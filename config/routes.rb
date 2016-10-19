@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   match '/help',    to: 'static_pages#help',    via: 'get'
   resources :microposts
   resources :users
-  root 'users#index'
+  root 'static_pages#home'
 end
