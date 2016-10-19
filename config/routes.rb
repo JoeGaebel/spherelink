@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get 'static_pages/home'
-  get 'static_pages/help'
+  match '/home',    to: 'static_pages#home',    via: 'get'
+  match '/help',    to: 'static_pages#help',    via: 'get'
   resources :microposts
   resources :users
   root 'users#index'

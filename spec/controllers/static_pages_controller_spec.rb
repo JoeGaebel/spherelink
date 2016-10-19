@@ -1,8 +1,12 @@
 require 'spec_helper'
 
 describe StaticPagesController do
-  it 'should get home' do
-    get static_pages_home_url
-    assert_response :success
+  let(:pages) { [:home, :help]}
+
+  it 'should get the pages' do
+    pages.each do |page|
+      get page
+      assert_response :success
+    end
   end
 end
