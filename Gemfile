@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.4'
+ruby '2.2.5'
 
 gem 'rails', '5.0.0.1'
 gem 'mysql2', '>= 0.3.18', '< 0.5'
@@ -22,6 +22,7 @@ group :test do
   gem 'minitest-reporters',       '1.1.9'
   gem 'guard',                    '2.13.0'
   gem 'guard-minitest',           '2.4.4'
+  gem 'rspec',                    '~> 3.4'
 end
 
 group :development do
