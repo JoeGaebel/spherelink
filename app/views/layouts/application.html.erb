@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= @page_title %> | Social Microloan</title>
+    <% if @page_title %>
+      <title><%= @page_title %> | Social Microloan</title>
+    <% else %>
+      <title>Social Microloan</title>
+    <% end %>
+
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
