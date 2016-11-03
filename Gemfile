@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.2.5'
 
 gem 'rails', '5.0.0.1'
+gem 'bootstrap-sass', '3.3.6'
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 gem 'puma', '3.4.0'
 gem 'sass-rails', '5.0.6'
