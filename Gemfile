@@ -2,8 +2,9 @@ source 'https://rubygems.org'
 ruby '2.2.5'
 
 gem 'rails', '5.0.0.1'
+gem 'bcrypt'
 gem 'bootstrap-sass', '3.3.6'
-gem 'mysql2', '>= 0.3.18', '< 0.5'
+gem 'mysql2'
 gem 'puma', '3.4.0'
 gem 'sass-rails', '5.0.6'
 gem 'uglifier', '3.0.0'
@@ -16,12 +17,13 @@ gem 'pg', group: :production
 
 group :development, :test do
   gem 'pry'
+  gem 'factory_girl_rails'
+  gem 'rspec-rails',              '~> 3.5'
 end
 
 group :test do
   gem 'rails-controller-testing', '0.1.1'
   gem 'guard',                    '2.13.0'
-  gem 'rspec-rails',              '~> 3.5'
   gem 'shoulda-matchers',         '~> 3.1', '>= 3.1.1'
   gem 'capybara',                 '~> 2.10', '>= 2.10.1'
 end
