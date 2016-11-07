@@ -74,12 +74,7 @@ describe User do
         expect(@user).not_to be_valid
       end
 
-      it 'password should be present (nonblank)' do
-        @user.password = @user.password_confirmation = ' ' * valid_length
-        expect(@user).to_not be_valid
-      end
-
-      it 'password should have a minimum length' do
+      it 'should have a minimum length' do
         @user.password = @user.password_confirmation = 'a' * (valid_length - 1)
         expect(@user).to_not be_valid
       end

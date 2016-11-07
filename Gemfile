@@ -19,13 +19,16 @@ group :development, :test do
   gem 'pry'
   gem 'factory_girl_rails'
   gem 'rspec-rails',              '~> 3.5'
+  gem 'capybara',                 '~> 2.10', '>= 2.10.1'
+  gem 'database_cleaner'
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
 end
 
 group :test do
   gem 'rails-controller-testing', '0.1.1'
   gem 'guard',                    '2.13.0'
   gem 'shoulda-matchers',         '~> 3.1', '>= 3.1.1'
-  gem 'capybara',                 '~> 2.10', '>= 2.10.1'
 end
 
 group :development do
