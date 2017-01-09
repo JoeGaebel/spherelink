@@ -28,6 +28,7 @@ describe UsersController do
       }.by(1)
 
       expect(response).to redirect_to User.last
+      expect(is_logged_in?).to be_truthy
     end
 
     it 'does not create a User with invalid attributes' do
