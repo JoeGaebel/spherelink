@@ -23,6 +23,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
+  gem 'pry-nav'
 end
 
 group :test do

@@ -80,4 +80,15 @@ describe User do
       end
     end
   end
+
+  describe '#authenticated?' do
+    before do
+      @user = build(:user)
+      expect(@user.remember_digest).to eq(nil)
+    end
+
+    it 'should return false for a user with nil digest' do
+      expect(@user.authenticated?('')).to eq(false)
+    end
+  end
 end
