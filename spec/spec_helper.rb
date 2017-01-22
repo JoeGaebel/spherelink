@@ -63,7 +63,7 @@ RSpec.configure do |config|
     !session[:user_id].nil?
   end
 
-  def session_log_in(user)
+  def log_in(user)
     session[:user_id] = user.id
   end
 end

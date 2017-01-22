@@ -53,4 +53,18 @@ describe 'user login' do
       end
     end
   end
+
+  describe 'friendly forwarding' do
+    before do
+      @user = create(:user)
+    end
+
+    it 'redirects back to the correct page after auth' do
+      get edit_user_path(@user.id)
+      expect(response).to redirect_to(login_url)
+
+      log_in_as(@user)
+      expect(response).to redirect_to(edit_user_url(@user))
+    end
+  end
 end
