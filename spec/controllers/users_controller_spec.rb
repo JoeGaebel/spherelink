@@ -9,7 +9,7 @@ describe UsersController do
   end
 
   describe 'creating users' do
-    def do_request(options= {})
+    def do_request(options = {})
       post :create, params: { user: options }
     end
 
@@ -18,11 +18,11 @@ describe UsersController do
 
       expect {
         do_request({
-              name:  'Testing',
-              email: 'test@test.com',
-              password: 'testingtesting',
-              password_confirmation: 'testingtesting'
-            })
+          name:  'Testing',
+          email: 'test@test.com',
+          password: 'testingtesting',
+          password_confirmation: 'testingtesting'
+        })
       }.to change {
         User.count
       }.by(1)
@@ -35,7 +35,12 @@ describe UsersController do
       get :new
 
       expect {
-        do_request({name:  '', email: 'user@invalid', password: 'foo', password_confirmation: 'bar'})
+        do_request({
+          name:  '',
+          email: 'user@invalid',
+          password: 'foo',
+          password_confirmation: 'bar'
+        })
       }.to change {
         User.count
       }.by(0)
@@ -44,10 +49,28 @@ describe UsersController do
       assert_select 'div#error_explanation'
       assert_select 'div.field_with_errors'
     end
+
+    it 'does not allow admin to be set' do
+      get :new
+
+      hacker_name = 'I can haz admin?'
+
+      do_request({
+        name:  hacker_name,
+        email: 'admin@example.com',
+        password: 'password',
+        password_confirmation: 'password',
+        admin: true
+      })
+
+      created_user = User.last
+      expect(created_user.name).to eq(hacker_name)
+      expect(created_user).not_to be_admin
+    end
   end
 
   describe 'editing users' do
-    def do_request(id, options= {})
+    def do_request(id, options = {})
       patch :update, params: { id: id, user: options }
     end
 
@@ -117,6 +140,88 @@ describe UsersController do
         do_request(@user.id, { name: 'Definitely not Bob' })
         expect(flash).to_not be_present
         expect(response).to redirect_to(root_url)
+      end
+    end
+
+    it 'does not allow admin to be set' do
+      log_in(@user)
+      do_request(@user.id, {
+        admin: true
+      })
+
+      expect(flash[:success]).to be_present
+      expect(response).to redirect_to(@user)
+
+      @user.reload
+      expect(@user).not_to be_admin
+    end
+  end
+
+  describe 'index' do
+    def do_request
+      get :index
+    end
+
+    context 'when not logged in' do
+      before do
+        expect(is_logged_in?).to eq(false)
+      end
+
+      it 'redirects to login' do
+        do_request
+        expect(response).to redirect_to(login_url)
+      end
+    end
+  end
+
+  describe 'destroy' do
+    before do
+      @user = create(:user, admin: true)
+      @other_user = create(:user, {
+        name: 'Billy Bob',
+        email: 'jimbob@example.com'
+      })
+    end
+
+    def do_request(user)
+      delete :destroy, params: { id: user.id }
+    end
+
+    context 'when not logged in' do
+      before do
+        expect(is_logged_in?).to eq(false)
+      end
+
+      it 'should redirect' do
+        expect { do_request(@user) }.not_to change { User.count }
+        expect(response).to redirect_to(login_url)
+      end
+    end
+
+    context 'when logged in as a non admin' do
+      before do
+        expect(@other_user).not_to be_admin
+        log_in(@other_user)
+      end
+
+      it 'should redirect to root path' do
+        expect { do_request(@user) }.not_to change { User.count }
+        expect(response).to redirect_to(root_url)
+      end
+    end
+
+    context 'when logged in as an admin' do
+      before do
+        log_in(@user)
+      end
+
+      it 'deletes and flashes' do
+        expect { do_request(@other_user) }.to change {
+          User.count
+        }.by(-1)
+
+        expect(flash[:success]).to be_present
+        expect(response).to redirect_to(users_url)
       end
     end
   end
