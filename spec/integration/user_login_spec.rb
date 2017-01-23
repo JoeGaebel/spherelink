@@ -1,4 +1,8 @@
 describe 'user login' do
+  def do_request(session)
+    post login_path, params: { session: session }
+  end
+
   context 'with valid information followed by a logout' do
     before do
       @user = create(:user, password: 'password')
@@ -6,8 +10,7 @@ describe 'user login' do
 
     it 'manages the session and links' do
       get login_path
-      post login_path, params: { session: { email: @user.email,
-        password: 'password' } }
+      do_request(email: @user.email, password: 'password')
       assert is_logged_in?
       assert_redirected_to @user
       follow_redirect!
@@ -59,6 +62,19 @@ describe 'user login' do
 
       log_in_as(@user)
       expect(response).to redirect_to(edit_user_url(@user))
+    end
+  end
+
+  context 'with an unactivated user' do
+    before do
+      @user = create(:user, activated: false)
+    end
+
+    it 'flashes that you are not activated' do
+      do_request(email: @user.email, password: 'password')
+      expect(is_logged_in?).to be_falsey
+      expect(response).to redirect_to(root_url)
+      expect(flash[:warning]).to be_present
     end
   end
 end
