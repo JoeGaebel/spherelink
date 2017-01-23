@@ -3,12 +3,12 @@ require 'spec_helper'
 describe UsersController do
   render_views
 
-  it 'should get new' do
+  it 'should get #new' do
     get :new
     assert_response :success
   end
 
-  describe 'creating users' do
+  describe '#create' do
     def do_request(options = {})
       post :create, params: { user: options }
     end
@@ -27,8 +27,8 @@ describe UsersController do
         User.count
       }.by(1)
 
-      expect(response).to redirect_to User.last
-      expect(is_logged_in?).to be_truthy
+      expect(response).to redirect_to root_url
+      expect(is_logged_in?).to be_falsey
     end
 
     it 'does not create a User with invalid attributes' do
@@ -69,7 +69,7 @@ describe UsersController do
     end
   end
 
-  describe 'editing users' do
+  describe '#edit' do
     def do_request(id, options = {})
       patch :update, params: { id: id, user: options }
     end
@@ -157,7 +157,7 @@ describe UsersController do
     end
   end
 
-  describe 'index' do
+  describe '#index' do
     def do_request
       get :index
     end
@@ -174,7 +174,7 @@ describe UsersController do
     end
   end
 
-  describe 'destroy' do
+  describe '#destroy' do
     before do
       @user = create(:user, admin: true)
       @other_user = create(:user, {
@@ -222,6 +222,40 @@ describe UsersController do
 
         expect(flash[:success]).to be_present
         expect(response).to redirect_to(users_url)
+      end
+    end
+  end
+
+  describe '#show' do
+    before do
+      @user = create(:user)
+    end
+
+    def do_request(user)
+      get :show, params: { id: user.id }
+    end
+
+    context 'when the user is not activated' do
+      before do
+        @other_guy = create(:user, activated: false)
+      end
+
+      it 'redirects' do
+        log_in(@user)
+        do_request(@other_guy)
+        expect(response).to redirect_to root_url
+      end
+    end
+
+    context 'when the user is activated' do
+      before do
+        @other_guy = create(:user)
+      end
+
+      it 'shows the user page' do
+        log_in(@user)
+        do_request(@other_guy)
+        assert_select 'section.user_info'
       end
     end
   end

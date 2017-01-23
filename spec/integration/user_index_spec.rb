@@ -12,6 +12,19 @@ describe 'user index' do
     @user = create(:user)
   end
 
+  context 'with unactivated users' do
+    before do
+      User.update_all(activated: false)
+      @user.update_column(:activated, true)
+    end
+
+    it 'does not show unactivated users' do
+      log_in_as(@user)
+      get users_path
+      assert_select 'ul.users li', 1
+    end
+  end
+
   it 'paginates' do
     log_in_as(@user)
     get users_path

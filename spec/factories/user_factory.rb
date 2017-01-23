@@ -5,5 +5,6 @@ FactoryGirl.define do
     password 'password'
     password_confirmation { password || 'password' }
     admin { false }
+    activated { true }
   end
 end
