@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe UserMailer, type: :mailer do
+  let(:user) { create(:user) }
+
   describe 'account_activation' do
-    let(:user) { create(:user) }
     let(:mail) { UserMailer.account_activation(user) }
 
     before do
@@ -23,16 +24,22 @@ describe UserMailer, type: :mailer do
   end
 
   describe 'password_reset' do
-    let(:mail) { UserMailer.password_reset }
+    before do
+      user.reset_token = User.new_token
+    end
+
+    let(:mail) { UserMailer.password_reset(user) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('Password reset')
-      expect(mail.to).to eq(['to@example.org'])
+      expect(mail.to).to eq(["#{user.email}"])
       expect(mail.from).to eq(['noreply@example.com'])
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match('Hi')
+      expect(mail.body.encoded).to match(user.reset_token)
+      expect(mail.body.encoded).to match(CGI.escape(user.email))
+
     end
   end
 end
