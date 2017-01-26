@@ -26,13 +26,13 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
-  gem 'pry-nav'
+  gem 'pry-byebug'
 end
 
 group :test do
   gem 'rails-controller-testing', '0.1.1'
   gem 'guard',                    '2.13.0'
-  gem 'shoulda-matchers',         '~> 3.1', '>= 3.1.1'
+  gem 'shoulda-matchers',         '~> 3.1'
 end
 
 group :development do

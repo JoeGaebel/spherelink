@@ -6,6 +6,8 @@ describe User do
       @user = build(:user)
     end
 
+    it { should have_many(:microposts).dependent(:destroy) }
+
     describe 'name' do
       it 'should be valid' do
         expect(@user).to be_valid

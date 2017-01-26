@@ -16,6 +16,13 @@ unless defined?(TESTS_ARE_LOADED)
   require 'capybara/rspec'
 end
 
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
 RSpec.configure do |config|
   config.include Capybara::DSL
   config.shared_context_metadata_behavior = :apply_to_host_groups
@@ -71,5 +78,9 @@ RSpec.configure do |config|
     post login_path, params: { session: { email: user.email,
       password: user.password,
       remember_me: remember_me } }
+  end
+
+  def hipster_ipsum
+    Faker::Hipster.sentence(4, false, 4)
   end
 end

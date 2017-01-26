@@ -16,6 +16,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  has_many :microposts, dependent: :destroy
+
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ?
       BCrypt::Engine::MIN_COST :
