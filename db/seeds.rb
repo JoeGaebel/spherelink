@@ -8,7 +8,7 @@ User.create!({
   activated_at: Time.zone.now
 })
 
-100.times do |n|
+3.times do |n|
   User.create!({
     name: Faker::Name.name,
     email: "example-#{n+1}@example.com",
@@ -20,7 +20,7 @@ User.create!({
 end
 
 users = User.order(:created_at).take(6)
-50.times do
+5.times do
   users.each do |user|
     content = Faker::Hipster.sentence(4, false, 4)
     user.microposts.create!(content: content)
