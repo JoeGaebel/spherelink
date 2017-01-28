@@ -66,6 +66,10 @@ class User < ApplicationRecord
     reset_sent_at < RESET_DURATION.ago
   end
 
+  def feed
+    Micropost.where('user_id = ?', id)
+  end
+
   private
 
   def downcase_email
