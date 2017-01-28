@@ -29,23 +29,6 @@ describe 'Microposts' do
       get root_path
       expect(response.body).to include('1 micropost')
     end
-  end
-
-  describe 'creating a micropost' do
-    def do_request(content)
-      post microposts_path, params: { micropost: { content: content } }
-    end
-
-    context 'with an invalid submission' do
-      let(:invalid_content) { nil }
-
-      it 'redirects and shows an error' do
-        log_in_as(@user)
-        get root_path
-        expect { do_request(invalid_content) }.not_to change { Micropost.count }
-        assert_select 'div#error_explanation'
-      end
-    end
 
     context 'with sufficient posts' do
       before do
@@ -60,14 +43,38 @@ describe 'Microposts' do
         assert_select 'div.pagination'
       end
     end
+  end
+
+  describe 'creating a micropost' do
+    def do_request(options = {})
+      post microposts_path, params: { micropost: options }
+    end
+
+    context 'with an invalid submission' do
+      let(:invalid_content) { nil }
+
+      it 'redirects and shows an error' do
+        log_in_as(@user)
+        get root_path
+        expect { do_request(content: invalid_content) }.not_to change { Micropost.count }
+        assert_select 'div#error_explanation'
+      end
+    end
 
     context 'with a valid submission' do
       let(:valid_content) { 'Non-alcoholic beers!? Wow!' }
+      let(:picture) { fixture_file_upload('spec/fixtures/rails.png', 'image/png') }
 
       it 'posts the micropost' do
         log_in_as(@user)
         get root_path
-        expect { do_request(valid_content) }.to change { Micropost.count }.by(1)
+        assert_select 'input[type=file]'
+        expect { do_request({
+          content: valid_content,
+          picture: picture
+        }) }.to change { Micropost.count }.by(1)
+        expect(assigns(:micropost).picture).to be_present
+
         expect(response).to redirect_to(root_url)
         follow_redirect!
         expect(response.body).to include valid_content
