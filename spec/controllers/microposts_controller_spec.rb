@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe MicropostsController, type: :request do
-  # render_views
-
   before do
     @user = create(:user)
     @micropost = create(:micropost, user: @user)

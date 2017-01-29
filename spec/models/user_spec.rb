@@ -93,4 +93,22 @@ describe User do
       expect(@user.authenticated?(:remember, '')).to eq(false)
     end
   end
+
+  describe 'following' do
+    before do
+      @user = create(:user)
+      @other_guy = create(:user)
+    end
+
+    it 'should follow and unfollow a user' do
+      expect(@user).not_to be_following(@other_guy)
+      @user.follow(@other_guy)
+
+      expect(@user).to be_following(@other_guy)
+      expect(@other_guy.followers).to include(@user)
+      @user.unfollow(@other_guy)
+
+      expect(@user).not_to be_following(@other_guy)
+    end
+  end
 end
