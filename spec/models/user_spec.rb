@@ -111,4 +111,38 @@ describe User do
       expect(@user).not_to be_following(@other_guy)
     end
   end
+
+  describe 'feed' do
+    before do
+      @user = create(:user)
+      @followed_user = create(:user)
+      @not_followed_user = create(:user)
+
+      5.times do
+        create(:micropost, user: @user)
+        create(:micropost, user: @followed_user)
+        create(:micropost, user: @not_followed_user)
+      end
+
+      create(:relationship, {
+        follower_id: @user.id,
+        followed_id: @followed_user.id
+      })
+    end
+
+
+    it 'should have the right posts' do
+      @followed_user.microposts.each do |post_following|
+        expect(@user.feed).to include(post_following)
+      end
+
+      @user.microposts.each do |post_self|
+        expect(@user.feed).to include(post_self)
+      end
+
+      @not_followed_user.microposts.each do |post_unfollowed|
+        expect(@user.feed).not_to include(post_unfollowed)
+      end
+    end
+  end
 end

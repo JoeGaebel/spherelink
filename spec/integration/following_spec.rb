@@ -71,4 +71,24 @@ describe 'Following' do
         to change { @user.following.count }.by(-1)
       end
   end
+
+  describe 'the home page feed' do
+    before do
+      5.times do
+        create(:micropost, user: @other_user)
+      end
+
+      create(:relationship, {
+        follower_id: @user.id,
+        followed_id: @other_user.id
+      })
+    end
+
+    it 'feeds well' do
+      get root_path
+      @user.feed.paginate(page: 1).each do |micropost|
+        expect(response.body).to include(CGI.escapeHTML(micropost.content))
+      end
+    end
+  end
 end
