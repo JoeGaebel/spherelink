@@ -18,6 +18,7 @@ gem 'jbuilder',     '2.4.1'
 gem 'carrierwave', '0.11.2'
 gem 'mini_magick', '4.5.1'
 gem 'fog', '1.38.0'
+gem 'rename'
 
 gem 'pg', group: :production
 
