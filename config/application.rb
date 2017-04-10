@@ -17,5 +17,6 @@ module Nostalgia
     end
 
     config.action_view.embed_authenticity_token_in_remote_forms = true
+    config.assets.paths << Rails.root.join('node_modules')
   end
 end

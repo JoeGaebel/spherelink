@@ -1,0 +1,12 @@
+{
+  "name": "nostalgia",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoeGaebel/nostalgia.git"
+  },
+  "dependencies": {
+    "photo-sphere-viewer": "3.2.2"
+  },
+  "license": "ISC"
+}

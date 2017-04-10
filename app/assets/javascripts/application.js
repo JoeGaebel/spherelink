@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
+//= require photo-sphere-viewer/dist/photo-sphere-viewer.min
 //= require_tree .
