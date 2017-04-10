@@ -9,6 +9,7 @@
     "npm": "3.10.3"
   },
   "dependencies": {
+    "bower": "1.8.0",
     "photo-sphere-viewer": "3.2.2",
     "three": "0.84.0",
     "uevent": "1.0.0",
