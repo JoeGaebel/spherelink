@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
+  get    '/photo',   to: 'static_pages#photo'
+  get    '/marina',   to: 'static_pages#marina'
   resources :users do
     member do
       get :following, :followers
