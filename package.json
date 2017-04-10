@@ -9,7 +9,8 @@
     "photo-sphere-viewer": "3.2.2",
     "three": "0.84.0",
     "uevent": "1.0.0",
-    "d.js": "0.7.5"
+    "d.js": "0.7.5",
+    "dot": "1.1.1"
   },
   "license": "ISC"
 }
