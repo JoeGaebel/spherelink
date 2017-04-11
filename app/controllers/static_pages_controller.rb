@@ -25,8 +25,4 @@
   def photo
     @page_title = 'Hmmm'
   end
-
-  def marina
-    send_file 'app/assets/images/marina.jpg', type: 'image/png'
-  end
 end

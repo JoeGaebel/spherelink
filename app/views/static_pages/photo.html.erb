@@ -3,9 +3,9 @@
 <div id="photosphere"></div>
 <script>
   new PhotoSphereViewer({
-    panorama: '/marina',
+    panorama: "<%= image_url('marina.jpg') %>",
     container: 'photosphere',
-    loading_img: 'http://photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
+    loading_img: "<%= image_url('photosphere-logo.gif') %>",
     navbar: 'autorotate zoom download caption fullscreen',
     default_fov: 44,
     mousewheel: false,
