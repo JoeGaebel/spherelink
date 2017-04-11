@@ -261,12 +261,12 @@
   PSV.on('select-marker', function(marker) {
     if (marker.isPolygon()) {
       inKitchen = !inKitchen;
-      PSV.clearMarkers();
       if(inKitchen) {
         PSV.setPanorama("<%= image_url('kitchen.jpg') %>", {
           longitude: Math.PI,
           latitude: 0,
         }, true).then(function(){
+          PSV.clearMarkers();
           PSV.addMarker(goToLivingroom);
           PSV.addMarker(joesFace);
           PSV.addMarker(fridge);
@@ -276,6 +276,7 @@
           longitude: Math.PI,
           latitude: 0,
         }, true).then(function(){
+          PSV.clearMarkers();
           PSV.addMarker(goToKitchen);
         });
       }
