@@ -14,9 +14,9 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
-//= require three/build/three.min
-//= require d.js/lib/D.min
-//= require uevent/uevent.min
-//= require dot/doT.min
-//= require photo-sphere-viewer/dist/photo-sphere-viewer.min
+//= require three/build/three
+//= require d.js/lib/D
+//= require uevent/uevent
+//= require dot/doT
+//= require photo-sphere-viewer/dist/photo-sphere-viewer
 //= require_tree .
