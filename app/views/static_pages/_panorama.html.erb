@@ -260,6 +260,11 @@
 
   PSV.on('select-marker', function(marker) {
     if (marker.isPolygon()) {
+      PSV.rotate({
+        longitude: marker.longitude,
+        latitude: marker.latitude - (Math.PI / 7)
+      });
+
       inKitchen = !inKitchen;
       if(inKitchen) {
         PSV.setPanorama("<%= image_url('kitchen.jpg') %>", {
