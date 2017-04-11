@@ -23,6 +23,6 @@
   end
 
   def photo
-    @page_title = 'Hmmm'
+    @page_title = 'Nostalgia'
   end
 end

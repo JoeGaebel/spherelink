@@ -292,7 +292,9 @@
 //    }
   });
 
-  $('.psv-navbar').hide();
+  PSV.on('ready', function() {
+    $('.psv-navbar').hide();
+  });
 </script>
 
 <svg id="patterns">
