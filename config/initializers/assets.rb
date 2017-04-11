@@ -8,11 +8,11 @@ Rails.application.config.assets.version = '1.0'
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-# Rails.application.config.assets.precompile += %w( three/examples/js/renderers/CanvasRenderer.js )
-# Rails.application.config.assets.precompile += %w( three/examples/js/renderers/Projector.js )
-# Rails.application.config.assets.precompile += %w( three/examples/js/shaders/CopyShader.js )
-# Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/EffectComposer.js )
-# Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/RenderPass.js )
-# Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/ShaderPass.js )
-# Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/MaskPass.js )
-# Rails.application.config.assets.precompile += %w( three/examples/js/controls/DeviceOrientationControls.js )
+Rails.application.config.assets.precompile += %w( three/examples/js/renderers/CanvasRenderer.js )
+Rails.application.config.assets.precompile += %w( three/examples/js/renderers/Projector.js )
+Rails.application.config.assets.precompile += %w( three/examples/js/shaders/CopyShader.js )
+Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/EffectComposer.js )
+Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/RenderPass.js )
+Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/ShaderPass.js )
+Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/MaskPass.js )
+Rails.application.config.assets.precompile += %w( three/examples/js/controls/DeviceOrientationControls.js )
