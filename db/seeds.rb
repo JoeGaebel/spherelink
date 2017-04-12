@@ -1,7 +1,7 @@
 USERS_COUNT = 15
 POSTS_COUNT = 5
 
-User.create!({
+joe = User.create!({
   name:  'Joe',
   email: 'joe@joegaebel.com',
   password:              'password',
@@ -36,3 +36,59 @@ following = users[2..USERS_COUNT]
 followers = users[3..USERS_COUNT]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
+
+puts "Creating memory stuff"
+
+memory = Memory.create!({
+  user: joe,
+  name: "Joe's house"
+})
+
+livingroom_sphere = Sphere.create!({
+  memory: memory,
+  panorma: 'livingroom.jpg',
+  caption: 'living room!'
+})
+
+kitchen_sphere = Sphere.create!({
+  memory: memory,
+  panorama: 'kitchen.jpg',
+  caption: 'kitchen!'
+})
+
+Marker.create!({
+  sphere: kitchen_sphere,
+  image: 'pin2.png',
+  tooltip_content: 'Look at joes face',
+  content: 'joesface.jpg',
+  x: 2068,
+  y: 1225,
+  width: 32,
+  height: 32
+})
+
+Marker.create!({
+  sphere: kitchen_sphere,
+  image: 'pin2.png',
+  tooltip_content: 'cool fridge photo',
+  content: 'fridge.jpg',
+  x: 8546,
+  y: 745,
+  width: 32,
+  height: 32
+})
+
+Portal.create!({
+  polygon_px: [4042,289,4402,236,4507,1338,4069,1343],
+  from_sphere: livingroom_sphere,
+  to_sphere: kitchen_sphere,
+  tooltip_content: 'Go to the kitchen!'
+})
+
+Portal.create!({
+  polygon_px: [8950,302,555,280,658,848,255,996,313,1596,9014,1666,8958,302],
+  from_sphere: kitchen_sphere,
+  to_sphere: livingroom_sphere,
+  tooltip_content: 'Go to the livingroom!'
+})
+

@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128205017) do
+ActiveRecord::Schema.define(version: 20170412031849) do
+
+  create_table "markers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "image"
+    t.string   "tooltip_content"
+    t.string   "tooltip_position",               default: "right bottom"
+    t.text     "content",          limit: 65535
+    t.integer  "x"
+    t.integer  "y"
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "sphere_id"
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.index ["sphere_id"], name: "index_markers_on_sphere_id", using: :btree
+  end
+
+  create_table "memories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string  "name"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_memories_on_user_id", using: :btree
+  end
 
   create_table "microposts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "content",    limit: 65535
@@ -22,6 +43,20 @@ ActiveRecord::Schema.define(version: 20170128205017) do
     t.index ["user_id"], name: "index_microposts_on_user_id", using: :btree
   end
 
+  create_table "portals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text     "polygon_px",          limit: 65535
+    t.string   "fill",                                                      default: "points"
+    t.string   "stroke",                                                    default: "#ff0032"
+    t.decimal  "stroke_transparency",               precision: 6, scale: 2, default: "0.8"
+    t.integer  "stroke_width",                                              default: 2
+    t.string   "tooltip_content"
+    t.string   "tooltip_position",                                          default: "right bottom"
+    t.integer  "from_sphere_id"
+    t.integer  "to_sphere_id"
+    t.datetime "created_at",                                                                         null: false
+    t.datetime "updated_at",                                                                         null: false
+  end
+
   create_table "relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "follower_id"
     t.integer  "followed_id"
@@ -30,6 +65,15 @@ ActiveRecord::Schema.define(version: 20170128205017) do
     t.index ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
     t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
     t.index ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+  end
+
+  create_table "spheres", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "panorama"
+    t.string   "caption"
+    t.integer  "memory_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["memory_id"], name: "index_spheres_on_memory_id", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
