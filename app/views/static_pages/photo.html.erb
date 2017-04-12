@@ -1,4 +1,8 @@
 <%= render 'three_examples' %>
+<script>
+window.memory = <%= @memory_json.to_s.html_safe %>;
+</script>
+
 
 <script type="text/template" id="pin-content">
   <h1>HTML Ipsum Presents</h1>

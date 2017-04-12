@@ -41,12 +41,12 @@ puts "Creating memory stuff"
 
 memory = Memory.create!({
   user: joe,
-  name: "Joe's house"
+  name: "Joe's Childhood Home"
 })
 
 livingroom_sphere = Sphere.create!({
   memory: memory,
-  panorma: 'livingroom.jpg',
+  panorama: 'livingroom.jpg',
   caption: 'living room!'
 })
 

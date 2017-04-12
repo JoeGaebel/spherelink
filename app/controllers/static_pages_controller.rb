@@ -24,5 +24,6 @@
 
   def photo
     @page_title = 'Nostalgia'
+    @memory_json = Memory.first.to_json(include: { spheres: { include: [:portals, :markers]}})
   end
 end

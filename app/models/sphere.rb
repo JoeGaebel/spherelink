@@ -1,7 +1,5 @@
 class Sphere < ApplicationRecord
   belongs_to :memory
-  has_many :portals
+  has_many :portals, foreign_key: 'from_sphere_id'
   has_many :markers
-
-  attr_accessor :panorma, :caption
 end

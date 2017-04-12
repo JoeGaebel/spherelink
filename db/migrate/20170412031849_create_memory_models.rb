@@ -4,7 +4,7 @@ class CreateMemoryModels < ActiveRecord::Migration[5.0]
       t.text :polygon_px
       t.string :fill, default: 'points'
       t.string :stroke, default: '#ff0032'
-      t.decimal :stroke_transparency, default: 0.8, scale: 2, precision: 6
+      t.integer :stroke_transparency, default: 80
       t.integer :stroke_width, default: 2
       t.string :tooltip_content
       t.string :tooltip_position, default: 'right bottom'
