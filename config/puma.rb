@@ -4,8 +4,8 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum, this matches the default thread size of Active Record.
 #
-
-threads_count = ENV.fetch("RAILS_MAX_THREADS") { Rails.env.development? ? 1 : 5 }.to_i
+debug = false
+threads_count = ENV.fetch("RAILS_MAX_THREADS") { debug ? 1 : 5 }.to_i
 threads threads_count, threads_count
 
 rackup      DefaultRackup
@@ -18,8 +18,8 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
 #
-workers ENV.fetch("WEB_CONCURRENCY") { Rails.env.development? ? 1 : 2 }
-worker_timeout 6000 if Rails.env.development?
+workers ENV.fetch("WEB_CONCURRENCY") { debug ? 1 : 2 }
+worker_timeout 6000 if debug
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code

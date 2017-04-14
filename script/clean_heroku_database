@@ -1,3 +1,3 @@
-heroku pg:reset DATABASE --confirm Nostalgia &&
+heroku pg:reset DATABASE --confirm nostal &&
 heroku run rails db:migrate &&
 heroku run rails db:seed
