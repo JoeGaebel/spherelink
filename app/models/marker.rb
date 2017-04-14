@@ -1,14 +1,19 @@
 class Marker < ApplicationRecord
-  include ActionView::Helpers::AssetUrlHelper
+  include ActionView::Helpers::AssetTagHelper
 
   belongs_to :sphere
   mount_uploader :content, MarkerUploader
 
   def to_builder
     Jbuilder.new do |json|
-      json.(self, :id, :tooltip_content, :tooltip_position, :x, :y, :width, :height)
-      json.image image_url(image)
-      json.content content.url
+      json.(self, :id, :x, :y, :width, :height)
+      json.id "marker-#{id}"
+      json.image ActionController::Base.helpers.image_path("pin2.png")
+      json.tooltip do
+        json.content tooltip_content
+        json.position tooltip_position
+      end
+      json.content image_tag(content.url, style: "width: 100%")
     end
   end
 end

@@ -4,9 +4,29 @@ class Portal < ApplicationRecord
 
   serialize :polygon_px, Array
 
+  def hex2rgba(hex, opacity)
+    hex = hex.sub!('#','')
+    r = Integer(hex.slice(0, hex.length/3), 16)
+    g = Integer(hex.slice(hex.length/3, 2*hex.length/3), 16)
+    b = Integer(hex.slice(2*hex.length/3, 3*hex.length/3), 16)
+
+    "rgba(#{r}, #{g}, #{b}, #{opacity/100.0})"
+  end
+
   def to_builder
     Jbuilder.new do |json|
-      json.(self, :id, :polygon_px, :fill, :stroke, :stroke_transparency, :stroke_width, :tooltip_content, :tooltip_position, :to_sphere_id)
+      json.(self, :polygon_px, :to_sphere_id)
+      json.id "portal-#{id}"
+      json.svgStyle do
+        json.key_format! -> (key){ key.sub('_', '-') }
+        json.fill "url(##{fill})"
+        json.stroke hex2rgba(stroke, stroke_transparency)
+        json.stroke_width "#{stroke_width}px"
+      end
+      json.tooltip do
+        json.content tooltip_content
+        json.position tooltip_position
+      end
     end
   end
 end
