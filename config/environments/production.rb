@@ -102,5 +102,4 @@ Rails.application.configure do
   config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
   config.assets.compile = true
   config.assets.digest = true
-
 end
