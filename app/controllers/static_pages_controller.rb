@@ -24,9 +24,6 @@
 
   def photo
     @page_title = 'Nostalgia'
-    @memory_json = ActiveModelSerializers::SerializableResource.new(
-      Memory.first,
-      include: ['spheres.markers', 'spheres.portals']
-    ).to_json
+    @memory_json = Memory.first.to_builder.target!
   end
 end
