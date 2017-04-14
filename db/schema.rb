@@ -45,16 +45,16 @@ ActiveRecord::Schema.define(version: 20170412031849) do
 
   create_table "portals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "polygon_px",          limit: 65535
-    t.string   "fill",                                                      default: "points"
-    t.string   "stroke",                                                    default: "#ff0032"
-    t.decimal  "stroke_transparency",               precision: 6, scale: 2, default: "0.8"
-    t.integer  "stroke_width",                                              default: 2
+    t.string   "fill",                              default: "points"
+    t.string   "stroke",                            default: "#ff0032"
+    t.integer  "stroke_transparency",               default: 80
+    t.integer  "stroke_width",                      default: 2
     t.string   "tooltip_content"
-    t.string   "tooltip_position",                                          default: "right bottom"
+    t.string   "tooltip_position",                  default: "right bottom"
     t.integer  "from_sphere_id"
     t.integer  "to_sphere_id"
-    t.datetime "created_at",                                                                         null: false
-    t.datetime "updated_at",                                                                         null: false
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
   end
 
   create_table "relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
