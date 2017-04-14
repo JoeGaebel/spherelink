@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
+//= require underscore
 //= require three/build/three
 //= require d.js/lib/D
 //= require uevent/uevent

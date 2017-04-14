@@ -20,6 +20,8 @@ gem 'mini_magick', '4.5.1'
 gem 'fog', '1.38.0'
 gem 'rename'
 gem 'rails_12factor', group: :production
+gem 'active_model_serializers', '~> 0.10.0'
+gem 'underscore-rails'
 
 gem 'pg', group: :production
 
