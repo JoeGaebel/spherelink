@@ -1,0 +1,1 @@
+figaro heroku:set -e production
