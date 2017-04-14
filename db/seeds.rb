@@ -46,13 +46,13 @@ memory = Memory.create!({
 
 livingroom_sphere = Sphere.create!({
   memory: memory,
-  panorama: 'livingroom.jpg',
+  panorama: File.open("#{Rails.root}/app/assets/images/livingroom.jpg"),
   caption: 'living room!'
 })
 
 kitchen_sphere = Sphere.create!({
   memory: memory,
-  panorama: 'kitchen.jpg',
+  panorama: File.open("#{Rails.root}/app/assets/images/kitchen.jpg"),
   caption: 'kitchen!'
 })
 
@@ -60,7 +60,7 @@ Marker.create!({
   sphere: kitchen_sphere,
   image: 'pin2.png',
   tooltip_content: 'Look at joes face',
-  content: 'joesface.jpg',
+  content: File.open("#{Rails.root}/app/assets/images/joesface.jpg"),
   x: 2068,
   y: 1225,
   width: 32,
@@ -71,7 +71,7 @@ Marker.create!({
   sphere: kitchen_sphere,
   image: 'pin2.png',
   tooltip_content: 'cool fridge photo',
-  content: 'fridge.jpg',
+  content: File.open("#{Rails.root}/app/assets/images/fridge.jpg"),
   x: 8546,
   y: 745,
   width: 32,
