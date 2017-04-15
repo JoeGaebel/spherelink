@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% if @page_title %>
-      <title><%= @page_title %> | Social Microloan</title>
+    <% if true #@page_title %>
+      <title>Saudade</title>
     <% else %>
       <title>Social Microloan</title>
     <% end %>
@@ -12,13 +12,13 @@
   </head>
 
   <body>
-  <%= render 'layouts/header' %>
+  <%#= render 'layouts/header' %>
     <div class="container">
       <% flash.each do |message_type, message| %>
         <div class="alert alert-<%= message_type %>"><%= message %></div>
       <% end %>
       <%= yield %>
-      <%= render 'layouts/footer' %>
+      <%#= render 'layouts/footer' %>
       <%= debug(params) if Rails.env.development? %>
     </div>
   </body>
