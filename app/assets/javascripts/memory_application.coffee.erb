@@ -95,7 +95,8 @@ class MemoryApplication
         @createSound(sphere.sound).play()
 
     else
-      soundManager.unmute(memory.defaultSound.id) if memory.defaultSound
+      soundManager.pauseAll();
+      soundManager.play(memory.defaultSound.id).unmute() if memory.defaultSound
 
   getCenter: (array) ->
     x = array.map (a) -> a[0]
