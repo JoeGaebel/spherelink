@@ -72,7 +72,7 @@ class MemoryApplication
 
   maybePlaySadness: ->
     if window.currentSphere.id == 6
-      soundManager.play('as_you_found_me')
+      soundManager.play('as_you_found_me', loops: 99)
       soundManager.mute('sail')
     else
       soundManager.pause('as_you_found_me')
