@@ -71,12 +71,12 @@ class MemoryApplication
     sphere.markers.concat sphere.portals
 
   maybePlaySadness: ->
-    if currentSphere.id == 6
-      soundManager.stop('sail')
+    if window.currentSphere.id == 6
       soundManager.play('as_you_found_me')
+      soundManager.mute('sail')
     else
-      soundManager.stop('as_you_found_me')
-      soundManager.start('sail')
+      soundManager.pause('as_you_found_me')
+      soundManager.unmute('sail')
 
   getCenter: (array) ->
     x = array.map (a) -> a[0]

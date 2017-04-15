@@ -4,6 +4,8 @@
 <script>
   soundManager.setup({
     preferFlash: false,
+    stream: true,
+    loops: 99,
     onready: function() {
       soundManager.createSound({
         id: 'as_you_found_me',
@@ -21,7 +23,7 @@
         volume: 35
       });
 
-      soundManager.play('sail');
+      window.soundManager.play('sail')
     }
   });
 
