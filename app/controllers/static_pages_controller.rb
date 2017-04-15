@@ -24,6 +24,6 @@
 
   def photo
     @page_title = 'Nostalgia'
-    @memory_json = Memory.first.to_builder.target!
+    @memory_json = Memory.second.to_builder.target!
   end
 end

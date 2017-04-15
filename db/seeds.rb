@@ -11,31 +11,31 @@ joe = User.create!({
   activated_at: Time.zone.now
 })
 
-USERS_COUNT.times do |n|
-  User.create!({
-    name: Faker::Name.name,
-    email: "example-#{n+1}@example.com",
-    password: 'password',
-    password_confirmation: 'password',
-    activated: true,
-    activated_at: Time.zone.now
-  })
-end
+# USERS_COUNT.times do |n|
+#   User.create!({
+#     name: Faker::Name.name,
+#     email: "example-#{n+1}@example.com",
+#     password: 'password',
+#     password_confirmation: 'password',
+#     activated: true,
+#     activated_at: Time.zone.now
+#   })
+# end
 
-users = User.order(:created_at).take(USERS_COUNT/3)
-POSTS_COUNT.times do
-  users.each do |user|
-    content = Faker::Hipster.sentence(4, false, 4)
-    user.microposts.create!(content: content)
-  end
-end
-
-users = User.all
-user  = users.first
-following = users[2..USERS_COUNT]
-followers = users[3..USERS_COUNT]
-following.each { |followed| user.follow(followed) }
-followers.each { |follower| follower.follow(user) }
+# users = User.order(:created_at).take(USERS_COUNT/3)
+# POSTS_COUNT.times do
+#   users.each do |user|
+#     content = Faker::Hipster.sentence(4, false, 4)
+#     user.microposts.create!(content: content)
+#   end
+# end
+#
+# users = User.all
+# user  = users.first
+# following = users[2..USERS_COUNT]
+# followers = users[3..USERS_COUNT]
+# following.each { |followed| user.follow(followed) }
+# followers.each { |follower| follower.follow(user) }
 
 puts "Creating memory stuff"
 
@@ -91,4 +91,56 @@ Portal.create!({
   to_sphere: livingroom_sphere,
   tooltip_content: 'Go to the livingroom!'
 })
+
+
+boat = Memory.create!({
+  user: joe,
+  name: "Joe's Boat"
+})
+
+marina = Sphere.create!({
+  memory: boat,
+  panorama: File.open("#{Rails.root}/app/assets/images/marina.jpg"),
+  caption: 'Marina'
+})
+
+boat_livingroom = Sphere.create!({
+  memory: boat,
+  panorama: File.open("#{Rails.root}/app/assets/images/boat_livingroom.jpg"),
+  caption: 'Boat Livingroom'
+})
+
+boat_bed = Sphere.create!({
+  memory: boat,
+  panorama: File.open("#{Rails.root}/app/assets/images/boat_bed.jpg"),
+  caption: 'Boat Livingroom'
+})
+
+Portal.create!({
+  polygon_px: [10132, 1403, 9498, 1131, 9281, 1007, 9073, 945, 8979, 928, 8737, 906, 8558, 919, 8424, 972, 8420, 1064, 8285, 1054, 8293, 1360, 8442, 1564, 8767, 1678, 9736, 1986, 10135, 1439],
+  from_sphere: marina,
+  to_sphere: boat_livingroom,
+  fov_lat: -0.23348006184717462,
+  fov_lng: 0.31859582997095737,
+  tooltip_content: 'Welcome aboard!'
+})
+
+Portal.create!({
+  polygon_px: [4426, 1188, 4930, 1198, 4966, 1932, 4381, 1907],
+  from_sphere: boat_livingroom,
+  to_sphere: boat_bed,
+  fov_lat: -0.4402067505993963,
+  fov_lng: 0.07437769032333764,
+  tooltip_content: 'Check out that boat bed!'
+})
+
+Portal.create!({
+  polygon_px: [1685, -8, 5132, -22, 4488, 1092, 2836, 968],
+  from_sphere: boat_bed,
+  to_sphere: marina,
+  fov_lat: -0.01934385578648512,
+  fov_lng: 0.6276086446264931,
+  tooltip_content: 'Go back to the marina'
+})
+
 

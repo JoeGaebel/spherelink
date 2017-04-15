@@ -15,7 +15,7 @@ class Portal < ApplicationRecord
 
   def to_builder
     Jbuilder.new do |json|
-      json.(self, :polygon_px, :to_sphere_id)
+      json.(self, :polygon_px, :to_sphere_id, :fov_lat, :fov_lng)
       json.id "portal-#{id}"
       json.svgStyle do
         json.key_format! -> (key){ key.sub('_', '-') }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412031849) do
+ActiveRecord::Schema.define(version: 20170415010245) do
 
   create_table "markers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "image"
@@ -45,16 +45,18 @@ ActiveRecord::Schema.define(version: 20170412031849) do
 
   create_table "portals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "polygon_px",          limit: 65535
-    t.string   "fill",                              default: "points"
-    t.string   "stroke",                            default: "#ff0032"
-    t.integer  "stroke_transparency",               default: 80
-    t.integer  "stroke_width",                      default: 2
+    t.string   "fill",                                                        default: "points"
+    t.string   "stroke",                                                      default: "#ff0032"
+    t.integer  "stroke_transparency",                                         default: 80
+    t.integer  "stroke_width",                                                default: 2
     t.string   "tooltip_content"
-    t.string   "tooltip_position",                  default: "right bottom"
+    t.string   "tooltip_position",                                            default: "right bottom"
     t.integer  "from_sphere_id"
     t.integer  "to_sphere_id"
-    t.datetime "created_at",                                                 null: false
-    t.datetime "updated_at",                                                 null: false
+    t.datetime "created_at",                                                                           null: false
+    t.datetime "updated_at",                                                                           null: false
+    t.decimal  "fov_lat",                           precision: 18, scale: 17, default: "0.0"
+    t.decimal  "fov_lng",                           precision: 18, scale: 17, default: "0.0"
   end
 
   create_table "relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

@@ -33,7 +33,8 @@ class MemoryApplication
 
   bindHandlers: ->
     window.PSV.on 'click', (e) ->
-      console.log(e.texture_x + " " + e.texture_y)
+      console.log("x, y: "+ e.texture_x + ", " + e.texture_y)
+      console.log("latitude, longitude: "+e.latitude + ", " + e.longitude)
 
     window.PSV.on 'ready', ->
       $('.psv-navbar').hide();
@@ -42,20 +43,21 @@ class MemoryApplication
       @doTransition(marker) if marker.isPolygon()
 
   doTransition: (marker) ->
-    window.PSV.rotate({
-      longitude: marker.longitude,
-      latitude: marker.latitude - (Math.PI / 7)
-    })
+#    window.PSV.rotate({ #TODO: Make this rotate to center of poly
+#      longitude: marker.longitude,
+#      latitude: marker.latitude - (Math.PI / 7)
+#    })
 
     portal = _.findWhere(window.currentSphere.portals, { id: marker.id })
     associatedSphere = _.findWhere(window.memory.spheres, { id: portal.to_sphere_id })
 
     window.PSV.setPanorama(associatedSphere.panorama, {
-      longitude: Math.PI,
-      latitude: 0
-    }, true).then(=> @_setMarkersAndCurrentSphere(associatedSphere))
+      latitude: portal.fov_lat,
+      longitude: portal.fov_lng
+    }, true).then(=> @_setupNextSphere(associatedSphere))
 
-  _setMarkersAndCurrentSphere: (sphere) ->
+  _setupNextSphere: (sphere) ->
+    PSV.zoom(40)
     PSV.clearMarkers();
     markers = @getPortalsAndMarkers(sphere);
     PSV.addMarker(marker) for marker in markers
