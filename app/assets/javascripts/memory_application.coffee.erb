@@ -1,4 +1,8 @@
 class MemoryApplication
+  soundManagerReady: =>
+    if memory.defaultSound
+      @createSound(memory.defaultSound).play()
+
   defaultPanoramaSettings:
     loading_img: "<%= image_url('photosphere-logo.gif') %>",
     navbar: [],
@@ -19,11 +23,22 @@ class MemoryApplication
       loader: true,
       blur: false
 
+  defaultSoundManagerSettings:
+    preferFlash: false,
+    stream: true,
+
+  defaultSoundSettings:
+    autoLoad: true,
+    autoPlay: false
+
   constructor: (memory, sphereNum) ->
     window.memory = memory
     window.currentSphere = memory.spheres[sphereNum]
 
   start: ->
+    soundManager.setup(@defaultSoundManagerSettings);
+    soundManager.onready(@soundManagerReady)
+
     window.PSV = new PhotoSphereViewer($.extend
         panorama: window.currentSphere.panorama,
         caption: window.currentSphere.caption,
@@ -45,38 +60,42 @@ class MemoryApplication
 
   doTransition: (marker) ->
     center = @getCenter(marker.polygon_px)
-    window.PSV.animate({
-      x: center[0],
-      y: center[1]
-    }, 1000).then(=> @setNextSphere(marker))
 
-  setNextSphere: (marker) ->
     portal = _.findWhere(window.currentSphere.portals, { id: marker.id })
     associatedSphere = _.findWhere(window.memory.spheres, { id: portal.to_sphere_id })
 
-    window.PSV.setPanorama(associatedSphere.panorama, {
+    window.PSV.animate({
+      x: center[0],
+      y: center[1]
+    }, 1000).then(=> @setNextSphere(associatedSphere, portal))
+
+  setNextSphere: (sphere, portal) ->
+    window.PSV.setPanorama(sphere.panorama, {
       latitude: portal.fov_lat,
       longitude: portal.fov_lng
-    }, true).then(=> @_setNextSphereMakers(associatedSphere))
+    }, true).then(=> @_setNextSphereMakers(sphere))
 
   _setNextSphereMakers: (sphere) ->
     PSV.zoom(sphere.defaultZoom)
     PSV.clearMarkers();
     markers = @getPortalsAndMarkers(sphere);
     PSV.addMarker(marker) for marker in markers
+    @playSound(sphere)
     window.currentSphere = sphere;
-    @maybePlaySadness()
 
   getPortalsAndMarkers: (sphere) ->
     sphere.markers.concat sphere.portals
 
-  maybePlaySadness: ->
-    if window.currentSphere.id == 6
-      soundManager.play('as_you_found_me', loops: 99)
-      soundManager.mute('sail')
+  playSound: (sphere) ->
+    if sphere.sound
+      soundManager.mute(memory.defaultSound.id) if memory.defaultSound
+      if soundManager.getSoundById(sphere.sound.id)
+        soundManager.play(sphere.sound.id).unmute()
+      else
+        @createSound(sphere.sound).play()
+
     else
-      soundManager.pause('as_you_found_me')
-      soundManager.unmute('sail')
+      soundManager.unmute(memory.defaultSound.id) if memory.defaultSound
 
   getCenter: (array) ->
     x = array.map (a) -> a[0]
@@ -86,5 +105,8 @@ class MemoryApplication
     minY = Math.min.apply(null, y)
     maxY = Math.max.apply(null, y)
     [(minX + maxX)/2, (minY + maxY)/2]
+
+  createSound: (soundConfig) ->
+    soundManager.createSound(_.extend({}, @defaultSoundSettings, soundConfig))
 
 window.MemoryApplication = MemoryApplication
