@@ -14,7 +14,7 @@ class MemoryApplication
     size:
       height: 600
     transition:
-      duration: 3000,
+      duration: 1500,
       loader: false,
       blur: true
 
@@ -43,20 +43,22 @@ class MemoryApplication
       @doTransition(marker) if marker.isPolygon()
 
   doTransition: (marker) ->
-#    window.PSV.rotate({ #TODO: Make this rotate to center of poly
-#      longitude: marker.longitude,
-#      latitude: marker.latitude - (Math.PI / 7)
-#    })
+    center = @getCenter(marker.polygon_px)
+    window.PSV.animate({
+      x: center[0],
+      y: center[1]
+    }, 1000).then(=> @setNextSphere(marker))
 
+  setNextSphere: (marker) ->
     portal = _.findWhere(window.currentSphere.portals, { id: marker.id })
     associatedSphere = _.findWhere(window.memory.spheres, { id: portal.to_sphere_id })
 
     window.PSV.setPanorama(associatedSphere.panorama, {
       latitude: portal.fov_lat,
       longitude: portal.fov_lng
-    }, true).then(=> @_setupNextSphere(associatedSphere))
+    }, true).then(=> @_setNextSphereMakers(associatedSphere))
 
-  _setupNextSphere: (sphere) ->
+  _setNextSphereMakers: (sphere) ->
     PSV.zoom(sphere.defaultZoom)
     PSV.clearMarkers();
     markers = @getPortalsAndMarkers(sphere);
@@ -65,5 +67,14 @@ class MemoryApplication
 
   getPortalsAndMarkers: (sphere) ->
     sphere.markers.concat sphere.portals
+
+  getCenter: (array) ->
+    x = array.map (a) -> a[0]
+    y = array.map (a) -> a[1]
+    minX = Math.min.apply(null, x)
+    maxX = Math.max.apply(null, x)
+    minY = Math.min.apply(null, y)
+    maxY = Math.max.apply(null, y)
+    [(minX + maxX)/2, (minY + maxY)/2]
 
 window.MemoryApplication = MemoryApplication
