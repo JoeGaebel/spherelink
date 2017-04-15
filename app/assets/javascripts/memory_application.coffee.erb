@@ -72,9 +72,11 @@ class MemoryApplication
 
   maybePlaySadness: ->
     if currentSphere.id == 6
+      soundManager.stop('sail')
       soundManager.play('as_you_found_me')
     else
       soundManager.stop('as_you_found_me')
+      soundManager.start('sail')
 
   getCenter: (array) ->
     x = array.map (a) -> a[0]

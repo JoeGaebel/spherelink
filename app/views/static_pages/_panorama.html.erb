@@ -10,8 +10,18 @@
         url: '<%= asset_url("as_you_found_me.mp3") %>',
         autoLoad: true,
         autoPlay: false,
-        volume: 50
+        volume: 20
       });
+
+      soundManager.createSound({
+        id: 'sail',
+        url: '<%= asset_url("sail.mp3") %>',
+        autoLoad: true,
+        autoPlay: false,
+        volume: 35
+      });
+
+      soundManager.play('sail');
     }
   });
 
