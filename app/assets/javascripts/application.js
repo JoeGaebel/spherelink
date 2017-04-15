@@ -20,4 +20,5 @@
 //= require uevent/uevent
 //= require dot/doT
 //= require photo-sphere-viewer/dist/photo-sphere-viewer
+//= require memory_application
 //= require_tree .

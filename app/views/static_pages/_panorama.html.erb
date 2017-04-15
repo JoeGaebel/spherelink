@@ -1,75 +1,7 @@
 <div id="photosphere"></div>
 <script>
-
-  var imagePath = "<%= image_path("pin2.png") %>";
-
-  function getPortalsAndMarkers(sphere){
-    return sphere.markers.concat(sphere.portals)
-  };
-
-  const defaultPanoramaSettings = {
-    loading_img: "<%= image_url('photosphere-logo.gif') %>",
-    navbar: [],
-    sphere_segments: 32,
-    container: 'photosphere',
-    anim_speed: '-2rpm',
-    default_fov: 20,
-    fisheye: true,
-    move_speed: 1.1,
-    time_anim: false,
-    gyroscope: false,
-    webgl: true,
-    size: {
-      height: 600
-    },
-    transition: {
-      duration: 3000,
-      loader: false,
-      blur: true
-    }
-  };
-
-  var currentSphere = window.memory.spheres[0];
-
-  var PSV = new PhotoSphereViewer(
-    $.extend({
-    panorama: currentSphere.panorama,
-    caption: currentSphere.caption,
-    markers: getPortalsAndMarkers(currentSphere)
-  }, defaultPanoramaSettings));
-
-  PSV.on('click', function(e) {
-   console.log(e.texture_x + " " + e.texture_y);
-  });
-
-  PSV.on('select-marker', function(marker) {
-    if (marker.isPolygon()) {
-      PSV.rotate({
-        longitude: marker.longitude,
-        latitude: marker.latitude - (Math.PI / 7)
-      });
-
-      var portal = _.findWhere(currentSphere.portals, { id: marker.id });
-      var associatedSphere = _.findWhere(window.memory.spheres, { id: portal.to_sphere_id });
-
-
-      PSV.setPanorama(associatedSphere.panorama, {
-        longitude: Math.PI,
-        latitude: 0
-      }, true).then(function(){
-        PSV.clearMarkers();
-        markers = getPortalsAndMarkers(associatedSphere);
-        for (marker of markers) {
-          PSV.addMarker(marker);
-        }
-        currentSphere = associatedSphere;
-      });
-    }
-  });
-
-  PSV.on('ready', function() {
-    $('.psv-navbar').hide();
-  });
+  var memoryApplication = new MemoryApplication(<%= @memory_json.to_s.html_safe %>, 0);
+  memoryApplication.start();
 </script>
 
 <svg id="patterns">

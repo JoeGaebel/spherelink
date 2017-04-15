@@ -1,0 +1,67 @@
+class MemoryApplication
+  defaultPanoramaSettings:
+    loading_img: "<%= image_url('photosphere-logo.gif') %>",
+    navbar: [],
+    sphere_segments: 32,
+    container: 'photosphere',
+    anim_speed: '-2rpm',
+    default_fov: 20,
+    fisheye: true,
+    move_speed: 1.1,
+    time_anim: false,
+    gyroscope: false,
+    webgl: true,
+    size:
+      height: 600
+    transition:
+      duration: 3000,
+      loader: false,
+      blur: true
+
+  constructor: (memory, sphereNum) ->
+    window.memory = memory
+    window.currentSphere = memory.spheres[sphereNum]
+
+  start: ->
+    window.PSV = new PhotoSphereViewer($.extend
+        panorama: window.currentSphere.panorama,
+        caption: window.currentSphere.caption,
+        markers: @getPortalsAndMarkers(currentSphere)
+      , @defaultPanoramaSettings
+    )
+    @bindHandlers()
+
+  bindHandlers: ->
+    window.PSV.on 'click', (e) ->
+      console.log(e.texture_x + " " + e.texture_y)
+
+    window.PSV.on 'ready', ->
+      $('.psv-navbar').hide();
+
+    window.PSV.on 'select-marker', (marker) =>
+      @doTransition(marker) if marker.isPolygon()
+
+  doTransition: (marker) ->
+    window.PSV.rotate({
+      longitude: marker.longitude,
+      latitude: marker.latitude - (Math.PI / 7)
+    })
+
+    portal = _.findWhere(window.currentSphere.portals, { id: marker.id })
+    associatedSphere = _.findWhere(window.memory.spheres, { id: portal.to_sphere_id })
+
+    window.PSV.setPanorama(associatedSphere.panorama, {
+      longitude: Math.PI,
+      latitude: 0
+    }, true).then(=> @_setMarkersAndCurrentSphere(associatedSphere))
+
+  _setMarkersAndCurrentSphere: (sphere) ->
+    PSV.clearMarkers();
+    markers = @getPortalsAndMarkers(sphere);
+    PSV.addMarker(marker) for marker in markers
+    window.currentSphere = sphere;
+
+  getPortalsAndMarkers: (sphere) ->
+    sphere.markers.concat sphere.portals
+
+window.MemoryApplication = MemoryApplication
