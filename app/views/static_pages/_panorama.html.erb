@@ -1,5 +1,20 @@
+<div id="waveform"></div>
 <div id="photosphere"></div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.3.7/wavesurfer.min.js"></script>
 <script>
+  soundManager.setup({
+    preferFlash: false,
+    onready: function() {
+      soundManager.createSound({
+        id: 'as_you_found_me',
+        url: '<%= asset_url("as_you_found_me.mp3") %>',
+        autoLoad: true,
+        autoPlay: false,
+        volume: 50
+      });
+    }
+  });
+
   var memoryApplication = new MemoryApplication(<%= @memory_json.to_s.html_safe %>, 0);
   memoryApplication.start();
 </script>

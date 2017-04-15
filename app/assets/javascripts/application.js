@@ -21,4 +21,5 @@
 //= require dot/doT
 //= require photo-sphere-viewer/dist/photo-sphere-viewer
 //= require memory_application
+//= require soundmanager2-jsmin
 //= require_tree .

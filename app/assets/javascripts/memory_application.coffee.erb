@@ -65,9 +65,16 @@ class MemoryApplication
     markers = @getPortalsAndMarkers(sphere);
     PSV.addMarker(marker) for marker in markers
     window.currentSphere = sphere;
+    @maybePlaySadness()
 
   getPortalsAndMarkers: (sphere) ->
     sphere.markers.concat sphere.portals
+
+  maybePlaySadness: ->
+    if currentSphere.id == 6
+      soundManager.play('as_you_found_me')
+    else
+      soundManager.stop('as_you_found_me')
 
   getCenter: (array) ->
     x = array.map (a) -> a[0]
