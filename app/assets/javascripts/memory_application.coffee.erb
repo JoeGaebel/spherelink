@@ -7,7 +7,7 @@ class MemoryApplication
     anim_speed: '-2rpm',
     default_fov: 20,
     fisheye: true,
-    move_speed: 1.1,
+    move_speed: 1.8,
     time_anim: false,
     gyroscope: true,
     webgl: true,
@@ -15,9 +15,9 @@ class MemoryApplication
       height: $(window).height()
       width: $(window).width()
     transition:
-      duration: 3000,
-      loader: false,
-      blur: true
+      duration: 0,
+      loader: true,
+      blur: false
 
   constructor: (memory, sphereNum) ->
     window.memory = memory
