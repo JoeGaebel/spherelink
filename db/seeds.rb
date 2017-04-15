@@ -240,3 +240,23 @@ Marker.create!({
   width: 32,
   height: 32
 })
+
+Marker.create!({
+  sphere: night_time,
+  image: 'pin2.png',
+  content: File.open("#{Rails.root}/app/assets/images/golden_gate_night.jpg"),
+  x: 6383,
+  y: 638,
+  width: 32,
+  height: 32
+})
+
+Marker.create!({
+  sphere: night_time,
+  image: 'pin2.png',
+  content: File.open("#{Rails.root}/app/assets/images/boat_bed_night.jpg"),
+  x: 5308,
+  y: 1230,
+  width: 32,
+  height: 32
+})
