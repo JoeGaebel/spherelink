@@ -2,20 +2,21 @@ class MemoryApplication
   defaultPanoramaSettings:
     loading_img: "<%= image_url('photosphere-logo.gif') %>",
     navbar: [],
-    sphere_segments: 32,
+    sphere_segments: 16,
     container: 'photosphere',
     anim_speed: '-2rpm',
     default_fov: 20,
     fisheye: true,
     move_speed: 1.1,
     time_anim: false,
-    gyroscope: false,
+    gyroscope: true,
     webgl: true,
     size:
-      height: 600
+      height: $(window).height()
+      width: $(window).width()
     transition:
       duration: 1500,
-      loader: false,
+      loader: true,
       blur: true
 
   constructor: (memory, sphereNum) ->
