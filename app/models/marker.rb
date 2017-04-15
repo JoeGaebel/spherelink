@@ -15,7 +15,7 @@ class Marker < ApplicationRecord
           json.position tooltip_position
         end
       end
-      json.content image_tag(content.url, style: "width: 100%") if content.url.present?
+      json.content image_tag(content.url, style: "max-width: 100%; max-height: 100%;") if content.url.present?
     end
   end
 end
