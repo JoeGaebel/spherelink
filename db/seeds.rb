@@ -159,7 +159,7 @@ Portal.create!({
   to_sphere: night_time,
   fov_lat: -0.6267388220839005,
   fov_lng: 0.16397512279941956,
-  tooltip_content: 'Shhh'
+  tooltip_content: 'Turn the light on'
 })
 
 Portal.create!({
@@ -169,7 +169,7 @@ Portal.create!({
   to_sphere: boat_livingroom,
   fov_lat: -0.6267388220839005,
   fov_lng: 0.16397512279941956,
-  tooltip_content: 'Shhh'
+  tooltip_content: 'Go back to day time'
 })
 
 Marker.create!({
