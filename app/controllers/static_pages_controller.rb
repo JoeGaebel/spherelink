@@ -22,8 +22,8 @@
     @page_title = 'Sign up'
   end
 
-  def photo
-    @page_title = 'Nostalgia'
+  def demo
     @memory_json = Memory.second.to_builder.target!
+    render :memory
   end
 end

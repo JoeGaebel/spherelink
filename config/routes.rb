@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'static_pages#photo'
+  root 'static_pages#demo'
   get    '/help',    to: 'static_pages#help'
   get    '/about',   to: 'static_pages#about'
   get    '/contact', to: 'static_pages#contact'
@@ -8,8 +8,6 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
-  get    '/photo',   to: 'static_pages#photo'
-  get    '/marina',   to: 'static_pages#marina'
   resources :users do
     member do
       get :following, :followers
