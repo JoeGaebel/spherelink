@@ -172,5 +172,23 @@ Portal.create!({
   tooltip_content: 'Shhh'
 })
 
+Marker.create!({
+  sphere: boat_livingroom,
+  image: 'back.jpg',
+  x: -4605,
+  y: 472,
+  width: 500,
+  height: 450
+})
+
+Marker.create!({
+  sphere: night_time,
+  image: 'pin2.png',
+  content: File.open("#{Rails.root}/app/assets/images/marina_night.jpg"),
+  x: 6815,
+  y: 579,
+  width: 32,
+  height: 32
+})
 
 
