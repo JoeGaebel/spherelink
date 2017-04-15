@@ -1,23 +1,6 @@
-This repo contains a finished version of the [Hartl Rails Tutorial](https://www.railstutorial.org/) which includes a basic overview of the major features of the Ruby on Rails web framework.
+# Saudade
+was once described as "the love that remains" after someone is gone. Saudade is the recollection of feelings, experiences, places, or events that once brought excitement, pleasure, well-being, which now triggers the senses and makes one live again. It can be described as an emptiness, like someone or something that should be there in a particular moment is missing, and the individual feels this absence. 
+<br>
+It brings sad and happy feelings altogether, sadness for missing and happiness for having experienced the feeling.
 
-I've tuned the tools used based on my experience in web development, opting for usage of Factories instead of Fixtures, and using RSpec instead of MiniTest.
-
-This repo constitutes a good starting point for creating web applications within Rails.
-
-# Setup
-- Ruby version: 2.2.5
-- DB: MySQL for Development, Postgres for Prod
-- `$ bundle install` to install dependencies
-- `$ rails db:create db:migrate db:seed` will initialize the database with the seed data
-- `$ rails s` will start the server
-
-## Testing
-- Selenium & Capybara for web mocking
-- Rspec test framework
-- Pry for debugging
-- FactoryGirl for model generation
-- `$ rspec spec/` will run the spec suite
-
-To Do
-- [ ] Integrate Devise for login
-- [ ] Fortify spec suite
+![sau](https://cloud.githubusercontent.com/assets/9356287/25067195/cb5b2de2-2209-11e7-86f2-9ab5f9b9b8d4.png)
