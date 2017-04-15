@@ -119,6 +119,12 @@ boat_bed = Sphere.create!({
   default_zoom: 30
 })
 
+night_time = Sphere.create!({
+  memory: boat,
+  panorama: File.open("#{Rails.root}/app/assets/images/boat_night.jpg"),
+  default_zoom: 30
+})
+
 Portal.create!({
   polygon_px: [10132, 1403, 9498, 1131, 9281, 1007, 9073, 945, 8979, 928, 8737, 906, 8558, 919, 8424, 972, 8420, 1064, 8285, 1054, 8293, 1360, 8442, 1564, 8767, 1678, 9736, 1986, 10135, 1439],
   from_sphere: marina,
@@ -145,5 +151,26 @@ Portal.create!({
   fov_lng: 0.6276086446264931,
   tooltip_content: 'Go back to the marina'
 })
+
+Portal.create!({
+  polygon_px: [2844, 1518, 3050, 1549, 3046, 1786, 2798, 1773],
+  stroke_transparency: 30,
+  from_sphere: boat_livingroom,
+  to_sphere: night_time,
+  fov_lat: -0.6267388220839005,
+  fov_lng: 0.16397512279941956,
+  tooltip_content: 'Shhh'
+})
+
+Portal.create!({
+  polygon_px: [3825, 1037, 4102, 1061, 4069, 1369, 3753, 1337],
+  stroke_transparency: 30,
+  from_sphere: night_time,
+  to_sphere: boat_livingroom,
+  fov_lat: -0.6267388220839005,
+  fov_lng: 0.16397512279941956,
+  tooltip_content: 'Shhh'
+})
+
 
 
