@@ -191,4 +191,23 @@ Marker.create!({
   height: 32
 })
 
+Marker.create!({
+  sphere: marina,
+  image: 'pin2.png',
+  content: File.open("#{Rails.root}/app/assets/images/joe_sail.jpg"),
+  x: 8991,
+  y: 632,
+  width: 32,
+  height: 32
+})
+
+Marker.create!({
+  sphere: boat_bed,
+  image: 'pin2.png',
+  content: File.open("#{Rails.root}/app/assets/images/books.jpg"),
+  x: 6658,
+  y: 2894,
+  width: 32,
+  height: 32
+})
 
