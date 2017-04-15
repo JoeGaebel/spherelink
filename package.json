@@ -6,11 +6,12 @@
     "url": "git+https://github.com/JoeGaebel/nostalgia.git"
   },
   "dependencies": {
-    "photo-sphere-viewer": "3.2.2",
-    "three": "0.84.0",
-    "uevent": "1.0.0",
     "d.js": "0.7.5",
-    "dot": "1.1.1"
+    "dot": "1.1.1",
+    "photo-sphere-viewer": "3.2.2",
+    "soundmanager2": "2.97.20150601-a",
+    "three": "0.84.0",
+    "uevent": "1.0.0"
   },
   "license": "ISC"
 }
