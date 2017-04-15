@@ -7,7 +7,8 @@ class Sphere < ApplicationRecord
 
   def to_builder
     Jbuilder.new do |json|
-      json.id id
+      json.(self, :id)
+      json.defaultZoom default_zoom
       json.panorama panorama.url
       json.portals portals.collect { |portal| portal.to_builder.attributes! }
       json.markers markers.collect { |marker| marker.to_builder.attributes! }

@@ -101,27 +101,30 @@ boat = Memory.create!({
 marina = Sphere.create!({
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/marina.jpg"),
-  caption: 'Marina'
+  caption: 'Marina',
+  default_zoom: 100
 })
 
 boat_livingroom = Sphere.create!({
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_livingroom.jpg"),
-  caption: 'Boat Livingroom'
+  caption: 'Boat Livingroom',
+  default_zoom: 40
 })
 
 boat_bed = Sphere.create!({
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_bed.jpg"),
-  caption: 'Boat Livingroom'
+  caption: 'Boat Livingroom',
+  default_zoom: 30
 })
 
 Portal.create!({
   polygon_px: [10132, 1403, 9498, 1131, 9281, 1007, 9073, 945, 8979, 928, 8737, 906, 8558, 919, 8424, 972, 8420, 1064, 8285, 1054, 8293, 1360, 8442, 1564, 8767, 1678, 9736, 1986, 10135, 1439],
   from_sphere: marina,
   to_sphere: boat_livingroom,
-  fov_lat: -0.23348006184717462,
-  fov_lng: 0.31859582997095737,
+  fov_lat: -0.44164038991889765,
+  fov_lng: 0.07131935408296552,
   tooltip_content: 'Welcome aboard!'
 })
 
@@ -129,8 +132,8 @@ Portal.create!({
   polygon_px: [4426, 1188, 4930, 1198, 4966, 1932, 4381, 1907],
   from_sphere: boat_livingroom,
   to_sphere: boat_bed,
-  fov_lat: -0.4402067505993963,
-  fov_lng: 0.07437769032333764,
+  fov_lat: -0.2149931464977397,
+  fov_lng: 0.04682678441209071,
   tooltip_content: 'Check out that boat bed!'
 })
 

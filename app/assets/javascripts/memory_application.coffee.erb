@@ -57,7 +57,7 @@ class MemoryApplication
     }, true).then(=> @_setupNextSphere(associatedSphere))
 
   _setupNextSphere: (sphere) ->
-    PSV.zoom(40)
+    PSV.zoom(sphere.defaultZoom)
     PSV.clearMarkers();
     markers = @getPortalsAndMarkers(sphere);
     PSV.addMarker(marker) for marker in markers

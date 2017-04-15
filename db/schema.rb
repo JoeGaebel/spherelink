@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170415010245) do
+ActiveRecord::Schema.define(version: 20170415011912) do
 
   create_table "markers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "image"
@@ -73,8 +73,9 @@ ActiveRecord::Schema.define(version: 20170415010245) do
     t.string   "panorama"
     t.string   "caption"
     t.integer  "memory_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "default_zoom", default: 50
     t.index ["memory_id"], name: "index_spheres_on_memory_id", using: :btree
   end
 
