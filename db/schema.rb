@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170415011912) do
+ActiveRecord::Schema.define(version: 20170415175333) do
 
   create_table "markers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "image"
@@ -67,6 +67,23 @@ ActiveRecord::Schema.define(version: 20170415011912) do
     t.index ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
     t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
     t.index ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+  end
+
+  create_table "sound_contexts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string  "context_type"
+    t.integer "context_id"
+    t.integer "sound_id"
+    t.index ["context_type", "context_id"], name: "index_sound_contexts_on_context_type_and_context_id", using: :btree
+    t.index ["sound_id"], name: "index_sound_contexts_on_sound_id", using: :btree
+  end
+
+  create_table "sounds", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "volume"
+    t.string   "name"
+    t.string   "file"
+    t.integer  "loops"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "spheres", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

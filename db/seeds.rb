@@ -260,3 +260,21 @@ Marker.create!({
   width: 32,
   height: 32
 })
+
+sail_sound = Sound.create!({
+  volume: 30,
+  file: File.open("#{Rails.root}/app/assets/sounds/sail.mp3"),
+  loops: 100,
+  name: 'sail'
+})
+
+sad_sound = Sound.create!({
+  volume: 30,
+  file: File.open("#{Rails.root}/app/assets/sounds/as_you_found_me.mp3"),
+  loops: 100,
+  name: 'as_you_found_me'
+})
+
+
+boat.default_sound = sail_sound
+night_time.sound = sad_sound
