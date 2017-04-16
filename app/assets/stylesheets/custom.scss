@@ -14,9 +14,10 @@ $gray-medium-light: #eaeaea;
 body {
   //background: rgb(85, 108, 122);
   background-image: image-url("background.jpg");
-  background-position: 80% -300px;
-  background-size: 2000px 1300px;
+  background-position: 80% 58%;
+  background-size: 139% 168%;
   background-repeat: no-repeat;
+  max-width: 1300px;
 }
 
 p, .josefin {
@@ -27,7 +28,7 @@ p, .josefin {
   font-family: 'Cardo', serif;
   margin-bottom: 1px;
   text-align: left;
-  padding-left: 402px;
+  padding-left: 32%;
   padding-top: 18px;
   color: #696969;
 
@@ -49,14 +50,14 @@ p, .josefin {
 .description {
   text-align: center;
   font-size: 21px;
-  padding: 80px 300px 0px 0px;
+  padding: 80px 12% 0 0;
   color: #4f4f4f;
   transform: perspective(267px) rotateX(24.2deg);
 }
 
 .preview {
   margin: auto;
-  width: 80.7%;
+  width: 79%;
   padding-top: 16px;
 }
 
