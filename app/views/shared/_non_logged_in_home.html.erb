@@ -1,13 +1,16 @@
-<div class="center jumbotron">
-  <h1>Welcome to Social MicroLoan</h1>
-
-  <h2>
-    This is the home page for the
-    <a href="http://www.railstutorial.org/">Ruby on Rails Tutorial</a>
-    sample application.
-  </h2>
-
-  <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
+<div class="header">
+  <span class="title">Saudade</span><span class="phonetics">(souˈdädə):</span>
 </div>
 
-<%= link_to image_tag("rails.png", alt: "Rails logo"), 'http://rubyonrails.org/' %>
+<div class="preview">
+  <%= render "shared/memory_viewer", size: { width: 860, height: 460 }, hideNavBar: true %>
+</div>
+<div class="josefin description">
+Saudade is the recollection of feelings, experiences, places, or events that once brought excitement,<br>
+pleasure, well-being, which now triggers the senses and makes one live again. It can be described as an emptiness,<br>
+like someone or something that should be there in a particular moment is missing,<br>
+and the individual feels this absence.
+</div>
+
+
+<%#= link_to "Create your own memory!", signup_path, class: "btn btn-lg btn-primary" %>

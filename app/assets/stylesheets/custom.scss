@@ -11,6 +11,59 @@ $gray-medium-light: #eaeaea;
   box-sizing:         border-box;
 }
 
+body {
+  //background: rgb(85, 108, 122);
+  background-image: image-url("background.jpg");
+  background-position: 80% -300px;
+  background-size: 2000px 1300px;
+  background-repeat: no-repeat;
+}
+
+p, .josefin {
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.header {
+  font-family: 'Cardo', serif;
+  margin-bottom: 1px;
+  text-align: left;
+  padding-left: 402px;
+  padding-top: 18px;
+  color: #696969;
+
+  span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .title {
+    font-size: 48px;
+    padding-right: 4px;
+  }
+  .phonetics {
+    font-size: 36px;
+    font-style: italic;
+    padding-top: 4.4px;
+  }
+}
+
+.description {
+  text-align: center;
+  font-size: 21px;
+  padding: 80px 300px 0px 0px;
+  color: #4f4f4f;
+  transform: perspective(267px) rotateX(24.2deg);
+}
+
+.preview {
+  margin: auto;
+  width: 80.7%;
+  padding-top: 16px;
+}
+
+.title {
+
+}
+
 /* miscellaneous */
 
 .debug_dump {
@@ -60,8 +113,7 @@ aside {
 
 /* universal */
 
-body {
-  //padding-top: 60px;
+.black-background {
   background: black;
 }
 

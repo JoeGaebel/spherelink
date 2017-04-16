@@ -3,6 +3,8 @@
     if logged_in?
       @micropost  = current_user.microposts.build
       @feed_items = current_user.feed.paginate(page: params[:page])
+    else
+      @memory_json = Memory.second.to_builder.target!
     end
   end
 
@@ -24,6 +26,5 @@
 
   def demo
     @memory_json = Memory.second.to_builder.target!
-    render :memory
   end
 end

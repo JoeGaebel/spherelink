@@ -1,0 +1,21 @@
+<%= render 'three_examples' %>
+<div id="photosphere"></div>
+<script>
+  var memoryApplication = new MemoryApplication({
+    memory: <%= @memory_json.to_s.html_safe %>,
+    sphereNum: 0,
+    size: <%= size.to_json.html_safe %>
+  });
+  memoryApplication.start();
+</script>
+
+<svg id="patterns" class="zero-height">
+  <defs>
+    <pattern id="dots" x="10" y="10" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="10" style="stroke: none; fill: rgba(255,0,0,0.4)" />
+    </pattern>
+    <pattern id="points" x="10" y="10" width="15" height="15" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="0.8" style="stroke: none; fill: red" />
+    </pattern>
+  </defs>
+</svg>

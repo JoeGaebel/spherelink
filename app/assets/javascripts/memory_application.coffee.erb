@@ -1,8 +1,4 @@
 class MemoryApplication
-  soundManagerReady: =>
-    if memory.defaultSound
-      @createSound(memory.defaultSound).play()
-
   defaultPanoramaSettings:
     loading_img: "<%= image_url('photosphere-logo.gif') %>",
     navbar: [
@@ -36,9 +32,11 @@ class MemoryApplication
     autoLoad: true,
     autoPlay: false
 
-  constructor: (memory, sphereNum) ->
-    window.memory = memory
-    window.currentSphere = memory.spheres[sphereNum]
+  constructor: (options = {}) ->
+    window.memory = options.memory
+    window.currentSphere = memory.spheres[options.sphereNum]
+    @defaultPanoramaSettings.size = options.size if options.size
+    window.hideNavBar = true
 
   start: ->
     soundManager.setup(@defaultSoundManagerSettings);
@@ -59,12 +57,17 @@ class MemoryApplication
 
     window.PSV.on 'ready', ->
       PSV.setCaption(currentSphere.caption)
+      PSV.hideNavbar() if window.hideNavBar
 
     window.PSV.on 'select-marker', (marker) =>
       @doTransition(marker) if marker.isPolygon()
 
     window.PSV.on 'fullscreen-updated', (enabled) ->
       PSV.toggleNavbar()
+
+  soundManagerReady: =>
+    if memory.defaultSound
+      @createSound(memory.defaultSound).play()
 
   doTransition: (marker) ->
     center = @getCenter(marker.polygon_px)
