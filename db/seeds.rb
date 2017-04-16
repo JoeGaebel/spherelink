@@ -115,7 +115,7 @@ boat_livingroom = Sphere.create!({
 boat_bed = Sphere.create!({
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_bed.jpg"),
-  caption: 'Boat Livingroom',
+  caption: 'Boat Bedroom',
   default_zoom: 30
 })
 

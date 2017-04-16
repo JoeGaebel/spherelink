@@ -5,7 +5,12 @@ class MemoryApplication
 
   defaultPanoramaSettings:
     loading_img: "<%= image_url('photosphere-logo.gif') %>",
-    navbar: [],
+    navbar: [
+      title: 'Fullscreen',
+      content: '<%= image_tag("fullscreen.png", style: "width: 25px; height: 25px;") %>',
+      onClick: => window.PSV.toggleFullscreen(),
+      'caption'
+    ],
     sphere_segments: 64,
     container: 'photosphere',
     anim_speed: '-2rpm',
@@ -53,10 +58,13 @@ class MemoryApplication
       console.log("latitude, longitude: "+e.latitude + ", " + e.longitude)
 
     window.PSV.on 'ready', ->
-      $('.psv-navbar').hide();
+      PSV.setCaption(currentSphere.caption)
 
     window.PSV.on 'select-marker', (marker) =>
       @doTransition(marker) if marker.isPolygon()
+
+    window.PSV.on 'fullscreen-updated', (enabled) ->
+      PSV.toggleNavbar()
 
   doTransition: (marker) ->
     center = @getCenter(marker.polygon_px)
@@ -76,6 +84,7 @@ class MemoryApplication
     }, true).then(=> @_setNextSphereMakers(sphere))
 
   _setNextSphereMakers: (sphere) ->
+    PSV.setCaption(sphere.caption)
     PSV.zoom(sphere.defaultZoom)
     PSV.clearMarkers();
     markers = @getPortalsAndMarkers(sphere);
