@@ -14,11 +14,12 @@ $gray-medium-light: #eaeaea;
 body {
   //background: rgb(85, 108, 122);
   background-image: image-url("background.jpg");
-  background-position: 80% 58%;
-  background-size: 139% 168%;
+  background-position: -450px -285px;
+  background-size: 2005px 1271px;
   background-repeat: no-repeat;
   max-width: 1300px;
-  background-color: #c9cdd0;
+  background-color: #c2c6c9;
+  min-width: 1300px;
 }
 
 p, .josefin {
@@ -51,7 +52,7 @@ p, .josefin {
 .description {
   text-align: center;
   font-size: 21px;
-  padding: 80px 12% 0 0;
+  padding: 69px 12% 0 0;
   color: #4f4f4f;
   transform: perspective(267px) rotateX(24.2deg);
 }
