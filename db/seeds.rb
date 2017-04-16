@@ -109,20 +109,20 @@ boat_livingroom = Sphere.create!({
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_livingroom.jpg"),
   caption: 'Boat Livingroom',
-  default_zoom: 40
+  default_zoom: 78
 })
 
 boat_bed = Sphere.create!({
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_bed.jpg"),
   caption: 'Boat Bedroom',
-  default_zoom: 30
+  default_zoom: 36
 })
 
 night_time = Sphere.create!({
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_night.jpg"),
-  default_zoom: 30
+  default_zoom: 75
 })
 
 Portal.create!({
@@ -157,8 +157,8 @@ Portal.create!({
   stroke_transparency: 30,
   from_sphere: boat_livingroom,
   to_sphere: night_time,
-  fov_lat: -0.6267388220839005,
-  fov_lng: 0.16397512279941956,
+  fov_lat: -0.30214935245693164,
+  fov_lng: 0.17226333918505282,
   tooltip_content: 'Turn the light on'
 })
 
