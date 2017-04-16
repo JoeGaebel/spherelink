@@ -5,4 +5,4 @@ It brings sad and happy feelings altogether, sadness for missing and happiness f
 
 https://asaudade.herokuapp.com/
 
-![sau](https://cloud.githubusercontent.com/assets/9356287/25067195/cb5b2de2-2209-11e7-86f2-9ab5f9b9b8d4.png)
+![sau](https://cloud.githubusercontent.com/assets/9356287/25069049/ae3b1940-2243-11e7-8424-8e9ba3ef1e3f.png)
