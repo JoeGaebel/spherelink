@@ -17,8 +17,8 @@ class MemoryApplication
     gyroscope: true,
     webgl: true,
     size:
-      height: $(window).height()
-      width: $(window).width()
+      height: $('.photosphere').height()
+      width: $('.photosphere').width()
     transition:
       duration: 0,
       loader: true,
@@ -35,7 +35,6 @@ class MemoryApplication
   constructor: (options = {}) ->
     window.memory = options.memory
     window.currentSphere = memory.spheres[options.sphereNum]
-    @defaultPanoramaSettings.size = options.size if options.size
     window.hideNavBar = true
 
   start: ->
