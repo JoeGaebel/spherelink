@@ -9,13 +9,14 @@ class MemoryApplication
     ],
     sphere_segments: 64,
     container: 'photosphere',
-    anim_speed: '-2rpm',
+    anim_speed: '-0.5rpm',
+    time_anim: 0,
     default_fov: 20,
-    fisheye: true,
     move_speed: 1.8,
-    time_anim: false,
-    gyroscope: true,
+    fisheye: false,
+    gyroscope: false,
     webgl: true,
+    cache_texture: 10,
     size:
       height: $('.photosphere').height()
       width: $('.photosphere').width()

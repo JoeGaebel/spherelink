@@ -73,27 +73,27 @@ marina = Sphere.create!({
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/marina.jpg"),
   caption: 'Marina',
-  default_zoom: 100
+  default_zoom: 82
 })
 
 boat_livingroom = Sphere.create!({
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_livingroom.jpg"),
   caption: 'Boat Livingroom',
-  default_zoom: 78
+  default_zoom: 31
 })
 
 boat_bed = Sphere.create!({
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_bed.jpg"),
   caption: 'Boat Bedroom',
-  default_zoom: 36
+  default_zoom: 0
 })
 
 night_time = Sphere.create!({
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_night.jpg"),
-  default_zoom: 75
+  default_zoom: 43
 })
 
 Portal.create!({
@@ -143,14 +143,14 @@ Portal.create!({
   tooltip_content: 'Go back to day time'
 })
 
-Marker.create!({
-  sphere: boat_livingroom,
-  image: 'back.jpg',
-  x: -4605,
-  y: 472,
-  width: 500,
-  height: 450
-})
+# Marker.create!({
+#   sphere: boat_livingroom,
+#   image: 'back.jpg',
+#   x: -4605,
+#   y: 472,
+#   width: 500,
+#   height: 450
+# })
 
 Marker.create!({
   sphere: night_time,
