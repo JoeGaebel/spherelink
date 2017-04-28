@@ -386,9 +386,6 @@ GEM
     thread_safe (0.3.5)
     tilt (2.0.5)
     trollop (2.1.2)
-    turbolinks (5.0.1)
-      turbolinks-source (~> 5)
-    turbolinks-source (5.0.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (3.0.0)
@@ -445,7 +442,6 @@ DEPENDENCIES
   shoulda-matchers (~> 3.1)
   spring
   spring-watcher-listen (~> 2.0.0)
-  turbolinks (= 5.0.1)
   tzinfo-data
   uglifier (= 3.0.0)
   underscore-rails
@@ -456,4 +452,4 @@ RUBY VERSION
    ruby 2.2.5p319
 
 BUNDLED WITH
-   1.14.4
+   1.14.6
