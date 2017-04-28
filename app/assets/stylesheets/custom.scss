@@ -10,16 +10,27 @@ $gray-medium-light: #eaeaea;
   -webkit-box-sizing: border-box;
   box-sizing:         border-box;
 }
-
 body {
-  //background: rgb(85, 108, 122);
+  background-color: #c2c6c9;
   background-image: image-url("background.jpg");
   background-position: -450px -285px;
   background-size: 2005px 1271px;
   background-repeat: no-repeat;
+}
+
+.saudade-container {
   max-width: 1300px;
-  background-color: #c2c6c9;
   min-width: 1300px;
+}
+
+.create-saudade {
+  position: absolute;
+  margin-top: -1.8%;
+  right: 16.2%;
+  background: none;
+  color: #696969;
+  font-size: 21px;
+  transform: perspective(16px) rotateX(1.2deg) rotateZ(359.6deg)
 }
 
 p, .josefin {
