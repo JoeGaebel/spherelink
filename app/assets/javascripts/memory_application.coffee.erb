@@ -62,6 +62,7 @@ class MemoryApplication
     window.PSV.on 'ready', ->
       PSV.setCaption(currentSphere.caption)
       PSV.hideNavbar() if window.hideNavBar
+      setTimeout((-> PSV.zoom(currentSphere.defaultZoom)), 1)
 
     window.PSV.on 'select-marker', (marker) =>
       @doTransition(marker) if marker.isPolygon()
