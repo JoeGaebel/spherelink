@@ -6,7 +6,6 @@ class Memory < ApplicationRecord
   has_one :default_sound, through: :sound_context, source: :sound
 
   def to_builder
-
     Jbuilder.new do |json|
       json.(self, :id, :name)
       json.spheres spheres.collect { |sphere| sphere.to_builder.attributes! }
