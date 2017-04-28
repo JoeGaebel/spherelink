@@ -1,9 +1,9 @@
-<h1>Social MicroLoan</h1>
+<h1>Saudade</h1>
 
 <p>Hi <%= @user.name %>,</p>
 
 <p>
-  Welcome to Social Microloan! Click on the link below to activate your account:
+  Welcome to Saudade! Click on the link below to activate your account:
 </p>
 
 <%= link_to 'Activate', edit_account_activation_url(@user.activation_token, email: @user.email) %>
