@@ -11,7 +11,7 @@
     <%= render 'layouts/shim' %>
   </head>
 
-  <body>
+  <body <%= "class=#{ @body_class }" if @body_class %>>
   <%#= render 'layouts/header' %>
 
   <%= yield %>
