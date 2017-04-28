@@ -10,6 +10,7 @@ $gray-medium-light: #eaeaea;
   -webkit-box-sizing: border-box;
   box-sizing:         border-box;
 }
+
 body.demo {
   background-color: #c2c6c9;
   background-image: image-url("background.jpg");
@@ -21,6 +22,11 @@ body.demo {
 .saudade-container {
   max-width: 1300px;
   min-width: 1300px;
+}
+
+.alert {
+  position: absolute;
+  float: left;
 }
 
 .create-saudade {
