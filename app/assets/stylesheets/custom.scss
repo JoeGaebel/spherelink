@@ -29,14 +29,24 @@ body.demo {
   float: left;
 }
 
-.create-saudade {
+a.demo {
   position: absolute;
-  margin-top: -1.8%;
-  right: 16.2%;
-  background: none;
+  font-size: 22px;
   color: #696969;
-  font-size: 21px;
-  transform: perspective(16px) rotateX(1.2deg) rotateZ(359.6deg)
+
+  &:hover { text-decoration: none; color: #337ab7;}
+}
+
+.create-saudade {
+  bottom: 36px;
+  left: 1098px;
+  transform: rotateZ(392.3deg);
+}
+
+.login-saudade {
+  left: 1084px;
+  top: 47.2px;
+  transform: rotateZ(336.4deg);
 }
 
 p, .josefin {
@@ -79,10 +89,6 @@ p, .josefin {
   margin: auto;
   width: 79%;
   padding-top: 16px;
-}
-
-.title {
-
 }
 
 /* miscellaneous */
@@ -158,6 +164,11 @@ textarea {
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
+  font-family: 'Cardo', serif;
+}
+
+label, .btn {
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 h1 {
