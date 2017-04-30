@@ -13,7 +13,8 @@ puts "Creating memory stuff"
 memory = Memory.create!({
   user: joe,
   name: "Joe's Childhood Home",
-  description: "I lived in this same house for 18 years until I moved out. My parents still live here."
+  description: "I lived in this same house for 18 years until I moved out. My parents still live here.",
+  private: true
 })
 
 livingroom_sphere = Sphere.create!({

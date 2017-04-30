@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
+
   def ensure_user_logged_in
     unless logged_in?
       store_location
