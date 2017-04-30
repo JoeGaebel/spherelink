@@ -12,7 +12,8 @@ puts "Creating memory stuff"
 
 memory = Memory.create!({
   user: joe,
-  name: "Joe's Childhood Home"
+  name: "Joe's Childhood Home",
+  description: "I lived in this same house for 18 years until I moved out. My parents still live here."
 })
 
 livingroom_sphere = Sphere.create!({
@@ -67,7 +68,7 @@ Portal.create!({
 boat = Memory.create!({
   user: joe,
   name: "Joe's Boat",
-  description: "Rent in SF was crazy. So I lived on a boat. I have many fond memories, this boat was my home for 12 months, and I'll never forget it."
+  description: "Rent in SF was crazy. So I lived on a boat. This was my home for 12 months, and I'll never forget it."
 })
 
 marina = Sphere.create!({

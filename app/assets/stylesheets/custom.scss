@@ -85,17 +85,28 @@ p, .josefin {
   }
 }
 
+.profile-saudade {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
 .user-header {
   width: 50%;
   margin: 0 auto;
+  text-align: center;
+  margin-bottom: 17px;
 }
 
 .description {
   text-align: center;
   font-size: 21px;
-  padding: 69px 12% 0 0;
   color: #4f4f4f;
   transform: perspective(267px) rotateX(24.2deg);
+}
+
+.demo-description {
+  padding: 69px 12% 0 0;
   margin-top: -2px;
 }
 

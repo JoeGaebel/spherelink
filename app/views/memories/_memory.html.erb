@@ -1,5 +1,5 @@
-<li id="memory-<%= memory.id %>">
+<li id="memory-<%= memory.id %>" class="memory-item-view">
   <h3 class="name"><%= memory.name %></h3>
-  <p class="timestamp">Posted <%= time_ago_in_words(memory.created_at) %> ago.</p>
+  <p class="timestamp">Created <%= time_ago_in_words(memory.created_at) %> ago.</p>
   <%= link_to 'View', memory_path(memory) %>
 </li>

@@ -1,0 +1,7 @@
+<div class="container">
+  <h1>Your Memories</h1>
+  <ul class="memory-list">
+    <%= render @memories %>
+  </ul>
+  <%= link_to 'Log out', logout_path, method: 'delete', class: 'logout' %>
+</div>

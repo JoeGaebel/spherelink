@@ -1,5 +1,5 @@
 <%= render 'shared/three_examples' %>
-<div id="photosphere" style="width: 83.6%; height: 460px;"></div>
+<div id="photosphere" style="<%= style %>"></div>
 <script>
   var memoryApplication = new MemoryApplication({
     memory: <%= @memory_json.to_s.html_safe %>,

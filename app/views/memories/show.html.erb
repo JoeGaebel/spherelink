@@ -3,12 +3,12 @@
     <span class="title"><%= @memory.name %></span>
   </div>
 
-  <div class="preview">
-    <%= render "shared/memory_application", hideNavBar: true %>
+  <div class="viewer">
+    <%= render "shared/memory_application", hideNavBar: true, style: "width: 100%; height: 600px;" %>
   </div>
 
   <div class="josefin description">
-    <% @memory.description %>
+    <%= @memory.description %>
   </div>
 </div>
-<%= link_to "View Profile", user_path, class: "profile-saudade josefin demo" %>
+<%= link_to "Memories...", memories_path, class: "profile-saudade josefin demo" if logged_in? %>
