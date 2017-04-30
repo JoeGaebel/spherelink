@@ -66,7 +66,8 @@ Portal.create!({
 
 boat = Memory.create!({
   user: joe,
-  name: "Joe's Boat"
+  name: "Joe's Boat",
+  description: "Rent in SF was crazy. So I lived on a boat. I have many fond memories, this boat was my home for 12 months, and I'll never forget it."
 })
 
 marina = Sphere.create!({

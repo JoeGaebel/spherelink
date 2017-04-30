@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170415175333) do
+ActiveRecord::Schema.define(version: 20170430214558) do
 
   create_table "markers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "image"
@@ -28,8 +28,11 @@ ActiveRecord::Schema.define(version: 20170415175333) do
   end
 
   create_table "memories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string  "name"
-    t.integer "user_id"
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "description", limit: 65535
     t.index ["user_id"], name: "index_memories_on_user_id", using: :btree
   end
 

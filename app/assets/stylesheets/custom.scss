@@ -53,27 +53,41 @@ p, .josefin {
   font-family: 'Josefin Sans', sans-serif;
 }
 
-.header {
-  font-family: 'Cardo', serif;
+.demo-header {
   margin-bottom: 1px;
   text-align: left;
   padding-left: 32%;
-  padding-top: 18px;
-  color: #696969;
 
   span {
     display: inline-block;
     vertical-align: middle;
   }
+
   .title {
-    font-size: 48px;
     padding-right: 4px;
   }
+
   .phonetics {
     font-size: 36px;
     font-style: italic;
     padding-top: 4.4px;
   }
+}
+
+.header {
+  font-family: 'Cardo', serif;
+  padding-top: 18px;
+  color: #696969;
+
+  .title {
+    font-size: 48px;
+    padding-right: 4px;
+  }
+}
+
+.user-header {
+  width: 50%;
+  margin: 0 auto;
 }
 
 .description {
@@ -85,10 +99,14 @@ p, .josefin {
   margin-top: -2px;
 }
 
-.preview {
+.demo-viewer {
   margin: auto;
   width: 79%;
   padding-top: 16px;
+}
+
+.viewer {
+  width: 100%;
 }
 
 /* miscellaneous */

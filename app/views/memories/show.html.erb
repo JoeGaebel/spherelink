@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="header user-header">
+    <span class="title"><%= @memory.name %></span>
+  </div>
+
+  <div class="preview">
+    <%= render "shared/memory_application", hideNavBar: true %>
+  </div>
+
+  <div class="josefin description">
+    <% @memory.description %>
+  </div>
+</div>
+<%= link_to "View Profile", user_path, class: "profile-saudade josefin demo" %>

@@ -1,8 +1,7 @@
   class StaticPagesController < ApplicationController
   def home
     if logged_in?
-      @micropost  = current_user.microposts.build
-      @feed_items = current_user.feed.paginate(page: params[:page])
+      @memories = current_user.memories
     else
       @body_class = 'demo'
       @memory_json = Memory.second.to_builder.target!
