@@ -1,3 +1,5 @@
+<%= link_to "Login", login_path, class: "user-login josefin demo" if !logged_in? %>
+
 <div class="container">
   <div class="header user-header">
     <span class="title"><%= @memory.name %></span>
@@ -11,4 +13,8 @@
     <%= @memory.description %>
   </div>
 </div>
-<%= link_to "Memories...", memories_path, class: "profile-saudade josefin demo" if logged_in? %>
+<% if logged_in? %>
+  <%= link_to "Memories...", memories_path, class: "profile-saudade josefin demo" %>
+<% else %>
+  <%= link_to "Create your own!", signup_path, class: "profile-saudade josefin demo" %>
+<% end %>
