@@ -1,0 +1,10 @@
+<div class="container">
+  <h1>Create a Sphere</h1>
+  <%= form_for(@sphere, html: { multipart: true }) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <% f.label :photosphere %>
+    <%= f.file_field :panorama, accept: 'image/jpeg,image/gif,image/png' %>
+    <%= f.hidden_field :memory_id, value: @memory.id %>
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+  <% end %>
+</div>

@@ -1,12 +1,39 @@
 class MemoriesController < ApplicationController
   before_action :ensure_allowed_access, only: [:show]
-  before_action :ensure_user_logged_in, only: [:index]
+  before_action :ensure_user_logged_in, only: [:index, :new, :create]
+
+  def create
+    binding.pry
+    @memory = current_user.memories.build(memory_params)
+    if booleanify(params[:next])
+      if @memory.save
+        redirect_to new_sphere_path(id: @memory.id)
+      else
+        flash[:danger] = "Error!"
+        render :new
+      end
+    else
+      if @memory.save
+        redirect_to memories_path
+      end
+    end
+  end
+
+  def new
+    @memory = current_user.memories.build
+  end
 
   def show
   end
 
   def index
     @memories = current_user.memories
+  end
+
+  def destroy
+    memory = current_user.memories.find_by(id: params[:id])
+    memory.destroy if memory
+    redirect_to memories_path
   end
 
   private
@@ -33,5 +60,9 @@ class MemoriesController < ApplicationController
   def set_instance_vars(memory)
     @memory = memory
     @memory_json = memory.to_builder.target!
+  end
+
+  def memory_params
+    params.require(:memory).permit(:name, :description, :private)
   end
 end

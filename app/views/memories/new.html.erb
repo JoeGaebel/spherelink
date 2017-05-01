@@ -1,0 +1,18 @@
+<div class="container">
+  <h1>Create a memory</h1>
+  <%= form_for(@memory) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+
+    <%= f.label :private %>
+    <%= f.check_box :private %>
+
+    <%= f.button "Next", class: "btn btn-primary", name: "next", value: true %>
+    <%= f.button "Save and exit", class: "btn btn-primary", name: "next", value: false %>
+  <% end %>
+</div>
