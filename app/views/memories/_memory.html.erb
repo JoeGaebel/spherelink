@@ -1,6 +1,6 @@
 <li id="memory-<%= memory.id %>" class="memory-item-view">
-  <h3 class="name"><%= memory.name %></h3>
+  <h3 class="name"><%= link_to memory.name, memory_path(memory) %></h3>
+  <p class="desc"><%= memory.description %></p>
   <p class="timestamp">Created <%= time_ago_in_words(memory.created_at) %> ago.</p>
-  <%= link_to 'View', memory_path(memory) %>
   <%= link_to 'Delete', memory_path(memory), method: :delete, data: { confirm: 'Are you certain you want to delete this memory?' } if is_owner?(memory) %>
 </li>
