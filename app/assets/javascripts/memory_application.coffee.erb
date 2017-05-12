@@ -117,13 +117,27 @@ class MemoryApplication
       soundManager.play(memory.defaultSound.id).unmute() if memory.defaultSound
 
   getCenter: (array) ->
+    imageWidth = PSV.prop.pano_data.full_width
     x = array.map (a) -> a[0]
     y = array.map (a) -> a[1]
     minX = Math.min.apply(null, x)
     maxX = Math.max.apply(null, x)
     minY = Math.min.apply(null, y)
     maxY = Math.max.apply(null, y)
-    [(minX + maxX)/2, (minY + maxY)/2]
+
+    centerY = (minY + maxY)/2
+
+    insideCenterX = (minX + maxX)/2
+    insideAvgX = insideCenterX - minX
+
+    outsideAvgX = (imageWidth - maxX + minX) / 2
+    outsideOffset = maxX
+    outsideCenterX = (outsideAvgX + outsideOffset) % imageWidth
+    debugger
+    if insideAvgX > outsideAvgX
+      [outsideCenterX, centerY]
+    else
+      [insideCenterX, centerY]
 
   createSound: (soundConfig) ->
     soundManager.createSound(_.extend({}, @defaultSoundSettings, soundConfig))
