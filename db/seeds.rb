@@ -55,7 +55,9 @@ Portal.create!({
   polygon_px: [4042,289,4402,236,4507,1338,4069,1343],
   from_sphere: livingroom_sphere,
   to_sphere: kitchen_sphere,
-  tooltip_content: 'Go to the kitchen!'
+  tooltip_content: 'Go to the kitchen!',
+  fov_lat: -0.04186083996971335,
+  fov_lng: 3.3363460218464773,
 })
 
 Portal.create!({

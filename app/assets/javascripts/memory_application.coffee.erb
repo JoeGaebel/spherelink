@@ -7,7 +7,7 @@ class MemoryApplication
       onClick: => window.PSV.toggleFullscreen(),
       'caption'
     ],
-    sphere_segments: 64,
+    sphere_segments: 128,
     container: 'photosphere',
     anim_speed: '-0.5rpm',
     time_anim: 0,
@@ -23,7 +23,7 @@ class MemoryApplication
     transition:
       duration: 0,
       loader: true,
-      blur: false
+      blur: true
 
   defaultSoundManagerSettings:
     preferFlash: false,

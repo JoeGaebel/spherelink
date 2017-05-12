@@ -3,7 +3,7 @@
 <script>
   var memoryApplication = new MemoryApplication({
     memory: <%= @memory_json.to_s.html_safe %>,
-    sphereNum: 0
+    sphereNum: 1
   });
   memoryApplication.start();
 </script>
