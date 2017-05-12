@@ -251,6 +251,15 @@ sad_sound = Sound.create!({
   name: 'as_you_found_me'
 })
 
+banjo_sound = Sound.create!({
+  volume: 30,
+  file: File.open("#{Rails.root}/app/assets/sounds/banjo.mp3"),
+  loops: 100,
+  name: 'banjo'
+})
+
 
 boat.default_sound = sail_sound
 night_time.sound = sad_sound
+
+memory.default_sound = banjo_sound
