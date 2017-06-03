@@ -48,7 +48,6 @@ class MemoriesController < ApplicationController
   def ensure_allowed_access
     memory = Memory.find(params[:id])
     not_found if memory.blank?
-    set_instance_vars(memory) unless memory.private
 
     if memory.private
       if logged_in? && memory.user_id == current_user.id
@@ -56,6 +55,8 @@ class MemoriesController < ApplicationController
       else
         redirect_to_home
       end
+    else
+      set_instance_vars(memory)
     end
   end
 
