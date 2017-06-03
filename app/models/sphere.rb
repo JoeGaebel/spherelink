@@ -6,8 +6,6 @@ class Sphere < ApplicationRecord
   has_one :sound_context, as: :context
   has_one :sound, through: :sound_context, source: :sound
 
-  belongs_to :user
-
   mount_uploader :panorama, SphereUploader
 
   validates_presence_of :caption
