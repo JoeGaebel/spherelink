@@ -1,6 +1,6 @@
 class MemoriesController < ApplicationController
-  before_action :ensure_allowed_access, only: [:show]
-  before_action :ensure_user_logged_in, only: [:index, :new, :create]
+  before_action :ensure_allowed_access, only: [:show, :link]
+  before_action :ensure_user_logged_in, only: [:index, :new, :link, :create]
 
   def create
     @memory = current_user.memories.build(memory_params)
@@ -10,7 +10,7 @@ class MemoriesController < ApplicationController
       errors = build_spheres(@memory, sphere_params) if sphere_params
 
       if errors.present?
-        flash[:danger] = errors.map(&:full_messages).uniq
+        flash[:danger] = errors.map(&:full_messages).uniq.join(",")
         render :new
         return
       end
@@ -38,6 +38,9 @@ class MemoriesController < ApplicationController
     memory = current_user.memories.find_by(id: params[:id])
     memory.destroy if memory
     redirect_to memories_path
+  end
+
+  def link
   end
 
   private
@@ -74,8 +77,11 @@ class MemoriesController < ApplicationController
     errors = []
 
     sphere_params.each do |_, sphere_attrs|
+      return unless sphere_attrs[:panorama]
+
       sphere = memory.spheres.build
       sphere.panorama = sphere_attrs[:panorama]
+      sphere.caption = sphere_attrs[:caption]
 
       unless sphere.save
         errors << sphere.errors

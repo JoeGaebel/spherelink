@@ -8,6 +8,8 @@ class Sphere < ApplicationRecord
 
   mount_uploader :panorama, SphereUploader
 
+  validates_presence_of :caption
+
   def to_builder
     Jbuilder.new do |json|
       json.(self, :id, :caption)

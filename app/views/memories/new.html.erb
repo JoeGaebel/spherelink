@@ -17,6 +17,10 @@
     <%= f.nested_fields_for :spheres do |s| %>
       <div class="add-sphere">
         <%= s.label :photosphere %>
+
+        <%= s.label :caption %>
+        <%= s.text_field :caption %>
+
         <%= s.file_field :panorama, accept: 'image/jpeg,image/gif,image/png' %>
         <%= s.remove_nested_fields_link 'Remove sphere' %>
       </div>
