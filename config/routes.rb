@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get    '/about',   to: 'static_pages#about'
   get    '/contact', to: 'static_pages#contact'
   get    '/signup',  to: 'users#new'
-  get    '/demo',  to: 'static_pages#demo'
+  get    '/demo',    to: 'static_pages#demo'
   post   '/signup',  to: 'users#create'
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
@@ -13,5 +13,4 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
   resources :memories #, only: [:show, :index, :new]
-  resources :spheres
 end

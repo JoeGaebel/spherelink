@@ -3,19 +3,23 @@ class MemoriesController < ApplicationController
   before_action :ensure_user_logged_in, only: [:index, :new, :create]
 
   def create
-    binding.pry
     @memory = current_user.memories.build(memory_params)
-    if booleanify(params[:next])
-      if @memory.save
-        redirect_to new_sphere_path(id: @memory.id)
-      else
-        flash[:danger] = "Error!"
+
+    if @memory.save
+      sphere_params = params[:memory][:spheres_attributes]
+      errors = build_spheres(@memory, sphere_params) if sphere_params
+
+      if errors.present?
+        flash[:danger] = errors.map(&:full_messages).uniq
         render :new
+        return
       end
+
+      flash[:success] = "Memory created!"
+      redirect_to memories_path
     else
-      if @memory.save
-        redirect_to memories_path
-      end
+      flash[:danger] = @memory.errors.full_messages.join(", ")
+      render :new
     end
   end
 
@@ -64,5 +68,20 @@ class MemoriesController < ApplicationController
 
   def memory_params
     params.require(:memory).permit(:name, :description, :private)
+  end
+
+  def build_spheres(memory, sphere_params)
+    errors = []
+
+    sphere_params.each do |_, sphere_attrs|
+      sphere = memory.spheres.build
+      sphere.panorama = sphere_attrs[:panorama]
+
+      unless sphere.save
+        errors << sphere.errors
+      end
+    end
+
+    errors
   end
 end

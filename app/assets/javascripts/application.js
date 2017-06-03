@@ -21,4 +21,5 @@
 //= require photo-sphere-viewer/dist/photo-sphere-viewer
 //= require memory_application
 //= require soundmanager2/script/soundmanager2-jsmin
+//= require nested_form_fields
 //= require_tree .

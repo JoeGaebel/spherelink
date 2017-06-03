@@ -277,6 +277,30 @@ footer ul li {
 
 /* forms */
 
+.private-checkbox {
+  input {
+    width: initial;
+  }
+}
+
+.add-sphere {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  input {
+    width: initial;
+    line-height: 10px;
+    border: none;
+  }
+}
+
+.memories-list {
+  list-style: none
+}
+
+.create-sphere {
+  margin-top: 20px;
+}
+
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;

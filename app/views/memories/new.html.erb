@@ -1,6 +1,6 @@
 <div class="container">
   <h1>Create a memory</h1>
-  <%= form_for(@memory) do |f| %>
+  <%= form_for(@memory, html: { multipart: true }) do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
 
     <%= f.label :name %>
@@ -9,10 +9,20 @@
     <%= f.label :description %>
     <%= f.text_area :description %>
 
-    <%= f.label :private %>
-    <%= f.check_box :private %>
+    <div class="private-checkbox">
+      <%= f.check_box :private %>
+      <%= f.label :private %>
+    </div>
 
-    <%= f.button "Next", class: "btn btn-primary", name: "next", value: true %>
-    <%= f.button "Save and exit", class: "btn btn-primary", name: "next", value: false %>
+    <%= f.nested_fields_for :spheres do |s| %>
+      <div class="add-sphere">
+        <%= s.label :photosphere %>
+        <%= s.file_field :panorama, accept: 'image/jpeg,image/gif,image/png' %>
+        <%= s.remove_nested_fields_link 'Remove sphere' %>
+      </div>
+    <% end %>
+
+    <%= f.add_nested_fields_link :spheres, 'Add photosphere' %>
+    <%= f.submit "Submit", class: "btn btn-primary create-sphere"  %>
   <% end %>
 </div>

@@ -274,6 +274,10 @@ GEM
     multi_json (1.12.1)
     mysql2 (0.4.5)
     nenv (0.3.0)
+    nested_form_fields (0.8)
+      coffee-rails (>= 3.2.1)
+      jquery-rails
+      rails (>= 3.2.0)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
@@ -428,6 +432,7 @@ DEPENDENCIES
   listen (~> 3.0.5)
   mini_magick (= 4.5.1)
   mysql2
+  nested_form_fields
   pg
   pry
   pry-byebug
