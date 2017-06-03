@@ -15,6 +15,7 @@ class User < ApplicationRecord
   before_create :create_activation_digest
 
   has_many :memories
+  has_many :spheres, through: :memories
 
   has_secure_password
 

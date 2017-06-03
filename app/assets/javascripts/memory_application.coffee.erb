@@ -1,4 +1,6 @@
 class MemoryApplication
+  pinUrl: "<%= image_url('pin2.png') %>"
+
   defaultPanoramaSettings:
     loading_img: "<%= image_url('photosphere-logo.gif') %>",
     navbar: [
@@ -41,6 +43,8 @@ class MemoryApplication
   editPanoramaSettings:
     anim_speed: '0rpm'
 
+  createdPortalCount: 0
+
   constructor: (options = {}) ->
     window.memory = options.memory
     window.currentSphere = memory.spheres[options.sphereNum]
@@ -51,22 +55,20 @@ class MemoryApplication
     soundManager.setup(@defaultSoundManagerSettings);
     soundManager.onready(@soundManagerReady)
 
-    window.PSV = new PhotoSphereViewer($.extend
-        panorama: window.currentSphere.panorama,
-        caption: window.currentSphere.caption,
-        markers: @getPortalsAndMarkers(currentSphere)
-      , @defaultPanoramaSettings
-      , @editPanoramaSettings
-    )
-    
+    PSVOptions = $.extend
+      panorama: window.currentSphere.panorama,
+      caption: window.currentSphere.caption,
+      markers: @getPortalsAndMarkers(currentSphere)
+    , @defaultPanoramaSettings
+
+    PSVOptions = $.extend(PSVOptions, @editPanoramaSettings) if @editMode
+
+    window.PSV = new PhotoSphereViewer(PSVOptions)
+
     @bindHandlers()
     @bindEditHandlers() if @editMode
 
   bindHandlers: ->
-    window.PSV.on 'click', (e) ->
-      console.log("x, y: "+ e.texture_x + ", " + e.texture_y)
-      console.log("latitude, longitude: "+e.latitude + ", " + e.longitude)
-
     window.PSV.on 'ready', ->
       PSV.setCaption(currentSphere.caption)
       PSV.hideNavbar() if window.hideNavBar
@@ -78,18 +80,22 @@ class MemoryApplication
     window.PSV.on 'fullscreen-updated', (enabled) ->
       PSV.toggleNavbar()
 
+    PSV.on 'click', @onPSVClick
+
   bindEditHandlers: ->
     $(document).ready =>
+      @ui = {}
+      @ui.$sphereLink = $('.sphere-link')
+      @ui.$startPortal = $('#start-portal')
+      @ui.$resetPortal = $('#reset-portal')
+      @ui.$savePortal = $('#save-portal')
+      @ui.$toSphereSelect = $('#to_sphere_id')
 
-      $('.sphere-link').on 'click', (e) =>
-        debugger
-        id = parseInt(e.currentTarget.id)
-        associatedSphere = _.findWhere(window.memory.spheres, { id })
-        @setNextSphere(associatedSphere)
-
-  soundManagerReady: =>
-    if memory.defaultSound
-      @createSound(memory.defaultSound).play()
+      @ui.$toSphereSelect.change(@toSphereSelectChanged)
+      @ui.$startPortal.click(@startPortalClicked)
+      @ui.$resetPortal.click(@resetClicked)
+      @ui.$sphereLink.click(@sphereLinkClicked)
+      @ui.$savePortal.click(@savePortalClicked)
 
   doTransition: (marker) ->
     center = @getCenter(marker.polygon_px)
@@ -157,5 +163,99 @@ class MemoryApplication
 
   createSound: (soundConfig) ->
     soundManager.createSound(_.extend({}, @defaultSoundSettings, soundConfig))
+
+  getPortalParams: (portal) ->
+    params =
+      id: window.currentSphere.id
+      portal:
+        polygon_px: portal.polygon_px
+        to_sphere_id: portal.to_sphere_id
+
+    JSON.stringify(params)
+
+# Event Handlers
+
+
+  soundManagerReady: =>
+    if memory.defaultSound
+      @createSound(memory.defaultSound).play()
+
+  resetClicked: =>
+    @ui.$startPortal.prop('disabled', false)
+    @ui.$savePortal.prop('disabled', true)
+    @isCreatingPortal = false
+    PSV.removeMarker('new-portal', true)
+
+  sphereLinkClicked: (e) =>
+    id = parseInt(e.currentTarget.id)
+    associatedSphere = _.findWhere(window.memory.spheres, { id })
+    @setNextSphere(associatedSphere)
+
+  startPortalClicked: =>
+    @ui.$startPortal.prop('disabled', true)
+    @ui.$resetPortal.prop('disabled', false)
+    @isCreatingPortal = true
+
+    PSV.addMarker
+      id: 'new-portal',
+      polygon_px: [[]]
+      to_sphere_id: @ui.$toSphereSelect.val()
+      svgStyle:
+        fill: "url(#points)"
+        stroke: "rgba(255, 50, 50, 0.8)"
+        'stroke-width': "2px"
+
+  toSphereSelectChanged: =>
+    if @isCreatingPortal
+      newPortal = PSV.getMarker('new-portal')
+      newPortal.to_sphere_id = @ui.$toSphereSelect.val()
+
+      PSV.updateMarker(newPortal)
+
+  savePortalClicked: =>
+    portal = PSV.getMarker('new-portal')
+
+    $.ajax
+      url: '/portals'
+      type: 'POST'
+      dataType: 'json'
+      contentType: 'application/json'
+      success: @onSavePortalSuccess
+      error: @onSavePortalError
+      data: @getPortalParams(portal)
+
+  onSavePortalSuccess: =>
+    portal = PSV.getMarker('new-portal')
+    PSV.removeMarker('new-portal', false)
+
+    createdPortalAttrs =
+      id: "created-portal-#{ ++@createdPortalCount }"
+      polygon_px: portal.polygon_px
+      svgStyle:
+        fill: "url(#points)"
+        stroke: "rgba(255, 50, 50, 0.8)"
+        'stroke-width': "2px"
+
+    PSV.addMarker(createdPortalAttrs)
+    @ui.$savePortal.prop('disabled', true)
+    @isCreatingPortal = false
+
+  onSavePortalError: (jqXHR, textStatus, errorThrown) =>
+    alert("Looks like that save didn't work... #{textStatus}: #{errorThrown}")
+
+  onPSVClick: (e) =>
+    if @isCreatingPortal
+      newPortal = PSV.getMarker('new-portal')
+      newPortal.polygon_px = [] unless newPortal.polygon_px[0].length
+      newPortal.polygon_px.push [e.texture_x, e.texture_y]
+
+      PSV.updateMarker(newPortal, true)
+
+      if newPortal.polygon_px.length > 2
+        @ui.$savePortal.prop('disabled', false)
+
+    console.log("x, y: "+ e.texture_x + ", " + e.texture_y)
+    console.log("latitude, longitude: "+e.latitude + ", " + e.longitude)
+
 
 window.MemoryApplication = MemoryApplication
