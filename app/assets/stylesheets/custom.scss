@@ -132,7 +132,7 @@ p, .josefin {
 .finishing-touches {
   list-style: none;
   li > h2 {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     text-align: left;
   }
 
@@ -452,4 +452,20 @@ span.picture {
 
 .zero-height {
   height: 0px;
+}
+
+.sphere-container {
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 10px;
+}
+
+.sphere-item-view {
+  padding-right: 10px;
+  float: left;
+  text-align: center;
+  p.caption {
+    font-size: 1em;
+    margin-bottom: 0px;
+  }
 }

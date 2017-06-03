@@ -1,0 +1,7 @@
+<div id="sphere-<%= sphere.id %>" class="sphere-item-view">
+  <a href="javascript:;" id="sphere-<%= sphere.id %>">
+    <%= image_tag(sphere.panorama.thumb.url) %>
+  </a>
+  <p class="caption"><%= sphere.caption %></p>
+  <%#= link_to 'Delete', memory_path(memory), method: :delete, data: { confirm: 'Are you certain you want to delete this memory?' } if is_owner?(memory) %>
+</div>
