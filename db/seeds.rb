@@ -98,7 +98,8 @@ boat_bed = Sphere.create!({
 night_time = Sphere.create!({
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_night.jpg"),
-  default_zoom: 43
+  default_zoom: 43,
+  caption: 'night time',
 })
 
 Portal.create!({
