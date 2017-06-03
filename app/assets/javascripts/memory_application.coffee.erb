@@ -38,10 +38,14 @@ class MemoryApplication
     autoLoad: true,
     autoPlay: false
 
+  editPanoramaSettings:
+    anim_speed: '0rpm'
+
   constructor: (options = {}) ->
     window.memory = options.memory
     window.currentSphere = memory.spheres[options.sphereNum]
     window.hideNavBar = true
+    @editMode = options.editMode
 
   start: ->
     soundManager.setup(@defaultSoundManagerSettings);
@@ -52,8 +56,11 @@ class MemoryApplication
         caption: window.currentSphere.caption,
         markers: @getPortalsAndMarkers(currentSphere)
       , @defaultPanoramaSettings
+      , @editPanoramaSettings
     )
+    
     @bindHandlers()
+    @bindEditHandlers() if @editMode
 
   bindHandlers: ->
     window.PSV.on 'click', (e) ->
@@ -71,6 +78,15 @@ class MemoryApplication
     window.PSV.on 'fullscreen-updated', (enabled) ->
       PSV.toggleNavbar()
 
+  bindEditHandlers: ->
+    $(document).ready =>
+
+      $('.sphere-link').on 'click', (e) =>
+        debugger
+        id = parseInt(e.currentTarget.id)
+        associatedSphere = _.findWhere(window.memory.spheres, { id })
+        @setNextSphere(associatedSphere)
+
   soundManagerReady: =>
     if memory.defaultSound
       @createSound(memory.defaultSound).play()
@@ -86,10 +102,10 @@ class MemoryApplication
       y: center[1]
     }, 1000).then(=> @setNextSphere(associatedSphere, portal))
 
-  setNextSphere: (sphere, portal) ->
+  setNextSphere: (sphere, portal = {}) ->
     window.PSV.setPanorama(sphere.panorama, {
-      latitude: portal.fov_lat,
-      longitude: portal.fov_lng
+      latitude: portal.fov_lat || 0,
+      longitude: portal.fov_lng || 0
     }, true).then(=> @_setNextSphereMakers(sphere))
 
   _setNextSphereMakers: (sphere) ->
