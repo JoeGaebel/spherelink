@@ -5,10 +5,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <h2 class="link-sphere-header">Spheres</h2>
-      <div class="sphere-container">
-        <%= render @memory.spheres %>
-      </div>
+      <%= render 'sphere_select_view' %>
     </div>
   </div>
 
@@ -18,19 +15,7 @@
     </div>
     <div class="col-md-3">
       <ul class="finishing-touches">
-        <li>
-          <div class="tipsy-header">
-            <h3>Portals <a class="tipsy-link">(?)</a></h3>
-          </div>
-          <p class="delete-explanation" hidden>Click a portal to delete it</p>
-
-          <%= select_tag 'to_sphere_id', nil, hidden: true %>
-          <%= text_field_tag 'portal_caption', nil, placeholder: 'Portal caption', hidden: true %>
-          <button id="start-portal" class="btn btn-primary">Add</button>
-          <button id="save-portal" class="btn btn-primary" disabled>Save</button>
-          <button id="reset-portal" class="btn btn-primary" disabled>Reset</button>
-          <button id="delete-portal" class="btn btn-primary">Delete</button>
-        </li>
+        <%= render 'portal_view' %>
       </ul>
     </div>
   </div>

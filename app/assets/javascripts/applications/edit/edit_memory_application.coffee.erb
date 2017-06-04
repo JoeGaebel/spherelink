@@ -1,0 +1,31 @@
+#= require applications/memory_application
+#= require applications/edit/portal_view
+#= require applications/edit/sphere_select_view
+
+class EditMemoryApplication extends MemoryApplication
+  constructor: (options = {}) ->
+    super
+    @portalView = new PortalView({ app: @ })
+    @sphereSelectView = new SphereSelectView
+      app: @
+      portalView: @portalView
+
+# Helpers
+
+  getPSVOptions: ->
+    $.extend
+      panorama: window.currentSphere.panorama,
+      caption: window.currentSphere.caption,
+      markers: @getPortalsAndMarkers(currentSphere)
+    , @defaultPanoramaSettings, @editPanoramaSettings
+
+  _setNextSphereMakers: (sphere) ->
+    super
+    @portalView.updateSelect()
+
+# Constants
+
+  editPanoramaSettings:
+    anim_speed: '0rpm'
+
+window.EditMemoryApplication = EditMemoryApplication

@@ -14,7 +14,6 @@ class MemoryApplication
     PSV.on 'ready', @onPSVReady
     PSV.on 'fullscreen-updated', (enabled) -> PSV.toggleNavbar()
     PSV.on 'select-marker', @onSelectMarker
-    PSV.on 'click', @onPSVClick
 
 
 # Helpers
@@ -103,10 +102,6 @@ class MemoryApplication
   onSoundManagerReady: =>
     if memory.defaultSound
       @createSound(memory.defaultSound).play()
-
-  onPSVClick: (e) =>
-    console.log("x, y: "+ e.texture_x + ", " + e.texture_y)
-    console.log("latitude, longitude: "+e.latitude + ", " + e.longitude)
 
   onSelectMarker: (marker) =>
     @doTransition(marker) if marker.isPolygon()

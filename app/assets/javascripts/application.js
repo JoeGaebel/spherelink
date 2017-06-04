@@ -22,5 +22,5 @@
 //= require soundmanager2/script/soundmanager2-jsmin
 //= require nested_form_fields
 //= require tipsy
-//= require_directory ./applications/
+//= require_tree ./applications/
 //= require_tree .
