@@ -75,7 +75,9 @@ class MemoryApplication
       setTimeout((-> PSV.zoom(currentSphere.defaultZoom)), 1)
 
     window.PSV.on 'select-marker', (marker) =>
-      @doTransition(marker) if marker.isPolygon()
+      if marker.isPolygon()
+        if !@editMode or @editMode and !@isCreatingPortal
+          @doTransition(marker)
 
     window.PSV.on 'fullscreen-updated', (enabled) ->
       PSV.toggleNavbar()
@@ -171,6 +173,7 @@ class MemoryApplication
 
     JSON.stringify(params)
 
+
 # Event Handlers
 
 
@@ -229,13 +232,18 @@ class MemoryApplication
     createdPortalAttrs =
       id: "created-portal-#{ ++@createdPortalCount }"
       polygon_px: portal.polygon_px
+      to_sphere_id: portal.to_sphere_id
       svgStyle:
         fill: "url(#points)"
         stroke: "rgba(255, 50, 50, 0.8)"
         'stroke-width': "2px"
 
     PSV.addMarker(createdPortalAttrs)
+    currentSphere.portals.push createdPortalAttrs
+
     @ui.$savePortal.prop('disabled', true)
+    @ui.$resetPortal.prop('disabled', true)
+    @ui.$startPortal.prop('disabled', false)
     @isCreatingPortal = false
 
   onSavePortalError: (jqXHR, textStatus, errorThrown) =>
