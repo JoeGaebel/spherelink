@@ -2,7 +2,7 @@
 
 <div id="photosphere" style="<%= style %>"></div>
 <script>
-  var editMemoryApplication = new window.EditMemoryApplication({
+  var editMemoryApplication = new EditMemoryApplication({
     memory: <%= @memory_json.to_s.html_safe %>,
     sphereNum: 0
   });

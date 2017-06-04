@@ -9,13 +9,13 @@ class EditMemoryApplication extends MemoryApplication
 
       @ui.$toSphereSelect.change(@toSphereSelectChanged)
       @ui.$startPortal.click(@startPortalClicked)
-      @ui.$resetPortal.click(@onResetClick)
-      @ui.$sphereLink.click(@sphereLinkClicked)
-      @ui.$savePortal.click(@savePortalClicked)
-      @ui.$portalCaption.keyup _.debounce(@portalCaptionChanged, 300)
+      @ui.$resetPortal.click(@resetAddPortalState)
+      @ui.$sphereLink.click(@onSphereLinkClicked)
+      @ui.$savePortal.click(@onSavePortalClicked)
+      @ui.$portalCaption.keyup _.debounce(@onPortalCaptionChanged, 300)
 
       @ui.$delete.click(@onDeleteClick)
-      @ui.$cancelDelete.click(@onCancelDeleteClick)
+      @ui.$cancelDelete.click(@resetDeletePortalState)
 
       @updateSelect()
       @createTipsies()
@@ -104,6 +104,25 @@ class EditMemoryApplication extends MemoryApplication
     if indexOfCachedPortal isnt -1
       currentSphere.portals.splice(indexOfCachedPortal, 1)
 
+  resetAddPortalState: =>
+    @isCreatingPortal = false
+
+    @ui.$startPortal.prop('disabled', false)
+    @ui.$savePortal.prop('disabled', true)
+    @ui.$resetPortal.prop('disabled', true)
+    @ui.$toSphereSelect.hide()
+    @ui.$portalCaption.hide()
+
+    @ui.$delete.prop('disabled', false)
+
+  resetDeletePortalState: =>
+    @isDeletingPortal = false
+    @ui.$delete.prop('disabled', false)
+    @ui.$cancelDelete.prop('disabled', true)
+    @ui.$deleteExplanation.hide()
+
+    @ui.$startPortal.prop('disabled', false)
+
 
 # Event Handlers
 
@@ -130,29 +149,20 @@ class EditMemoryApplication extends MemoryApplication
       else if !@isCreatingPortal
         @doTransition(marker)
 
-  onResetClick: =>
-    @ui.$startPortal.prop('disabled', false)
-    @ui.$savePortal.prop('disabled', true)
-    @ui.$resetPortal.prop('disabled', true)
-    @ui.$delete.prop('disabled', false)
-
-    @ui.$toSphereSelect.prop('hidden', true)
-    @ui.$portalCaption.prop('hidden', true)
-
-    @isCreatingPortal = false
-    PSV.removeMarker('new-portal', true)
-
-  sphereLinkClicked: (e) =>
+  onSphereLinkClicked: (e) =>
     id = parseInt(e.currentTarget.id)
     associatedSphere = _.findWhere(window.memory.spheres, { id })
     @setNextSphere(associatedSphere)
+
+    @resetAddPortalState()
+    @resetDeletePortalState()
 
   startPortalClicked: =>
     @ui.$startPortal.prop('disabled', true)
     @ui.$resetPortal.prop('disabled', false)
 
-    @ui.$toSphereSelect.prop('hidden', false)
-    @ui.$portalCaption.prop('hidden', false)
+    @ui.$toSphereSelect.show()
+    @ui.$portalCaption.show()
 
     @ui.$delete.prop('disabled', true)
 
@@ -177,7 +187,7 @@ class EditMemoryApplication extends MemoryApplication
 
       PSV.updateMarker(newPortal)
 
-  savePortalClicked: =>
+  onSavePortalClicked: =>
     portal = PSV.getMarker('new-portal')
 
     $.ajax
@@ -189,7 +199,7 @@ class EditMemoryApplication extends MemoryApplication
       error: @onAjaxError
       data: @getPortalParams(portal)
 
-  portalCaptionChanged: =>
+  onPortalCaptionChanged: =>
     if @isCreatingPortal
       newPortal = PSV.getMarker('new-portal')
       newPortal.tooltip.content = @ui.$portalCaption.val()
@@ -204,13 +214,6 @@ class EditMemoryApplication extends MemoryApplication
 
     @isDeletingPortal = true
 
-  onCancelDeleteClick: =>
-    @ui.$delete.prop('disabled', false)
-    @ui.$startPortal.prop('disabled', false)
-    @ui.$cancelDelete.prop('disabled', true)
-    @ui.$deleteExplanation.hide()
-    @isDeletingPortal = false
-
 
 # Promises
 
@@ -220,11 +223,7 @@ class EditMemoryApplication extends MemoryApplication
     @cleanPortalCache(@portalToDelete)
 
     @portalToDelete = null
-    @isDeletingPortal = false
-
-    @ui.$startPortal.prop('disabled', false)
-    @ui.$cancelDelete.prop('disabled', true)
-    @ui.$delete.prop('disabled', false)
+    @resetDeletePortalState()
 
   onAjaxError: (jqXHR, textStatus, errorThrown) =>
     alert("Looks like that request didn't work... #{textStatus}: #{errorThrown}")
@@ -248,15 +247,7 @@ class EditMemoryApplication extends MemoryApplication
     PSV.addMarker(createdPortalAttrs)
     currentSphere.portals.push createdPortalAttrs
 
-    @ui.$savePortal.prop('disabled', true)
-    @ui.$resetPortal.prop('disabled', true)
-    @ui.$startPortal.prop('disabled', false)
-
-    @ui.$toSphereSelect.prop('hidden', true)
-    @ui.$portalCaption.prop('hidden', true)
-    @ui.$delete.prop('disabled', false)
-
-    @isCreatingPortal = false
+    @resetAddPortalState()
 
 
 # Constants
