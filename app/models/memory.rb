@@ -8,6 +8,7 @@ class Memory < ApplicationRecord
   accepts_nested_attributes_for :spheres
 
   validates_presence_of :name
+  validates_length_of :spheres, minimum: 1, message: ', at least one sphere is required'
 
   def to_builder
     Jbuilder.new do |json|

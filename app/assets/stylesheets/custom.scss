@@ -317,8 +317,6 @@ footer ul li {
 }
 
 .add-sphere {
-  padding-top: 10px;
-  padding-bottom: 10px;
   input[type="file"] {
     width: initial;
     line-height: 10px;
@@ -331,7 +329,7 @@ footer ul li {
 }
 
 .create-sphere {
-  margin-top: 20px;
+  margin: 20px 0 20px 0;
 }
 
 input, textarea, select, .uneditable-input {
@@ -504,5 +502,14 @@ span.picture {
     text-align: left;
     font-size: 14px;
     margin-bottom: 5px;
+  }
+}
+
+.new_memory {
+  #error_explanation {
+    .alert {
+      position: relative;
+      float: none;
+    }
   }
 }
