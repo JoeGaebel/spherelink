@@ -5,35 +5,37 @@ class PortalsController < ApplicationController
     parent_sphere = current_user.spheres.find(params[:id])
     to_sphere = current_user.spheres.find(params[:portal][:to_sphere_id])
 
-    return render(error: :not_found) unless parent_sphere.present? && to_sphere.present?
+    if parent_sphere.blank? || to_sphere.blank?
+      render json: { status: :not_found }
+      return
+    end
 
     portal = parent_sphere.portals.build
     portal.polygon_px = params[:portal][:polygon_px]
+    portal.tooltip_content = params[:portal][:content]
     portal.to_sphere_id = to_sphere.id
 
     if portal.save
       render json: portal, status: :created
     else
-      render json: portal.errors, status: :unprocessable_entity
+      render json: portal.errors, status: :not_found
     end
   end
 
-  def portal_params
-    params.require(:portal).permit(:polygon_px, :to_sphere_id)
-  end
+  def destroy
+    parent_sphere = current_user.spheres.find(params[:sphere_id])
 
-  def ensure_allowed_access
-    memory = Memory.find(params[:id])
-    not_found if memory.blank?
+    if parent_sphere.blank?
+      render json: { status: :not_found }
+      return
+    end
 
-    if memory.private
-      if logged_in? && memory.user_id == current_user.id
-        set_instance_vars(memory)
-      else
-        redirect_to_home
-      end
+    portal = parent_sphere.portals.find(params[:id])
+    if portal.present? && portal.destroy
+      render json: portal, status: :ok
     else
-      set_instance_vars(memory)
+      render json: portal.errors, status: :not_found
     end
   end
+
 end

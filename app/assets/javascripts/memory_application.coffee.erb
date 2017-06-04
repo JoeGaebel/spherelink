@@ -76,7 +76,10 @@ class MemoryApplication
 
     window.PSV.on 'select-marker', (marker) =>
       if marker.isPolygon()
-        if !@editMode or @editMode and !@isCreatingPortal
+        if @isDeletingPortal
+          @deletePortal(marker)
+
+        else if !@editMode or @editMode and !@isCreatingPortal
           @doTransition(marker)
 
     window.PSV.on 'fullscreen-updated', (enabled) ->
@@ -92,14 +95,24 @@ class MemoryApplication
       @ui.$resetPortal = $('#reset-portal')
       @ui.$savePortal = $('#save-portal')
       @ui.$toSphereSelect = $('#to_sphere_id')
+      @ui.$portalCaption = $('#portal_caption')
+
+      @ui.$delete = $('#delete-portal')
+      @ui.$cancelDelete = $('#cancel-delete')
+      @ui.$deleteExplanation = $('.delete-explanation')
 
       @ui.$toSphereSelect.change(@toSphereSelectChanged)
       @ui.$startPortal.click(@startPortalClicked)
       @ui.$resetPortal.click(@resetClicked)
       @ui.$sphereLink.click(@sphereLinkClicked)
       @ui.$savePortal.click(@savePortalClicked)
+      @ui.$portalCaption.keyup _.debounce(@portalCaptionChanged, 300)
+
+      @ui.$delete.click(@onDeleteClick)
+      @ui.$cancelDelete.click(@onCancelDeleteClick)
 
       @updateSelect()
+      @createTipsies()
 
   doTransition: (portal) ->
     center = @getCenter(portal.polygon_px)
@@ -174,11 +187,11 @@ class MemoryApplication
       portal:
         polygon_px: portal.polygon_px
         to_sphere_id: portal.to_sphere_id
+        content: portal.tooltip.content
 
     JSON.stringify(params)
 
   updateSelect: =>
-    debugger
     @ui.$toSphereSelect.children().remove()
 
     for sphere in memory.spheres
@@ -188,6 +201,32 @@ class MemoryApplication
         text: sphere.caption
       ))
 
+  createTipsies: ->
+    $('.tipsy-link').tipsy
+      gravity: 'w'
+      opacity: 1
+      html: true
+      title: ->
+        """
+          <p>
+            Portals connect one photosphere to another.
+          </p>
+          <p>
+            Click the start button then click the corners of a door.
+            Then, select the photosphere to transition to, and give it a caption
+          </p>
+        """
+
+  deletePortal: (portal) =>
+    portalId = portal.id.split('-')[1]
+    @portalToDelete = portal
+
+    $.ajax
+      url: "/portals/#{portalId}?&sphere_id=#{currentSphere.id}"
+      type: 'DELETE'
+      contentType: 'application/json'
+      success: @onDeletePortalSuccess
+      error: @onAjaxError
 
 # Event Handlers
 
@@ -199,7 +238,11 @@ class MemoryApplication
   resetClicked: =>
     @ui.$startPortal.prop('disabled', false)
     @ui.$savePortal.prop('disabled', true)
-    @ui.$resetPortal.prop('disabled', false)
+    @ui.$resetPortal.prop('disabled', true)
+    @ui.$delete.prop('disabled', false)
+
+    @ui.$toSphereSelect.prop('hidden', true)
+    @ui.$portalCaption.prop('hidden', true)
 
     @isCreatingPortal = false
     PSV.removeMarker('new-portal', true)
@@ -212,12 +255,21 @@ class MemoryApplication
   startPortalClicked: =>
     @ui.$startPortal.prop('disabled', true)
     @ui.$resetPortal.prop('disabled', false)
+
+    @ui.$toSphereSelect.prop('hidden', false)
+    @ui.$portalCaption.prop('hidden', false)
+
+    @ui.$delete.prop('disabled', true)
+
     @isCreatingPortal = true
 
     PSV.addMarker
       id: 'new-portal',
       polygon_px: [[]]
       to_sphere_id: @ui.$toSphereSelect.val()
+      tooltip:
+        content: @ui.$portalCaption.val()
+        position: 'right bottom'
       svgStyle:
         fill: "url(#points)"
         stroke: "rgba(255, 50, 50, 0.8)"
@@ -239,17 +291,20 @@ class MemoryApplication
       dataType: 'json'
       contentType: 'application/json'
       success: @onSavePortalSuccess
-      error: @onSavePortalError
+      error: @onAjaxError
       data: @getPortalParams(portal)
 
-  onSavePortalSuccess: =>
+  onSavePortalSuccess: (savedRecord) =>
     portal = PSV.getMarker('new-portal')
     PSV.removeMarker('new-portal', false)
 
     createdPortalAttrs =
-      id: "created-portal-#{ ++@createdPortalCount }"
+      id: "portal-#{savedRecord.id}"
       polygon_px: portal.polygon_px
       to_sphere_id: portal.to_sphere_id
+      tooltip:
+        content: portal.tooltip.content
+        position: 'right bottom'
       svgStyle:
         fill: "url(#points)"
         stroke: "rgba(255, 50, 50, 0.8)"
@@ -261,10 +316,46 @@ class MemoryApplication
     @ui.$savePortal.prop('disabled', true)
     @ui.$resetPortal.prop('disabled', true)
     @ui.$startPortal.prop('disabled', false)
+
+    @ui.$toSphereSelect.prop('hidden', true)
+    @ui.$portalCaption.prop('hidden', true)
+    @ui.$delete.prop('disabled', false)
+
     @isCreatingPortal = false
 
-  onSavePortalError: (jqXHR, textStatus, errorThrown) =>
-    alert("Looks like that save didn't work... #{textStatus}: #{errorThrown}")
+  onAjaxError: (jqXHR, textStatus, errorThrown) =>
+    alert("Looks like that request didn't work... #{textStatus}: #{errorThrown}")
+
+  portalCaptionChanged: =>
+    if @isCreatingPortal
+      newPortal = PSV.getMarker('new-portal')
+      newPortal.tooltip.content = @ui.$portalCaption.val()
+
+      PSV.updateMarker(newPortal)
+
+  onDeleteClick: =>
+    @ui.$deleteExplanation.show()
+    @ui.$startPortal.prop('disabled', true)
+    @ui.$cancelDelete.prop('disabled', false)
+    @ui.$delete.prop('disabled', true)
+
+    @isDeletingPortal = true
+
+  onCancelDeleteClick: =>
+    @ui.$delete.prop('disabled', false)
+    @ui.$startPortal.prop('disabled', false)
+    @ui.$cancelDelete.prop('disabled', true)
+    @ui.$deleteExplanation.hide()
+    @isDeletingPortal = false
+
+  onDeletePortalSuccess: =>
+    PSV.removeMarker(@portalToDelete)
+    @portalToDelete = null
+    @isDeletingPortal = false
+
+    @ui.$startPortal.prop('disabled', false)
+    @ui.$cancelDelete.prop('disabled', true)
+    @ui.$delete.prop('disabled', false)
 
   onPSVClick: (e) =>
     if @isCreatingPortal

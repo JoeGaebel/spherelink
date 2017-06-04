@@ -29,8 +29,16 @@ body.demo {
   float: left;
 }
 
+.memories-link {
+  font-size: 22px;
+  color: #696969;
+
+  &:hover { text-decoration: none; color: #337ab7;}
+}
+
 a.demo {
   position: absolute;
+
   font-size: 22px;
   color: #696969;
 
@@ -127,11 +135,22 @@ p, .josefin {
 
 .link-viewer {
   width: 800px;
+  height: 500px;
+}
+
+.link-header {
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+.link-sphere-header {
+  text-align: left;
+  margin-bottom: 5px;
 }
 
 .finishing-touches {
   list-style: none;
-  li > h2 {
+  li h2 {
     margin-bottom: 10px;
     text-align: left;
   }
@@ -458,6 +477,7 @@ span.picture {
   width: 100%;
   overflow: hidden;
   padding-bottom: 10px;
+  margin: 0 auto;
 }
 
 .sphere-item-view {
@@ -467,5 +487,22 @@ span.picture {
   p.caption {
     font-size: 1em;
     margin-bottom: 0px;
+  }
+}
+
+.tipsy-link {
+  font-size: 20px;
+  &:hover, &:active, &:visited, &:focus {
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.tipsy {
+  p {
+    color: white;
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 5px;
   }
 }

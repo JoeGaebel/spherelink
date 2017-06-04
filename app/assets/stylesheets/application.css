@@ -13,4 +13,5 @@
  *= require_tree .
  *= require_self
  *= require photo-sphere-viewer/dist/photo-sphere-viewer.min
+ *= require tipsy
  */

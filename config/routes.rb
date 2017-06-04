@@ -18,5 +18,5 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :portals,            only: [:create]
+  resources :portals,            only: [:create, :destroy]
 end
