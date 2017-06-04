@@ -108,7 +108,7 @@ p, .josefin {
   width: 50%;
   margin: 0 auto;
   text-align: center;
-  margin-bottom: 17px;
+  margin-bottom: -10px;
 }
 
 .description {
@@ -512,4 +512,9 @@ span.picture {
       float: none;
     }
   }
+}
+
+
+.show-description {
+  padding-top: 15px;
 }
