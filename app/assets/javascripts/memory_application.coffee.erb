@@ -97,11 +97,9 @@ class MemoryApplication
       @ui.$sphereLink.click(@sphereLinkClicked)
       @ui.$savePortal.click(@savePortalClicked)
 
-  doTransition: (marker) ->
-    center = @getCenter(marker.polygon_px)
-
-    portal = _.findWhere(window.currentSphere.portals, { id: marker.id })
-    associatedSphere = _.findWhere(window.memory.spheres, { id: portal.to_sphere_id })
+  doTransition: (portal) ->
+    center = @getCenter(portal.polygon_px)
+    associatedSphere = _.findWhere(window.memory.spheres, { id: parseInt(portal.to_sphere_id) })
 
     window.PSV.animate({
       x: center[0],
