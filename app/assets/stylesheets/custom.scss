@@ -34,6 +34,7 @@ body.demo {
   color: #696969;
 
   &:hover { text-decoration: none; color: #337ab7;}
+  float: right;
 }
 
 a.demo {
@@ -505,7 +506,7 @@ span.picture {
   }
 }
 
-.new_memory {
+.new_memory, .edit_memory {
   #error_explanation {
     .alert {
       position: relative;
