@@ -1,0 +1,163 @@
+class MemoryApplication
+  constructor: (options = {}) ->
+    window.memory = options.memory
+    window.currentSphere = memory.spheres[options.sphereNum]
+    window.hideNavBar = true
+
+  start: ->
+    @setupSoundManager()
+    window.PSV = new PhotoSphereViewer(@getPSVOptions())
+    @bindHandlers()
+
+
+  bindHandlers: ->
+    PSV.on 'ready', @onPSVReady
+    PSV.on 'fullscreen-updated', (enabled) -> PSV.toggleNavbar()
+    PSV.on 'select-marker', @onSelectMarker
+    PSV.on 'click', @onPSVClick
+
+
+# Helpers
+
+
+  getPSVOptions: ->
+    $.extend
+      panorama: window.currentSphere.panorama,
+      caption: window.currentSphere.caption,
+      markers: @getPortalsAndMarkers(currentSphere)
+    , @defaultPanoramaSettings
+
+  setupSoundManager: ->
+    soundManager.setup(@defaultSoundManagerSettings);
+    soundManager.onready(@onSoundManagerReady)
+
+  doTransition: (portal) ->
+    center = @getCenter(portal.polygon_px)
+    associatedSphere = _.findWhere(window.memory.spheres, { id: parseInt(portal.to_sphere_id) })
+
+    window.PSV.animate({
+      x: center[0],
+      y: center[1]
+    }, 1000).then(=> @setNextSphere(associatedSphere, portal))
+
+  setNextSphere: (sphere, portal = {}) ->
+    window.PSV.setPanorama(sphere.panorama, {
+      latitude: portal.fov_lat || 0,
+      longitude: portal.fov_lng || 0
+    }, true).then(=> @_setNextSphereMakers(sphere))
+
+  _setNextSphereMakers: (sphere) ->
+    PSV.setCaption(sphere.caption)
+    PSV.zoom(sphere.defaultZoom)
+    PSV.clearMarkers();
+    markers = @getPortalsAndMarkers(sphere);
+    PSV.addMarker(marker) for marker in markers
+    @playSound(sphere)
+    window.currentSphere = sphere;
+
+  getPortalsAndMarkers: (sphere) ->
+    sphere.markers.concat sphere.portals
+
+  playSound: (sphere) ->
+    if sphere.sound
+      soundManager.mute(memory.defaultSound.id) if memory.defaultSound
+      if soundManager.getSoundById(sphere.sound.id)
+        soundManager.play(sphere.sound.id).unmute()
+      else
+        @createSound(sphere.sound).play()
+
+    else
+      soundManager.pauseAll();
+      soundManager.play(memory.defaultSound.id).unmute() if memory.defaultSound
+
+  getCenter: (array) ->
+    imageWidth = PSV.prop.pano_data.full_width
+    x = array.map (a) -> a[0]
+    y = array.map (a) -> a[1]
+    minX = Math.min.apply(null, x)
+    maxX = Math.max.apply(null, x)
+    minY = Math.min.apply(null, y)
+    maxY = Math.max.apply(null, y)
+
+    centerY = (minY + maxY)/2
+
+    insideCenterX = (minX + maxX)/2
+    insideAvgX = insideCenterX - minX
+
+    outsideAvgX = (imageWidth - maxX + minX) / 2
+    outsideOffset = maxX
+    outsideCenterX = (outsideAvgX + outsideOffset) % imageWidth
+
+    if insideAvgX > outsideAvgX
+      [outsideCenterX, centerY]
+    else
+      [insideCenterX, centerY]
+
+  createSound: (soundConfig) ->
+    soundManager.createSound(_.extend({}, @defaultSoundSettings, soundConfig))
+
+
+# Event Handlers
+
+
+  onSoundManagerReady: =>
+    if memory.defaultSound
+      @createSound(memory.defaultSound).play()
+
+  onPSVClick: (e) =>
+    console.log("x, y: "+ e.texture_x + ", " + e.texture_y)
+    console.log("latitude, longitude: "+e.latitude + ", " + e.longitude)
+
+  onSelectMarker: (marker) =>
+    @doTransition(marker) if marker.isPolygon()
+
+  onPSVReady: ->
+    PSV.setCaption(currentSphere.caption)
+    PSV.hideNavbar() if window.hideNavBar
+    setTimeout((-> PSV.zoom(currentSphere.defaultZoom)), 1)
+
+
+# Constants
+
+  pinUrl: "<%= image_url('pin2.png') %>"
+
+  defaultPanoramaSettings:
+    loading_img: "<%= image_url('photosphere-logo.gif') %>",
+    navbar: [
+      title: 'Fullscreen',
+      content: '<%= image_tag("fullscreen.png", style: "width: 25px; height: 25px;") %>',
+      onClick: => window.PSV.toggleFullscreen(),
+      'caption'
+    ],
+    sphere_segments: 128,
+    container: 'photosphere',
+    anim_speed: '-0.5rpm',
+    time_anim: 0,
+    default_fov: 20,
+    move_speed: 1.8,
+    fisheye: false,
+    gyroscope: false,
+    webgl: true,
+    cache_texture: 10,
+    size:
+      height: $('.photosphere').height()
+      width: $('.photosphere').width()
+    transition:
+      duration: 0,
+      loader: true,
+      blur: true
+
+  defaultSoundManagerSettings:
+    preferFlash: false,
+    debugMode: false,
+    debugFlash: false,
+    useHTML5Audio: true,
+    stream: true,
+    flashVersion: 8
+    url: "<%= asset_path("soundmanager2/swf/soundmanager2.swf") %>"
+
+  defaultSoundSettings:
+    autoLoad: true,
+    autoPlay: false
+
+window.MemoryApplication = MemoryApplication

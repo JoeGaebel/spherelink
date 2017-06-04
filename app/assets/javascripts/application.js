@@ -19,8 +19,8 @@
 //= require uevent/uevent
 //= require dot/doT
 //= require photo-sphere-viewer/dist/photo-sphere-viewer
-//= require memory_application
 //= require soundmanager2/script/soundmanager2-jsmin
 //= require nested_form_fields
 //= require tipsy
+//= require_directory ./applications/
 //= require_tree .
