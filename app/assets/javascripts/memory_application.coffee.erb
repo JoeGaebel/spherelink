@@ -99,6 +99,8 @@ class MemoryApplication
       @ui.$sphereLink.click(@sphereLinkClicked)
       @ui.$savePortal.click(@savePortalClicked)
 
+      @updateSelect()
+
   doTransition: (portal) ->
     center = @getCenter(portal.polygon_px)
     associatedSphere = _.findWhere(window.memory.spheres, { id: parseInt(portal.to_sphere_id) })
@@ -122,6 +124,8 @@ class MemoryApplication
     PSV.addMarker(marker) for marker in markers
     @playSound(sphere)
     window.currentSphere = sphere;
+
+    @updateSelect() if @editMode
 
   getPortalsAndMarkers: (sphere) ->
     sphere.markers.concat sphere.portals
@@ -173,6 +177,17 @@ class MemoryApplication
 
     JSON.stringify(params)
 
+  updateSelect: =>
+    debugger
+    @ui.$toSphereSelect.children().remove()
+
+    for sphere in memory.spheres
+      continue if currentSphere.id == sphere.id
+      @ui.$toSphereSelect.append($('<option>',
+        value: sphere.id,
+        text: sphere.caption
+      ))
+
 
 # Event Handlers
 
@@ -184,6 +199,8 @@ class MemoryApplication
   resetClicked: =>
     @ui.$startPortal.prop('disabled', false)
     @ui.$savePortal.prop('disabled', true)
+    @ui.$resetPortal.prop('disabled', false)
+
     @isCreatingPortal = false
     PSV.removeMarker('new-portal', true)
 

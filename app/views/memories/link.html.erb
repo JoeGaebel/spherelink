@@ -21,10 +21,10 @@
         <li>
           <h2>Add a portal</h2>
           <p>Click the start button then click the corners of a door. Then, select the photosphere to transition to.</p>
-          <%= select_tag 'to_sphere_id', options_for_select(@memory.spheres.collect{ |s| [s.caption, s.id] }) %>
+          <%= select_tag 'to_sphere_id' %>
           <button id="start-portal" class="btn btn-primary">Start</button>
           <button id="save-portal" class="btn btn-primary" disabled>Save</button>
-          <button id="reset-portal" class="btn btn-primary">Reset</button>
+          <button id="reset-portal" class="btn btn-primary" disabled>Reset</button>
         </li>
       </ul>
     </div>
