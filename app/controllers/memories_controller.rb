@@ -1,6 +1,6 @@
 class MemoriesController < ApplicationController
-  before_action :ensure_allowed_access, only: [:show, :link]
-  before_action :ensure_user_logged_in, only: [:index, :new, :link, :create]
+  before_action :ensure_allowed_access, only: [:show, :edit]
+  before_action :ensure_user_logged_in, only: [:index, :new, :edit, :create]
 
   def create
     @memory = current_user.memories.build(memory_params)
@@ -16,11 +16,14 @@ class MemoriesController < ApplicationController
       end
 
       flash[:success] = "Memory created!"
-      redirect_to memories_path
+      redirect_to edit_memory_path(@memory)
     else
       flash[:danger] = @memory.errors.full_messages.join(", ")
       render :new
     end
+  end
+
+  def edit
   end
 
   def new
@@ -38,9 +41,6 @@ class MemoriesController < ApplicationController
     memory = current_user.memories.find_by(id: params[:id])
     memory.destroy if memory
     redirect_to memories_path
-  end
-
-  def link
   end
 
   private
