@@ -7,15 +7,16 @@ class EditMemoryApplication extends MemoryApplication
     $(document).ready =>
       @createUIHash()
 
-      @ui.$toSphereSelect.change(@toSphereSelectChanged)
-      @ui.$startPortal.click(@startPortalClicked)
-      @ui.$resetPortal.click(@resetAddPortalState)
       @ui.$sphereLink.click(@onSphereLinkClicked)
-      @ui.$savePortal.click(@onSavePortalClicked)
-      @ui.$portalCaption.keyup _.debounce(@onPortalCaptionChanged, 300)
 
+      # Portal Management
+      @ui.$addPortal.click(@addPortalClicked)
+      @ui.$resetPortal.click(@resetPortalState)
+      @ui.$savePortal.click(@onSavePortalClicked)
       @ui.$delete.click(@onDeleteClick)
-      @ui.$cancelDelete.click(@resetDeletePortalState)
+
+      @ui.$portalCaption.keyup _.debounce(@onPortalCaptionChanged, 300)
+      @ui.$toSphereSelect.change(@toSphereSelectChanged)
 
       @updateSelect()
       @createTipsies()
@@ -24,7 +25,7 @@ class EditMemoryApplication extends MemoryApplication
     @ui = {}
 
     @ui.$sphereLink = $('.sphere-link')
-    @ui.$startPortal = $('#start-portal')
+    @ui.$addPortal = $('#start-portal')
     @ui.$resetPortal = $('#reset-portal')
     @ui.$savePortal = $('#save-portal')
     @ui.$toSphereSelect = $('#to_sphere_id')
@@ -33,7 +34,6 @@ class EditMemoryApplication extends MemoryApplication
     @ui.$tipsyLink = $('.tipsy-link')
 
     @ui.$delete = $('#delete-portal')
-    @ui.$cancelDelete = $('#cancel-delete')
     @ui.$deleteExplanation = $('.delete-explanation')
 
 
@@ -68,7 +68,7 @@ class EditMemoryApplication extends MemoryApplication
             Portals connect one photosphere to another.
           </p>
           <p>
-            Click the start button then click the corners of a door.
+            Click the <b>Add</b> button then click the corners of a door.
             Then, select the photosphere to transition to, and give it a caption
           </p>
         """
@@ -104,24 +104,18 @@ class EditMemoryApplication extends MemoryApplication
     if indexOfCachedPortal isnt -1
       currentSphere.portals.splice(indexOfCachedPortal, 1)
 
-  resetAddPortalState: =>
+  resetPortalState: =>
     @isCreatingPortal = false
+    @isDeletingPortal = false
 
-    @ui.$startPortal.prop('disabled', false)
+    @ui.$addPortal.prop('disabled', false)
     @ui.$savePortal.prop('disabled', true)
     @ui.$resetPortal.prop('disabled', true)
+    @ui.$delete.prop('disabled', false)
+
     @ui.$toSphereSelect.hide()
     @ui.$portalCaption.hide()
-
-    @ui.$delete.prop('disabled', false)
-
-  resetDeletePortalState: =>
-    @isDeletingPortal = false
-    @ui.$delete.prop('disabled', false)
-    @ui.$cancelDelete.prop('disabled', true)
     @ui.$deleteExplanation.hide()
-
-    @ui.$startPortal.prop('disabled', false)
 
 
 # Event Handlers
@@ -154,11 +148,10 @@ class EditMemoryApplication extends MemoryApplication
     associatedSphere = _.findWhere(window.memory.spheres, { id })
     @setNextSphere(associatedSphere)
 
-    @resetAddPortalState()
-    @resetDeletePortalState()
+    @resetPortalState()
 
-  startPortalClicked: =>
-    @ui.$startPortal.prop('disabled', true)
+  addPortalClicked: =>
+    @ui.$addPortal.prop('disabled', true)
     @ui.$resetPortal.prop('disabled', false)
 
     @ui.$toSphereSelect.show()
@@ -208,8 +201,8 @@ class EditMemoryApplication extends MemoryApplication
 
   onDeleteClick: =>
     @ui.$deleteExplanation.show()
-    @ui.$startPortal.prop('disabled', true)
-    @ui.$cancelDelete.prop('disabled', false)
+    @ui.$addPortal.prop('disabled', true)
+    @ui.$resetPortal.prop('disabled', false)
     @ui.$delete.prop('disabled', true)
 
     @isDeletingPortal = true
@@ -223,7 +216,7 @@ class EditMemoryApplication extends MemoryApplication
     @cleanPortalCache(@portalToDelete)
 
     @portalToDelete = null
-    @resetDeletePortalState()
+    @resetPortalState()
 
   onAjaxError: (jqXHR, textStatus, errorThrown) =>
     alert("Looks like that request didn't work... #{textStatus}: #{errorThrown}")
@@ -247,7 +240,7 @@ class EditMemoryApplication extends MemoryApplication
     PSV.addMarker(createdPortalAttrs)
     currentSphere.portals.push createdPortalAttrs
 
-    @resetAddPortalState()
+    @resetPortalState()
 
 
 # Constants

@@ -23,20 +23,14 @@
           <div class="tipsy-header">
             <h2>Add a portal <a class="tipsy-link">(?)</a></h2>
           </div>
+          <p class="delete-explanation" hidden>Click a portal to delete it</p>
 
           <%= select_tag 'to_sphere_id', nil, hidden: true %>
           <%= text_field_tag 'portal_caption', nil, placeholder: 'Portal caption', hidden: true %>
-          <button id="start-portal" class="btn btn-primary">Start</button>
+          <button id="start-portal" class="btn btn-primary">Add</button>
           <button id="save-portal" class="btn btn-primary" disabled>Save</button>
           <button id="reset-portal" class="btn btn-primary" disabled>Reset</button>
-        </li>
-
-        <li>
-
-          <h2>Delete a portal</h2>
-          <p class="delete-explanation" hidden>Click a portal to delete it</p>
           <button id="delete-portal" class="btn btn-primary">Delete</button>
-          <button id="cancel-delete" class="btn btn-primary" disabled>Cancel</button>
         </li>
       </ul>
     </div>
