@@ -1,26 +1,33 @@
 class MemoriesController < ApplicationController
-  before_action :ensure_allowed_access, only: [:show, :link]
-  before_action :ensure_user_logged_in, only: [:index, :new, :link, :create]
+  before_action :ensure_allowed_access, only: [:show, :edit]
+  before_action :ensure_user_logged_in, only: [:index, :new, :edit, :create]
 
   def create
+    @hideFlash = true
     @memory = current_user.memories.build(memory_params)
 
     if @memory.save
       sphere_params = params[:memory][:spheres_attributes]
-      errors = build_spheres(@memory, sphere_params) if sphere_params
+      build_spheres(@memory, sphere_params) if sphere_params
 
-      if errors.present?
-        flash[:danger] = errors.map(&:full_messages).uniq.join(",")
+      @memory.valid?
+
+      if @memory.errors.present?
+        @memory.destroy
+        flash[:danger] = @memory.errors.full_messages.join(",")
         render :new
         return
       end
 
-      flash[:success] = "Memory created!"
-      redirect_to memories_path
+      flash[:success] = "Memory created! Now add the finishing touches"
+      redirect_to edit_memory_path(@memory)
     else
       flash[:danger] = @memory.errors.full_messages.join(", ")
       render :new
     end
+  end
+
+  def edit
   end
 
   def new
@@ -38,9 +45,6 @@ class MemoriesController < ApplicationController
     memory = current_user.memories.find_by(id: params[:id])
     memory.destroy if memory
     redirect_to memories_path
-  end
-
-  def link
   end
 
   private
@@ -75,20 +79,11 @@ class MemoriesController < ApplicationController
   end
 
   def build_spheres(memory, sphere_params)
-    errors = []
-
     sphere_params.each do |_, sphere_attrs|
-      return unless sphere_attrs[:panorama]
-
       sphere = memory.spheres.build
       sphere.panorama = sphere_attrs[:panorama]
       sphere.caption = sphere_attrs[:caption]
-
-      unless sphere.save
-        errors << sphere.errors
-      end
+      sphere.save
     end
-
-    errors
   end
 end

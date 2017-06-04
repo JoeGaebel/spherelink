@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% if true #@page_title %>
-      <title>Saudade</title>
-    <% else %>
-      <title>Social Microloan</title>
-    <% end %>
+    <title>Saudade</title>
 
     <%= render 'layouts/rails_default' %>
     <%= render 'layouts/shim' %>
   </head>
 
   <body <%= "class=#{ @body_class }" if @body_class %>>
-  <% flash.each do |message_type, message| %>
-    <div class="alert alert-<%= message_type %>"><%= message %></div>
-  <% end %>
-  <%= yield %>
+    <% unless @hideFlash %>
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <% end %>
+    <% end %>
+
+    <%= yield %>
   </body>
 </html>

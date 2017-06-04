@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="header link-header">
+    <span class="title"><%= @memory.name %></span>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <%= render 'sphere_select_view' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="link-viewer col-md-6">
+      <%= render "shared/edit_memory_application", hideNavBar: true, style: "width: 100%; height: 100%", editMode: true %>
+    </div>
+    <div class="col-md-3">
+      <ul class="finishing-touches">
+        <%= render 'portal_view' %>
+      </ul>
+    </div>
+  </div>
+</div>
+<%= link_to "Back to memories...", memories_path, class: 'josefin memories-link' %>

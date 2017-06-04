@@ -1,0 +1,26 @@
+class SphereSelectView
+  constructor: (options = {}) ->
+    @app = options.app
+    @portalView = options.portalView
+    $(document).ready(@onDocumentReady)
+
+  onDocumentReady: =>
+    @createUIHash()
+    @bindHandlers()
+
+  createUIHash: ->
+    @ui = {}
+    @ui.$sphereLink = $('.sphere-link')
+
+  bindHandlers: ->
+    @ui.$sphereLink.click(@onSphereLinkClicked)
+
+  onSphereLinkClicked: (e) =>
+    id = parseInt(e.currentTarget.id)
+    associatedSphere = _.findWhere(window.memory.spheres, { id })
+    @app.setNextSphere(associatedSphere)
+
+    @portalView.resetViewState()
+
+
+window.SphereSelectView = SphereSelectView

@@ -1,0 +1,229 @@
+class PortalView
+  constructor: (options = {}) ->
+    @app = options.app
+    $(document).ready(@onDocumentReady)
+
+  onDocumentReady: =>
+    @createUIHash()
+    @bindHandlers()
+    @updateSelect()
+    @createTipsies()
+
+  createUIHash: ->
+    @ui = {}
+
+    @ui.$addPortal = $('#start-portal')
+    @ui.$resetPortal = $('#reset-portal')
+    @ui.$savePortal = $('#save-portal')
+    @ui.$toSphereSelect = $('#to_sphere_id')
+    @ui.$portalCaption = $('#portal_caption')
+
+    @ui.$tipsyLink = $('.tipsy-link')
+
+    @ui.$delete = $('#delete-portal')
+    @ui.$deleteExplanation = $('.delete-explanation')
+
+  bindHandlers: ->
+    PSV.on 'click', @onPSVClick
+
+    PSV.off 'select-marker'
+    PSV.on 'select-marker', @onSelectMarker
+
+    @ui.$addPortal.click(@onAddPortalClicked)
+    @ui.$resetPortal.click(@resetPortalState)
+    @ui.$savePortal.click(@onSavePortalClicked)
+    @ui.$delete.click(@onDeleteClick)
+
+    @ui.$portalCaption.keyup _.debounce(@onPortalCaptionChanged, 300)
+    @ui.$toSphereSelect.change(@onToSphereSelectChanged)
+
+  updateSelect: ->
+    @ui.$toSphereSelect.children().remove()
+
+    for sphere in memory.spheres
+      continue if currentSphere.id == sphere.id
+      @ui.$toSphereSelect.append($('<option>',
+        value: sphere.id,
+        text: sphere.caption
+      ))
+
+  createTipsies: ->
+    @ui.$tipsyLink.tipsy
+      gravity: 'w'
+      opacity: 1
+      html: true
+      title: ->
+        """
+          <p>
+            Portals connect one photosphere to another.
+          </p>
+          <p>
+            To add a portal, click the <b>Add</b> button then click the corners of a door.
+            Then, select the photosphere to transition to, and give it a caption
+          </p>
+        """
+
+  getPortalParams: (portal) ->
+    params =
+      id: window.currentSphere.id
+      portal:
+        polygon_px: portal.polygon_px
+        to_sphere_id: portal.to_sphere_id
+        content: portal.tooltip.content
+
+    JSON.stringify(params)
+
+  deletePortal: (portal) =>
+    portalId = portal.id.split('-')[1]
+    @portalToDelete = portal
+
+    $.ajax
+      url: "/portals/#{portalId}?&sphere_id=#{currentSphere.id}"
+      type: 'DELETE'
+      contentType: 'application/json'
+      success: @onDeletePortalSuccess
+      error: @onAjaxError
+
+  cleanPortalCache: (portal) ->
+    cachedPortal = _.findWhere(currentSphere.portals, { id: portal.id })
+    indexOfCachedPortal = currentSphere.portals.indexOf(cachedPortal)
+    if indexOfCachedPortal isnt -1
+      currentSphere.portals.splice(indexOfCachedPortal, 1)
+
+  resetViewState: =>
+    @isCreatingPortal = false
+    @isDeletingPortal = false
+
+    @ui.$addPortal.prop('disabled', false)
+    @ui.$savePortal.prop('disabled', true)
+    @ui.$resetPortal.prop('disabled', true)
+    @ui.$delete.prop('disabled', false)
+
+    @ui.$toSphereSelect.hide()
+    @ui.$portalCaption.hide()
+    @ui.$deleteExplanation.hide()
+
+    try
+      PSV.getMarker('new-portal')
+    catch
+      return
+
+    PSV.removeMarker('new-portal')
+
+
+# Event Handlers
+
+
+  onSelectMarker: (marker) =>
+    if marker.isPolygon()
+      if @isDeletingPortal
+        @deletePortal(marker)
+
+      else if !@isCreatingPortal
+        @app.doTransition(marker)
+
+  onPSVClick: (e) =>
+    if @isCreatingPortal
+      newPortal = PSV.getMarker('new-portal')
+      newPortal.polygon_px = [] unless newPortal.polygon_px[0].length
+      newPortal.polygon_px.push [e.texture_x, e.texture_y]
+
+      PSV.updateMarker(newPortal, true)
+
+      if newPortal.polygon_px.length > 2
+        @ui.$savePortal.prop('disabled', false)
+
+  onAddPortalClicked: =>
+    @ui.$addPortal.prop('disabled', true)
+    @ui.$resetPortal.prop('disabled', false)
+
+    @ui.$toSphereSelect.show()
+    @ui.$portalCaption.show()
+
+    @ui.$delete.prop('disabled', true)
+
+    @isCreatingPortal = true
+
+    PSV.addMarker
+      id: 'new-portal',
+      polygon_px: [[]]
+      to_sphere_id: @ui.$toSphereSelect.val()
+      tooltip:
+        content: @ui.$portalCaption.val()
+        position: 'right bottom'
+      svgStyle:
+        fill: "url(#points)"
+        stroke: "rgba(255, 50, 50, 0.8)"
+        'stroke-width': "2px"
+
+  onToSphereSelectChanged: =>
+    if @isCreatingPortal
+      newPortal = PSV.getMarker('new-portal')
+      newPortal.to_sphere_id = @ui.$toSphereSelect.val()
+
+      PSV.updateMarker(newPortal)
+
+  onSavePortalClicked: =>
+    portal = PSV.getMarker('new-portal')
+
+    $.ajax
+      url: '/portals'
+      type: 'POST'
+      dataType: 'json'
+      contentType: 'application/json'
+      success: @onSavePortalSuccess
+      error: @onAjaxError
+      data: @getPortalParams(portal)
+
+  onPortalCaptionChanged: =>
+    if @isCreatingPortal
+      newPortal = PSV.getMarker('new-portal')
+      newPortal.tooltip.content = @ui.$portalCaption.val()
+
+      PSV.updateMarker(newPortal)
+
+  onDeleteClick: =>
+    @ui.$deleteExplanation.show()
+    @ui.$addPortal.prop('disabled', true)
+    @ui.$resetPortal.prop('disabled', false)
+    @ui.$delete.prop('disabled', true)
+
+    @isDeletingPortal = true
+
+
+# Promises
+
+
+  onDeletePortalSuccess: =>
+    PSV.removeMarker(@portalToDelete)
+    @cleanPortalCache(@portalToDelete)
+
+    @portalToDelete = null
+    @resetViewState()
+
+  onSavePortalSuccess: (savedRecord) =>
+    portal = PSV.getMarker('new-portal')
+    PSV.removeMarker('new-portal', false)
+
+    createdPortalAttrs =
+      id: "portal-#{savedRecord.id}"
+      polygon_px: portal.polygon_px
+      to_sphere_id: portal.to_sphere_id
+      tooltip:
+        content: portal.tooltip.content
+        position: 'right bottom'
+      svgStyle:
+        fill: "url(#points)"
+        stroke: "rgba(255, 50, 50, 0.8)"
+        'stroke-width': "2px"
+
+    PSV.addMarker(createdPortalAttrs)
+    currentSphere.portals.push createdPortalAttrs
+
+    @resetViewState()
+
+  onAjaxError: (jqXHR, textStatus, errorThrown) =>
+    alert("Looks like that request didn't work... #{textStatus}: #{errorThrown}")
+
+
+window.PortalView = PortalView

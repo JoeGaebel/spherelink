@@ -9,12 +9,13 @@
     <%= render "shared/memory_application", hideNavBar: true, style: "width: 100%; height: 600px;" %>
   </div>
 
-  <div class="josefin description">
+  <div class="josefin description show-description">
     <%= @memory.description %>
   </div>
 </div>
+
 <% if logged_in? %>
-  <%= link_to "Memories...", memories_path, class: "profile-saudade josefin demo" %>
+  <%= link_to "Back to memories...", memories_path, class: "memories-link josefin" %>
 <% else %>
-  <%= link_to "Create your own!", signup_path, class: "profile-saudade josefin demo" %>
+  <%= link_to "Create your own!", signup_path, class: "memories-link josefin" %>
 <% end %>

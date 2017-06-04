@@ -1,7 +1,7 @@
 class Sphere < ApplicationRecord
   belongs_to :memory
-  has_many :portals, foreign_key: 'from_sphere_id'
-  has_many :markers
+  has_many :portals, foreign_key: 'from_sphere_id', dependent: :destroy
+  has_many :markers, dependent: :destroy
 
   has_one :sound_context, as: :context
   has_one :sound, through: :sound_context, source: :sound
@@ -9,6 +9,7 @@ class Sphere < ApplicationRecord
   mount_uploader :panorama, SphereUploader
 
   validates_presence_of :caption
+  validates_presence_of :panorama
 
   def to_builder
     Jbuilder.new do |json|

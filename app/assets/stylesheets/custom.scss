@@ -34,6 +34,7 @@ body.demo {
   color: #696969;
 
   &:hover { text-decoration: none; color: #337ab7;}
+  float: right;
 }
 
 a.demo {
@@ -108,7 +109,7 @@ p, .josefin {
   width: 50%;
   margin: 0 auto;
   text-align: center;
-  margin-bottom: 17px;
+  margin-bottom: -10px;
 }
 
 .description {
@@ -317,8 +318,6 @@ footer ul li {
 }
 
 .add-sphere {
-  padding-top: 10px;
-  padding-bottom: 10px;
   input[type="file"] {
     width: initial;
     line-height: 10px;
@@ -331,7 +330,7 @@ footer ul li {
 }
 
 .create-sphere {
-  margin-top: 20px;
+  margin: 20px 0 20px 0;
 }
 
 input, textarea, select, .uneditable-input {
@@ -505,4 +504,18 @@ span.picture {
     font-size: 14px;
     margin-bottom: 5px;
   }
+}
+
+.new_memory, .edit_memory {
+  #error_explanation {
+    .alert {
+      position: relative;
+      float: none;
+    }
+  }
+}
+
+
+.show-description {
+  padding-top: 15px;
 }
