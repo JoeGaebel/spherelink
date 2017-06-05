@@ -22,5 +22,6 @@
 //= require soundmanager2/script/soundmanager2-jsmin
 //= require nested_form_fields
 //= require tipsy
+//= require bootstrap-wysihtml5
 //= require_tree ./applications/
 //= require_tree .

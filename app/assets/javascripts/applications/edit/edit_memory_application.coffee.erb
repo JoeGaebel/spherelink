@@ -6,9 +6,14 @@ class EditMemoryApplication extends MemoryApplication
   constructor: (options = {}) ->
     super
     @portalView = new PortalView({ app: @ })
-    @sphereSelectView = new SphereSelectView
-      app: @
-      portalView: @portalView
+    @markerView = new MarkerView({ app: @ })
+    @sphereSelectView = new SphereSelectView({ app: @ })
+
+    @views = [@portalView, @markerView]
+
+  bindHandlers: ->
+    super
+    PSV.off 'select-marker'
 
 # Helpers
 
@@ -23,9 +28,36 @@ class EditMemoryApplication extends MemoryApplication
     super
     @portalView.updateSelect()
 
+  freezeOtherViews: (except) ->
+    viewsToFreeze = _.reject @views, (view) ->
+      view instanceof except.constructor
+
+    for view in viewsToFreeze
+      view.freeze()
+
+  unfreezeOtherViews: (except) ->
+    viewsToUnfreeze = _.reject @views, (view) ->
+      view instanceof except.constructor
+
+    for view in viewsToUnfreeze
+      view.resetViewState()
+
+  resetPageState: =>
+    for view in @views
+      view.resetViewState()
+
+
+# Promises
+
+  onAjaxError: (jqXHR, textStatus, errorThrown) =>
+    alert("Looks like that request didn't work... #{textStatus}: #{errorThrown}")
+
+
 # Constants
 
   editPanoramaSettings:
     anim_speed: '0rpm'
+
+  defaultMarkerDimension: <%= Marker::DEFAULT_DIM %>
 
 window.EditMemoryApplication = EditMemoryApplication

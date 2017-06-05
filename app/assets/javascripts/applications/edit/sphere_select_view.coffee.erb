@@ -20,7 +20,7 @@ class SphereSelectView
     associatedSphere = _.findWhere(window.memory.spheres, { id })
     @app.setNextSphere(associatedSphere)
 
-    @portalView.resetViewState()
+    @app.resetPageState()
 
 
 window.SphereSelectView = SphereSelectView
