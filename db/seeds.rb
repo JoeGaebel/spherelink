@@ -1,3 +1,9 @@
+include ActionView::Helpers::AssetTagHelper
+def asset_image_tag(image)
+  path = ActionController::Base.helpers.asset_url(image)
+  "#{image_tag(path, style: 'max-width: 100%; max-height: 100%;')}"
+end
+
 joe = User.create!({
   name:  'Joe',
   email: 'joe@joegaebel.com',
@@ -33,7 +39,7 @@ Marker.create!({
   sphere: kitchen_sphere,
   image: 'pin2.png',
   tooltip_content: 'Look at joes face',
-  content: File.open("#{Rails.root}/app/assets/images/joesface.jpg"),
+  content: asset_image_tag('joesface.jpg'),
   x: 2068,
   y: 1225,
   width: 32,
@@ -44,7 +50,7 @@ Marker.create!({
   sphere: kitchen_sphere,
   image: 'pin2.png',
   tooltip_content: 'cool fridge photo',
-  content: File.open("#{Rails.root}/app/assets/images/fridge.jpg"),
+  content: asset_image_tag('fridge.jpg'),
   x: 8546,
   y: 745,
   width: 32,
@@ -161,7 +167,7 @@ Portal.create!({
 Marker.create!({
   sphere: night_time,
   image: 'pin2.png',
-  content: File.open("#{Rails.root}/app/assets/images/marina_night.jpg"),
+  content: asset_image_tag('marina_night.jpg'),
   x: 6815,
   y: 579,
   width: 32,
@@ -171,7 +177,7 @@ Marker.create!({
 Marker.create!({
   sphere: marina,
   image: 'pin2.png',
-  content: File.open("#{Rails.root}/app/assets/images/joe_sail.jpg"),
+  content: asset_image_tag('joe_sail.jpg'),
   x: 8991,
   y: 632,
   width: 32,
@@ -181,7 +187,7 @@ Marker.create!({
 Marker.create!({
   sphere: boat_bed,
   image: 'pin2.png',
-  content: File.open("#{Rails.root}/app/assets/images/books.jpg"),
+  content: asset_image_tag('books.jpg'),
   x: 6658,
   y: 2894,
   width: 32,
@@ -191,7 +197,7 @@ Marker.create!({
 Marker.create!({
   sphere: boat_bed,
   image: 'pin2.png',
-  content: File.open("#{Rails.root}/app/assets/images/dollars.jpg"),
+  content: asset_image_tag('dollars.jpg'),
   x: 2298,
   y: 2651,
   width: 32,
@@ -201,7 +207,7 @@ Marker.create!({
 Marker.create!({
   sphere: night_time,
   image: 'pin2.png',
-  content: File.open("#{Rails.root}/app/assets/images/marina_night2.jpg"),
+  content: asset_image_tag('marina_night2.jpg'),
   x: 3032,
   y: 374,
   width: 32,
@@ -211,7 +217,7 @@ Marker.create!({
 Marker.create!({
   sphere: boat_livingroom,
   image: 'pin2.png',
-  content: File.open("#{Rails.root}/app/assets/images/drawer.jpg"),
+  content: asset_image_tag('drawer.jpg'),
   x: 8024,
   y: 4747,
   width: 32,
@@ -221,7 +227,7 @@ Marker.create!({
 Marker.create!({
   sphere: night_time,
   image: 'pin2.png',
-  content: File.open("#{Rails.root}/app/assets/images/golden_gate_night.jpg"),
+  content: asset_image_tag('golden_gate_night.jpg'),
   x: 6383,
   y: 638,
   width: 32,
@@ -231,7 +237,7 @@ Marker.create!({
 Marker.create!({
   sphere: night_time,
   image: 'pin2.png',
-  content: File.open("#{Rails.root}/app/assets/images/boat_bed_night.jpg"),
+  content: asset_image_tag('boat_bed_night.jpg'),
   x: 5308,
   y: 1230,
   width: 32,

@@ -1,5 +1,4 @@
 class Marker < ApplicationRecord
-  include ActionView::Helpers::AssetTagHelper
   DEFAULT_DIM = 32
 
   belongs_to :sphere
