@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   resources :password_resets,     only: [:new, :create, :edit, :update]
   resources :memories
   resources :portals,             only: [:create, :destroy]
+  resources :markers,             only: [:create, :destroy]
 end

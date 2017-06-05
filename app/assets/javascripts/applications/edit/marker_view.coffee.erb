@@ -1,0 +1,243 @@
+class MarkerView
+  constructor: (options = {}) ->
+    @app = options.app
+    $(document).ready(@onDocumentReady)
+
+  onDocumentReady: =>
+    @createUIHash()
+    @bindHandlers()
+    @createTipsies()
+
+  createUIHash: ->
+    @ui = {}
+
+    @ui.$addMarker = $('#add-marker')
+    @ui.$resetMarker = $('#reset-marker')
+    @ui.$saveMarker = $('#save-marker')
+    @ui.$deleteMarker = $('#delete-marker')
+
+    @ui.$markerCaption = $('#marker_caption')
+    @ui.$markerContent = $('#marker_content')
+
+    @ui.$tipsy = $('#marker-tipsy')
+    @ui.$deleteExplanation = $('.delete-marker-explanation')
+
+  bindHandlers: ->
+    PSV.on 'click', @onPSVClick
+    PSV.on 'select-marker', @onSelectMarker
+
+    @ui.$addMarker.click(@onAddMarkerClick)
+    @ui.$resetMarker.click(@app.resetPageState)
+    @ui.$saveMarker.click(@onSaveMarkerClick)
+    @ui.$deleteMarker.click(@onDeleteMarkerClick)
+
+    @ui.$markerCaption.keyup _.debounce(@onMarkerCaptionChange)
+    @ui.$markerContent.keyup _.debounce(@onMarkerContentChange)
+
+  createTipsies: ->
+    @ui.$tipsy.tipsy
+      gravity: 'w'
+      opacity: 1
+      html: true
+      title: ->
+        """
+          <p>
+            Markers allow you to embed content into the Sphere
+          </p>
+          <p>
+            To add a marker, click the <b>Add</b> button then click a point.
+            Then, fill in the caption and the content
+          </p>
+        """
+
+  resetViewState: =>
+    @isCreatingMarker = false
+    @isDeletingMarker = false
+
+    @ui.$addMarker.prop('disabled', false)
+    @ui.$saveMarker.prop('disabled', true)
+    @ui.$resetMarker.prop('disabled', true)
+    @ui.$deleteMarker.prop('disabled', false)
+
+    @ui.$markerCaption.hide()
+    @ui.$markerContent.hide()
+
+    @ui.$deleteExplanation.hide()
+
+    try
+      PSV.getMarker('new-marker')
+    catch
+      return
+
+    PSV.removeMarker('new-marker')
+
+  freeze: ->
+    @ui.$addMarker.prop('disabled', true)
+    @ui.$saveMarker.prop('disabled', true)
+    @ui.$resetMarker.prop('disabled', true)
+    @ui.$deleteMarker.prop('disabled', true)
+
+    @ui.$markerCaption.hide()
+    @ui.$markerContent.hide()
+
+    @ui.$deleteExplanation.hide()
+
+    @isCreatingMarker = false
+    @isDeletingMarker = false
+
+  getMarkerParams: (marker) ->
+    params =
+      id: window.currentSphere.id
+      marker:
+        x: marker.x
+        y: marker.y
+        caption: marker.tooltip?.content || ''
+        content: marker.content
+
+    JSON.stringify(params)
+
+  deleteMarker: (marker) =>
+    markerId = marker.id.split('-')[1]
+    @markerToDelete = marker
+
+    $.ajax
+      url: "/markers/#{markerId}?&sphere_id=#{currentSphere.id}"
+      type: 'DELETE'
+      contentType: 'application/json'
+      success: @onDeleteMarkerSuccess
+      error: @app.onAjaxError
+
+  cleanMarkerCache: (marker) ->
+    cachedMarker = _.findWhere(currentSphere.markers, { id: marker.id })
+    indexOfCachedMarker = currentSphere.markers.indexOf(cachedMarker)
+    if indexOfCachedMarker isnt -1
+      currentSphere.markers.splice(indexOfCachedMarker, 1)
+
+# Event Handlers
+
+
+  onSelectMarker: (marker, event) =>
+    if marker.isNormal() && @isDeletingMarker
+      marker.content = ''
+      @deleteMarker(marker)
+
+  onPSVClick: (e) =>
+    if @isCreatingMarker
+      try
+        marker = PSV.getMarker('new-marker')
+      catch
+        PSV.addMarker
+          id: 'new-marker'
+          x: e.texture_x
+          y: e.texture_y
+          image: @app.pinUrl
+          width: @app.defaultMarkerDimension
+          height: @app.defaultMarkerDimension
+          sphere_id: currentSphere.id
+          content: @ui.$markerContent.val()
+          tooltip:
+            content: @ui.$markerCaption.val()
+
+        @ui.$saveMarker.prop('disabled', false)
+        @ui.$markerCaption.show()
+        @ui.$markerContent.show()
+
+        return
+
+      PSV.updateMarker
+        id: 'new-marker'
+        x: e.texture_x
+        y: e.texture_y
+
+  onAddMarkerClick: =>
+    @app.freezeOtherViews(@)
+
+    @ui.$addMarker.prop('disabled', true)
+    @ui.$resetMarker.prop('disabled', false)
+    @ui.$deleteMarker.prop('disabled', true)
+
+    @isCreatingMarker = true
+
+  onSaveMarkerClick: =>
+    marker = PSV.getMarker('new-marker')
+
+    $.ajax
+      url: '/markers'
+      type: 'POST'
+      dataType: 'json'
+      contentType: 'application/json'
+      success: @onSaveMarkerSuccess
+      error: @app.onAjaxError
+      data: @getMarkerParams(marker)
+
+
+  onDeleteMarkerClick: =>
+    @app.freezeOtherViews(@)
+    @ui.$deleteExplanation.show()
+
+    @ui.$addMarker.prop('disabled', true)
+    @ui.$resetMarker.prop('disabled', false)
+    @ui.$deleteMarker.prop('disabled', true)
+
+    @isDeletingMarker = true
+
+  onMarkerCaptionChange: =>
+    caption = @ui.$markerCaption.val()
+
+    if caption
+      PSV.updateMarker
+        id: 'new-marker'
+        tooltip:
+          content: @ui.$markerCaption.val()
+    else
+      PSV.updateMarker
+        id: 'new-marker'
+        tooltip: null
+
+  onMarkerContentChange: =>
+    content = @ui.$markerContent.val()
+
+    if content
+      PSV.updateMarker
+        id: 'new-marker'
+        content: content
+    else
+      PSV.updateMarker
+        id: 'new-marker'
+        content: null
+
+
+# Promises
+
+  onSaveMarkerSuccess: (savedRecord) =>
+    marker = PSV.getMarker('new-marker')
+    PSV.removeMarker('new-marker', false)
+
+    createdMarkerAttrs =
+      id: "marker-#{savedRecord.id}"
+      x: marker.x
+      y: marker.y
+      tooltip:
+        content: marker.tooltip?.content || ''
+        position: 'right bottom'
+      content: marker.content
+      image: @app.pinUrl
+      width: @app.defaultMarkerDimension
+      height: @app.defaultMarkerDimension
+      sphere_id: currentSphere.id
+
+    PSV.addMarker(createdMarkerAttrs)
+    currentSphere.markers.push createdMarkerAttrs
+
+    @app.resetPageState()
+
+  onDeleteMarkerSuccess: =>
+    PSV.removeMarker(@markerToDelete)
+    @cleanMarkerCache(@markerToDelete)
+
+    @markerToDelete = null
+    @app.resetPageState()
+
+
+
+window.MarkerView = MarkerView

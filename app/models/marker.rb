@@ -1,8 +1,8 @@
 class Marker < ApplicationRecord
   include ActionView::Helpers::AssetTagHelper
+  DEFAULT_DIM = 32
 
   belongs_to :sphere
-  mount_uploader :content, MarkerUploader
 
   def to_builder
     Jbuilder.new do |json|
@@ -15,7 +15,7 @@ class Marker < ApplicationRecord
           json.position tooltip_position
         end
       end
-      json.content image_tag(content.url, style: "max-width: 100%; max-height: 100%;") if content.url.present?
+      json.content content if content.present?
     end
   end
 end

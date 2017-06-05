@@ -1,8 +1,8 @@
 <li>
   <div class="tipsy-header">
-    <h3>Portals <a class="tipsy-link">(?)</a></h3>
+    <h3>Portals <a id="portal-tipsy" class="tipsy-link">(?)</a></h3>
   </div>
-  <p class="delete-explanation" hidden>Click a portal to delete it</p>
+  <p class="delete-portal-explanation" hidden>Click a portal to delete it</p>
 
   <%= select_tag 'to_sphere_id', nil, hidden: true %>
   <%= text_field_tag 'portal_caption', nil, placeholder: 'Portal caption', hidden: true %>

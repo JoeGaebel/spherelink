@@ -18,21 +18,19 @@ class PortalView
     @ui.$toSphereSelect = $('#to_sphere_id')
     @ui.$portalCaption = $('#portal_caption')
 
-    @ui.$tipsyLink = $('.tipsy-link')
+    @ui.$tipsy = $('#portal-tipsy')
 
-    @ui.$delete = $('#delete-portal')
-    @ui.$deleteExplanation = $('.delete-explanation')
+    @ui.$deletePortal = $('#delete-portal')
+    @ui.$deleteExplanation = $('.delete-portal-explanation')
 
   bindHandlers: ->
     PSV.on 'click', @onPSVClick
-
-    PSV.off 'select-marker'
     PSV.on 'select-marker', @onSelectMarker
 
     @ui.$addPortal.click(@onAddPortalClicked)
-    @ui.$resetPortal.click(@resetPortalState)
+    @ui.$resetPortal.click(@app.resetPageState)
     @ui.$savePortal.click(@onSavePortalClicked)
-    @ui.$delete.click(@onDeleteClick)
+    @ui.$deletePortal.click(@onDeleteClick)
 
     @ui.$portalCaption.keyup _.debounce(@onPortalCaptionChanged, 300)
     @ui.$toSphereSelect.change(@onToSphereSelectChanged)
@@ -48,7 +46,7 @@ class PortalView
       ))
 
   createTipsies: ->
-    @ui.$tipsyLink.tipsy
+    @ui.$tipsy.tipsy
       gravity: 'w'
       opacity: 1
       html: true
@@ -82,7 +80,7 @@ class PortalView
       type: 'DELETE'
       contentType: 'application/json'
       success: @onDeletePortalSuccess
-      error: @onAjaxError
+      error: @app.onAjaxError
 
   cleanPortalCache: (portal) ->
     cachedPortal = _.findWhere(currentSphere.portals, { id: portal.id })
@@ -97,7 +95,7 @@ class PortalView
     @ui.$addPortal.prop('disabled', false)
     @ui.$savePortal.prop('disabled', true)
     @ui.$resetPortal.prop('disabled', true)
-    @ui.$delete.prop('disabled', false)
+    @ui.$deletePortal.prop('disabled', false)
 
     @ui.$toSphereSelect.hide()
     @ui.$portalCaption.hide()
@@ -110,6 +108,19 @@ class PortalView
 
     PSV.removeMarker('new-portal')
 
+  freeze: ->
+    @ui.$addPortal.prop('disabled', true)
+    @ui.$savePortal.prop('disabled', true)
+    @ui.$resetPortal.prop('disabled', true)
+    @ui.$deletePortal.prop('disabled', true)
+
+    @ui.$toSphereSelect.hide()
+    @ui.$portalCaption.hide()
+    @ui.$deleteExplanation.hide()
+
+    @isCreatingPortal = false
+    @isDeletingPortal = false
+
 
 # Event Handlers
 
@@ -119,7 +130,7 @@ class PortalView
       if @isDeletingPortal
         @deletePortal(marker)
 
-      else if !@isCreatingPortal
+      if !@isCreatingPortal and !@isDeletingPortal
         @app.doTransition(marker)
 
   onPSVClick: (e) =>
@@ -134,13 +145,15 @@ class PortalView
         @ui.$savePortal.prop('disabled', false)
 
   onAddPortalClicked: =>
+    @app.freezeOtherViews(@)
+
     @ui.$addPortal.prop('disabled', true)
     @ui.$resetPortal.prop('disabled', false)
 
     @ui.$toSphereSelect.show()
     @ui.$portalCaption.show()
 
-    @ui.$delete.prop('disabled', true)
+    @ui.$deletePortal.prop('disabled', true)
 
     @isCreatingPortal = true
 
@@ -172,7 +185,7 @@ class PortalView
       dataType: 'json'
       contentType: 'application/json'
       success: @onSavePortalSuccess
-      error: @onAjaxError
+      error: @app.onAjaxError
       data: @getPortalParams(portal)
 
   onPortalCaptionChanged: =>
@@ -183,10 +196,11 @@ class PortalView
       PSV.updateMarker(newPortal)
 
   onDeleteClick: =>
+    @app.freezeOtherViews(@)
     @ui.$deleteExplanation.show()
     @ui.$addPortal.prop('disabled', true)
     @ui.$resetPortal.prop('disabled', false)
-    @ui.$delete.prop('disabled', true)
+    @ui.$deletePortal.prop('disabled', true)
 
     @isDeletingPortal = true
 
@@ -199,7 +213,7 @@ class PortalView
     @cleanPortalCache(@portalToDelete)
 
     @portalToDelete = null
-    @resetViewState()
+    @app.resetPageState()
 
   onSavePortalSuccess: (savedRecord) =>
     portal = PSV.getMarker('new-portal')
@@ -220,10 +234,7 @@ class PortalView
     PSV.addMarker(createdPortalAttrs)
     currentSphere.portals.push createdPortalAttrs
 
-    @resetViewState()
-
-  onAjaxError: (jqXHR, textStatus, errorThrown) =>
-    alert("Looks like that request didn't work... #{textStatus}: #{errorThrown}")
+    @app.resetPageState()
 
 
 window.PortalView = PortalView
