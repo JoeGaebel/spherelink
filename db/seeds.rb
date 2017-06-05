@@ -20,7 +20,7 @@ memory = Memory.create!({
   user: joe,
   name: "Joe's Childhood Home",
   description: "I lived in this same house for 18 years until I moved out. My parents still live here.",
-  private: true
+  private: false
 })
 
 livingroom_sphere = Sphere.create!({
