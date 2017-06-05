@@ -7,6 +7,7 @@ class MarkerView
     @createUIHash()
     @bindHandlers()
     @createTipsies()
+    @createEditor()
 
   createUIHash: ->
     @ui = {}
@@ -50,6 +51,15 @@ class MarkerView
           </p>
         """
 
+  createEditor: ->
+    @ui.$markerContent.wysihtml5
+      toolbar:
+        'fa': true
+        'lists': false
+
+    @ui.$markerContentToolbar = $('.wysihtml5-toolbar')
+    @ui.$markerContentToolbar.click => _.defer(@onMarkerContentChange)
+
   resetViewState: =>
     @isCreatingMarker = false
     @isDeletingMarker = false
@@ -61,6 +71,7 @@ class MarkerView
 
     @ui.$markerCaption.hide()
     @ui.$markerContent.hide()
+    @ui.$markerContentToolbar.hide()
 
     @ui.$deleteExplanation.hide()
 
@@ -79,6 +90,7 @@ class MarkerView
 
     @ui.$markerCaption.hide()
     @ui.$markerContent.hide()
+    @ui.$markerContentToolbar.hide()
 
     @ui.$deleteExplanation.hide()
 
@@ -92,7 +104,7 @@ class MarkerView
         x: marker.x
         y: marker.y
         caption: marker.tooltip?.content || ''
-        content: marker.content
+        content: @getEditorContent()
 
     JSON.stringify(params)
 
@@ -112,6 +124,9 @@ class MarkerView
     indexOfCachedMarker = currentSphere.markers.indexOf(cachedMarker)
     if indexOfCachedMarker isnt -1
       currentSphere.markers.splice(indexOfCachedMarker, 1)
+
+  getEditorContent: =>
+    @ui.$markerContent.html()
 
 # Event Handlers
 
@@ -134,13 +149,14 @@ class MarkerView
           width: @app.defaultMarkerDimension
           height: @app.defaultMarkerDimension
           sphere_id: currentSphere.id
-          content: @ui.$markerContent.val()
+          content: @getEditorContent()
           tooltip:
             content: @ui.$markerCaption.val()
 
         @ui.$saveMarker.prop('disabled', false)
         @ui.$markerCaption.show()
         @ui.$markerContent.show()
+        @ui.$markerContentToolbar.show()
 
         return
 
@@ -195,7 +211,7 @@ class MarkerView
         tooltip: null
 
   onMarkerContentChange: =>
-    content = @ui.$markerContent.val()
+    content = @getEditorContent()
 
     if content
       PSV.updateMarker

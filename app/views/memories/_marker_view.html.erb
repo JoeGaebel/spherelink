@@ -4,7 +4,7 @@
   </div>
   <p class="delete-marker-explanation" hidden>Click a marker to delete it</p>
   <%= text_field_tag 'marker_caption', nil, placeholder: 'Marker caption', hidden: true %>
-  <%= text_area_tag 'marker_content', nil, placeholder: 'Marker content', hidden: true %>
+  <div id="marker_content"></div>
 
   <button id="add-marker" class="btn btn-primary">Add</button>
   <button id="save-marker" class="btn btn-success" disabled>Save</button>

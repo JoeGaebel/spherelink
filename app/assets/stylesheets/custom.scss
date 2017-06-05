@@ -519,3 +519,22 @@ span.picture {
 .show-description {
   padding-top: 15px;
 }
+
+#marker_content {
+  display: none;
+  border: 1px solid #ccc;
+  height: 207px;
+  margin-bottom: 23px;
+  overflow: scroll;
+}
+
+ul.wysihtml5-toolbar.wysihtml5-toolbar {
+  display: none;
+}
+
+.psv-panel-content {
+  h1, h2, h3 {
+    color: white;
+  }
+
+}

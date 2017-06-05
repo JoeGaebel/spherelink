@@ -24,6 +24,8 @@ gem 'underscore-rails'
 gem 'figaro'
 gem 'nested_form_fields'
 gem 'tipsy-rails'
+gem 'font-awesome-rails'
+gem 'bootstrap-wysihtml5-rails'
 
 gem 'pg', group: :production
 
