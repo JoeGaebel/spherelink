@@ -1,0 +1,20 @@
+class SpheresController < ApplicationController
+  before_action :ensure_user_logged_in
+
+  def zoom
+    sphere = current_user.spheres.find(params[:id])
+
+    if sphere.blank?
+      render json: { status: :not_found }
+      return
+    end
+
+    sphere.default_zoom = params[:default_zoom]
+
+    if sphere.save
+      render json: sphere, status: :created
+    else
+      render json: sphere.errors, status: :not_found
+    end
+  end
+end

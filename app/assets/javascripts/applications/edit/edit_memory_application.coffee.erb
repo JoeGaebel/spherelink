@@ -1,6 +1,7 @@
 #= require applications/memory_application
 #= require applications/edit/portal_view
 #= require applications/edit/sphere_select_view
+#= require applications/edit/zoom_view
 
 class EditMemoryApplication extends MemoryApplication
   constructor: (options = {}) ->
@@ -8,6 +9,7 @@ class EditMemoryApplication extends MemoryApplication
     @portalView = new PortalView({ app: @ })
     @markerView = new MarkerView({ app: @ })
     @sphereSelectView = new SphereSelectView({ app: @ })
+    @zoomView = new ZoomView({ app: @ })
 
     @views = [@portalView, @markerView]
 
@@ -27,6 +29,7 @@ class EditMemoryApplication extends MemoryApplication
   _setNextSphereMakers: (sphere) ->
     super
     @portalView.updateSelect()
+    @zoomView.resetSliderValue()
 
   freezeOtherViews: (except) ->
     viewsToFreeze = _.reject @views, (view) ->

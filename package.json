@@ -6,6 +6,7 @@
     "url": "git+https://github.com/JoeGaebel/nostalgia.git"
   },
   "dependencies": {
+    "bootstrap-slider": "^9.8.0",
     "d.js": "0.7.5",
     "dot": "1.1.1",
     "photo-sphere-viewer": "3.2.2",
