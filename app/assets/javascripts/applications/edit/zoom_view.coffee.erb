@@ -1,0 +1,43 @@
+class ZoomView
+  constructor: (options = {}) ->
+    @app = options.app
+    $(document).ready(@onDocumentReady)
+
+  onDocumentReady: =>
+    @createUIHash()
+    @bindHandlers()
+    @resetSliderValue()
+
+  createUIHash: ->
+    @ui = {}
+
+    @ui.$slider = $('#default_zoom')
+    @ui.slider = @ui.$slider.slider()
+
+  bindHandlers: ->
+    @ui.slider.on 'change', @onSliderChange
+    @ui.slider.on 'slideStop', @saveZoomLevel
+
+  resetSliderValue: ->
+    @ui.$slider.slider('setValue', currentSphere.defaultZoom)
+
+  getLevel: ->
+    parseInt(@ui.$slider.val())
+
+  onSliderChange: =>
+    PSV.zoom(@getLevel())
+
+  saveZoomLevel: =>
+    level = @getLevel()
+    currentSphere.defaultZoom = level
+
+    $.ajax
+      url: "/spheres/#{currentSphere.id}/zoom"
+      type: 'POST'
+      dataType: 'json'
+      contentType: 'application/json'
+      error: @app.onAjaxError
+      data: JSON.stringify({ default_zoom: level })
+
+
+window.ZoomView = ZoomView
