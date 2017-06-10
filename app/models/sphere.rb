@@ -16,6 +16,7 @@ class Sphere < ApplicationRecord
       json.(self, :id, :caption)
       json.defaultZoom default_zoom
       json.panorama panorama.url
+      json.thumb panorama.thumb.url
       json.portals portals.collect { |portal| portal.to_builder.attributes! }
       json.markers markers.collect { |marker| marker.to_builder.attributes! }
       if sound.present?

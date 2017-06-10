@@ -17,5 +17,9 @@ Rails.application.routes.draw do
   resources :portals,             only: [:create, :destroy]
   resources :markers,             only: [:create, :destroy]
 
-  post 'spheres/:id/zoom', to: 'spheres#zoom'
+  resources :spheres do
+    member do
+      post :zoom
+    end
+  end
 end

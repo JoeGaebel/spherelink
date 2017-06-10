@@ -1,0 +1,67 @@
+class AddSphereView
+  constructor: (options = {}) ->
+    @app = options.app
+    $(document).ready(@onDocumentReady)
+
+  onDocumentReady: =>
+    @createUIHash()
+    @bindHandlers()
+
+  createUIHash: ->
+    @ui =
+      $addSphereLink: $('.add-sphere-link')
+      $submit: $('#upload-submit')
+      $cancel: $('#upload-cancel')
+      $caption: $('.sphere-caption')
+      $file: $('.sphere-file')
+
+      $fileForm: $('.file-form')
+      $captionForm: $('.caption-form')
+
+  bindHandlers: ->
+    @ui.$addSphereLink.click(@onAddSphereLinkClick)
+    @ui.$cancel.click(@resetPageState)
+    @ui.$submit.click(@onSubmitClick)
+
+  onAddSphereLinkClick: (event) =>
+    @ui.$addSphereLink.addClass('expanded')
+
+  resetPageState: =>
+    @ui.$addSphereLink.removeClass('expanded')
+    event.stopPropagation()
+
+  createSphere: ->
+    formData = new FormData()
+    formData.append('sphere[panorama]', @ui.$file[0].files[0]);
+    formData.append('sphere[caption]', @ui.$caption.val());
+    formData.append('memory_id', window.memory.id);
+
+    $.ajax
+      url: '/spheres',
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      type: 'POST'
+      success: @onCreateSphereSuccess
+      error: @app.onAjaxError
+
+  onSubmitClick: =>
+    if !@ui.$file[0].files[0]
+      @ui.$fileForm.addClass('has-error')
+
+    if !@ui.$caption.val()
+      @ui.$captionForm.addClass('has-error')
+
+    if @ui.$file[0].files[0] && @ui.$caption.val()
+      @ui.$fileForm.removeClass('has-error')
+      @ui.$captionForm.removeClass('has-error')
+      @createSphere()
+
+  onCreateSphereSuccess: (sphere) =>
+    window.memory.spheres.push(sphere)
+    @ui.$addSphereLink.removeClass('expanded')
+    @app.refreshSphereSelectView()
+
+
+window.AddSphereView = AddSphereView

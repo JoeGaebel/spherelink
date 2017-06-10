@@ -480,12 +480,22 @@ span.picture {
 }
 
 .sphere-item-view {
-  padding-right: 10px;
+  position: relative;
+  margin-right: 10px;
   float: left;
   text-align: center;
   p.caption {
     font-size: 1em;
     margin-bottom: 0px;
+  }
+
+  .delete-sphere {
+    position: absolute;
+    color: white;
+    right: 3px;
+    top: 5px;
+    cursor: pointer;
+    font-size: 14px;
   }
 }
 
@@ -540,5 +550,63 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
   img {
     max-width: 100%;
     max-height: 100%;
+  }
+}
+
+.add-sphere-link {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+  float: left;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+
+  .sphere-file, #upload-submit, .sphere-caption, .actions button {
+    display: none;
+  }
+
+  .glyphicon {
+    color: #ccc;
+    display: inline-block;
+    top: 30px;
+    position: relative;
+  }
+
+  .actions button {
+    padding: 3px 12px;
+    height: 27px;
+  }
+}
+
+.add-sphere-link.expanded {
+  width: 220px;
+  cursor: default;
+  border: none;
+
+  .sphere-file, #upload-submit, .sphere-caption, .actions button {
+    display: initial;
+  }
+
+  input[type=file] {
+    line-height: 0px;
+  }
+
+  .form-group {
+    margin-bottom: 2px;
+  }
+
+  .sphere-file {
+    margin-bottom: 0px;
+  }
+
+  .sphere-caption {
+    margin-bottom: 2px;
+  }
+
+  .glyphicon {
+    display: none;
   }
 }

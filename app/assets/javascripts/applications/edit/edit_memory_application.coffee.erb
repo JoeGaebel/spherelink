@@ -10,6 +10,7 @@ class EditMemoryApplication extends MemoryApplication
     @markerView = new MarkerView({ app: @ })
     @sphereSelectView = new SphereSelectView({ app: @ })
     @zoomView = new ZoomView({ app: @ })
+    @addSphereView = new AddSphereView({ app: @})
 
     @views = [@portalView, @markerView]
 
@@ -48,6 +49,9 @@ class EditMemoryApplication extends MemoryApplication
   resetPageState: =>
     for view in @views
       view.resetViewState()
+
+  refreshSphereSelectView: ->
+    @sphereSelectView.renderSpheres()
 
 
 # Promises
