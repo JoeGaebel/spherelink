@@ -1,0 +1,13 @@
+<div class="add-sphere-view">
+  <div class="add-sphere-link">
+    <div class="glyphicon glyphicon-plus"></div>
+    <%= file_field_tag 'sphere', accept: 'image/png,image/gif,image/jpeg', class: 'sphere-file'%>
+    <%= text_field_tag 'caption', nil, class: 'sphere-caption', placeholder: 'New sphere caption' %>
+    <div class="actions">
+      <%= button_tag 'Add new sphere', id: 'upload-submit', class: 'btn btn-success' %>
+      <%= button_tag 'cancel', id: 'upload-cancel', class: 'btn btn-warning' %>
+    </div>
+
+  </div>
+  <%#= text_field_tag 'marker_caption', nil, placeholder: 'Marker caption', hidden: true %>
+</div>

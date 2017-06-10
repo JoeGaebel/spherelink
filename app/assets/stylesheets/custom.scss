@@ -542,3 +542,48 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
     max-height: 100%;
   }
 }
+
+.add-sphere-link {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+  float: left;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+
+  .sphere-file, #upload-submit, .sphere-caption, .actions button {
+    display: none;
+  }
+
+  .glyphicon {
+    color: #ccc;
+    display: inline-block;
+    top: 30px;
+    position: relative;
+  }
+
+  .actions button {
+    padding: 3px 12px;
+    height: 27px;
+  }
+
+  input, button {
+    margin-bottom: 2px;
+  }
+}
+
+.add-sphere-link.expanded {
+  width: 220px;
+  cursor: default;
+
+  .sphere-file, #upload-submit, .sphere-caption, .actions button {
+    display: initial;
+  }
+
+  .glyphicon {
+    display: none;
+  }
+}

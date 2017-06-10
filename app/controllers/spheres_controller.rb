@@ -1,6 +1,25 @@
 class SpheresController < ApplicationController
   before_action :ensure_user_logged_in
 
+  def create
+    memory = current_user.memories.find(params[:memory_id])
+
+    if memory.blank?
+      render json: { status: :not_found }
+      return
+    end
+
+    sphere = memory.spheres.build
+    sphere.caption = params[:sphere][:caption]
+    sphere.panorama = params[:sphere][:panorama]
+
+    if sphere.save
+      render json: sphere, status: :created
+    else
+      render json: sphere.errors, status: :not_found
+    end
+  end
+
   def zoom
     sphere = current_user.spheres.find(params[:id])
 
