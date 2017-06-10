@@ -17,14 +17,43 @@ class SphereSelectView
         view = new SphereView(sphere)
         html = view.render()
         $(html).insertBefore($addSphereLink)
-        $("##{sphere.id}.sphere-link").click(@onSphereLinkClicked)
+        $("##{sphere.id}.sphere-link").click(@onSphereLinkClick)
+        $("##{sphere.id}.delete-sphere").click(@onSphereDeleteClick)
 
-  onSphereLinkClicked: (e) =>
+  deleteSphere: (sphereId) ->
+    $.ajax
+      url: "/spheres/#{sphereId}"
+      type: 'DELETE'
+      contentType: 'application/json'
+      success: @onSphereDeleteSuccess
+      error: @app.onAjaxError
+
+  cleanSphereCache: (sphereId) ->
+    cachedSphere = _.findWhere(window.memory.spheres, { id: sphereId })
+    indexOfCachedSphere = window.memory.spheres.indexOf(cachedSphere)
+    if indexOfCachedSphere isnt -1
+      memory.spheres.splice(indexOfCachedSphere, 1)
+
+  onSphereLinkClick: (e) =>
     id = parseInt(e.currentTarget.id)
     associatedSphere = _.findWhere(window.memory.spheres, { id })
     @app.setNextSphere(associatedSphere)
 
     @app.resetPageState()
+
+  onSphereDeleteClick: (e) =>
+    id = parseInt(e.currentTarget.id)
+    response = confirm("Delete this sphere and it's associated markers and portals?")
+    if response
+      @deleteSphere(id)
+
+  onSphereDeleteSuccess: (sphere) =>
+    @cleanSphereCache(sphere.id)
+
+    if currentSphere.id == sphere.id
+      @app.setNextSphere(memory.spheres[0])
+
+    $(".sphere-container #sphere-#{sphere.id}").remove()
 
 
 window.SphereSelectView = SphereSelectView

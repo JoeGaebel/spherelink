@@ -480,12 +480,22 @@ span.picture {
 }
 
 .sphere-item-view {
-  padding-right: 10px;
+  position: relative;
+  margin-right: 10px;
   float: left;
   text-align: center;
   p.caption {
     font-size: 1em;
     margin-bottom: 0px;
+  }
+
+  .delete-sphere {
+    position: absolute;
+    color: white;
+    right: 3px;
+    top: 5px;
+    cursor: pointer;
+    font-size: 14px;
   }
 }
 

@@ -20,6 +20,26 @@ class SpheresController < ApplicationController
     end
   end
 
+  def destroy
+    sphere = current_user.spheres.find(params[:id])
+
+    if sphere.memory.spheres.count == 1
+      render json: { status: :forbidden }
+      return
+    end
+
+    if sphere.blank?
+      render json: { status: :not_found }
+      return
+    end
+
+    if sphere.destroy
+      render json: sphere.to_builder.target!, status: :ok
+    else
+      render json: sphere.errors, status: :not_found
+    end
+  end
+
   def zoom
     sphere = current_user.spheres.find(params[:id])
 
