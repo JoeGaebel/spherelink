@@ -1,3 +1,5 @@
+#= require applications/edit/spinner_view
+
 class AddSphereView
   constructor: (options = {}) ->
     @app = options.app
@@ -23,10 +25,8 @@ class AddSphereView
     @ui.$cancel.click(@resetPageState)
     @ui.$submit.click(@onSubmitClick)
 
-  onAddSphereLinkClick: (event) =>
-    @ui.$addSphereLink.addClass('expanded')
-
   resetPageState: =>
+    @ui.$addSphereLink.click(@onAddSphereLinkClick)
     @ui.$addSphereLink.removeClass('expanded')
     event.stopPropagation()
 
@@ -35,6 +35,8 @@ class AddSphereView
     formData.append('sphere[panorama]', @ui.$file[0].files[0]);
     formData.append('sphere[caption]', @ui.$caption.val());
     formData.append('memory_id', window.memory.id);
+
+    @appendSpinner()
 
     $.ajax
       url: '/spheres',
@@ -45,6 +47,22 @@ class AddSphereView
       type: 'POST'
       success: @onCreateSphereSuccess
       error: @app.onAjaxError
+
+  appendSpinner: ->
+    $addSphereLink = $('.add-sphere-link')
+
+    view = new SpinnerView
+    html = view.render()
+    $(html).insertBefore($addSphereLink)
+
+  removeSpinner: ->
+    $('.spinner').remove()
+
+  onAddSphereLinkClick: (event) =>
+    @ui.$addSphereLink.addClass('expanded')
+    @ui.$addSphereLink.off('click')
+    @ui.$caption.val("")
+    @ui.$file.val("")
 
   onSubmitClick: =>
     if !@ui.$file[0].files[0]
@@ -61,6 +79,8 @@ class AddSphereView
   onCreateSphereSuccess: (sphere) =>
     window.memory.spheres.push(sphere)
     @ui.$addSphereLink.removeClass('expanded')
+    @removeSpinner()
+    @ui.$addSphereLink.click(@onAddSphereLinkClick)
     @app.refreshSphereSelectView()
 
 

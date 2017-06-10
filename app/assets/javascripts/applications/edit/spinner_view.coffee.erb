@@ -1,0 +1,12 @@
+class SpinnerView
+  template: ->
+    """
+      <div class="sphere-item-view spinner">
+        <%= image_tag('spinner') %>
+      </div>
+    """
+
+  render: ->
+    @template()
+
+window.SpinnerView = SpinnerView
