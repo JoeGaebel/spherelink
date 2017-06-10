@@ -9,8 +9,8 @@ class SphereSelectView
     @bindHandlers()
 
   createUIHash: ->
-    @ui = {}
-    @ui.$sphereLink = $('.sphere-link')
+    @ui =
+      $sphereLink: $('.sphere-link')
 
   bindHandlers: ->
     @ui.$sphereLink.click(@onSphereLinkClicked)

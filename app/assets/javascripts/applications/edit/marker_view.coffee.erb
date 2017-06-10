@@ -10,18 +10,17 @@ class MarkerView
     @createEditor()
 
   createUIHash: ->
-    @ui = {}
+    @ui =
+      $addMarker: $('#add-marker')
+      $resetMarker: $('#reset-marker')
+      $saveMarker: $('#save-marker')
+      $deleteMarker: $('#delete-marker')
 
-    @ui.$addMarker = $('#add-marker')
-    @ui.$resetMarker = $('#reset-marker')
-    @ui.$saveMarker = $('#save-marker')
-    @ui.$deleteMarker = $('#delete-marker')
+      $markerCaption: $('#marker_caption')
+      $markerContent: $('#marker_content')
 
-    @ui.$markerCaption = $('#marker_caption')
-    @ui.$markerContent = $('#marker_content')
-
-    @ui.$tipsy = $('#marker-tipsy')
-    @ui.$deleteExplanation = $('.delete-marker-explanation')
+      $tipsy: $('#marker-tipsy')
+      $deleteExplanation: $('.delete-marker-explanation')
 
   bindHandlers: ->
     PSV.on 'click', @onPSVClick

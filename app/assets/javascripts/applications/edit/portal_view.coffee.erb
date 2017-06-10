@@ -10,18 +10,17 @@ class PortalView
     @createTipsies()
 
   createUIHash: ->
-    @ui = {}
+    @ui =
+      $addPortal: $('#start-portal')
+      $resetPortal: $('#reset-portal')
+      $savePortal: $('#save-portal')
+      $toSphereSelect: $('#to_sphere_id')
+      $portalCaption: $('#portal_caption')
 
-    @ui.$addPortal = $('#start-portal')
-    @ui.$resetPortal = $('#reset-portal')
-    @ui.$savePortal = $('#save-portal')
-    @ui.$toSphereSelect = $('#to_sphere_id')
-    @ui.$portalCaption = $('#portal_caption')
+      $tipsy: $('#portal-tipsy')
 
-    @ui.$tipsy = $('#portal-tipsy')
-
-    @ui.$deletePortal = $('#delete-portal')
-    @ui.$deleteExplanation = $('.delete-portal-explanation')
+      $deletePortal: $('#delete-portal')
+      $deleteExplanation: $('.delete-portal-explanation')
 
   bindHandlers: ->
     PSV.on 'click', @onPSVClick
