@@ -1,3 +1,5 @@
+#= require applications/edit/sphere_view
+
 class SphereSelectView
   constructor: (options = {}) ->
     @app = options.app
@@ -5,6 +7,7 @@ class SphereSelectView
     $(document).ready(@onDocumentReady)
 
   onDocumentReady: =>
+    @renderSpheres()
     @createUIHash()
     @bindHandlers()
 
@@ -14,6 +17,14 @@ class SphereSelectView
 
   bindHandlers: ->
     @ui.$sphereLink.click(@onSphereLinkClicked)
+
+  renderSpheres: ->
+    $addSphereLink = $('.add-sphere-link')
+    for sphere in window.memory.spheres
+      view = new SphereView(sphere)
+      html = $(view.render())
+      html.insertBefore($addSphereLink)
+
 
   onSphereLinkClicked: (e) =>
     id = parseInt(e.currentTarget.id)

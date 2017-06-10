@@ -569,18 +569,23 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
     padding: 3px 12px;
     height: 27px;
   }
-
-  input, button {
-    margin-bottom: 2px;
-  }
 }
 
 .add-sphere-link.expanded {
   width: 220px;
   cursor: default;
+  border: none;
 
   .sphere-file, #upload-submit, .sphere-caption, .actions button {
     display: initial;
+  }
+
+  .sphere-file {
+    margin-bottom: 10px;
+  }
+
+  .sphere-caption {
+    margin-bottom: 14px;
   }
 
   .glyphicon {
