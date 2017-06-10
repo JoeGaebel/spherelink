@@ -14,7 +14,7 @@ class SpheresController < ApplicationController
     sphere.panorama = params[:sphere][:panorama]
 
     if sphere.save
-      render json: sphere, status: :created
+      render json: sphere.to_builder.target!, status: :created
     else
       render json: sphere.errors, status: :not_found
     end
@@ -31,7 +31,7 @@ class SpheresController < ApplicationController
     sphere.default_zoom = params[:default_zoom]
 
     if sphere.save
-      render json: sphere, status: :created
+      render json: sphere.to_builder.target!, status: :created
     else
       render json: sphere.errors, status: :not_found
     end

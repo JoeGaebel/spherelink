@@ -8,23 +8,16 @@ class SphereSelectView
 
   onDocumentReady: =>
     @renderSpheres()
-    @createUIHash()
-    @bindHandlers()
-
-  createUIHash: ->
-    @ui =
-      $sphereLink: $('.sphere-link')
-
-  bindHandlers: ->
-    @ui.$sphereLink.click(@onSphereLinkClicked)
 
   renderSpheres: ->
-    $addSphereLink = $('.add-sphere-link')
     for sphere in window.memory.spheres
-      view = new SphereView(sphere)
-      html = $(view.render())
-      html.insertBefore($addSphereLink)
+      $addSphereLink = $('.add-sphere-link')
 
+      if $("#sphere-#{sphere.id}").length == 0
+        view = new SphereView(sphere)
+        html = view.render()
+        $(html).insertBefore($addSphereLink)
+        $("##{sphere.id}.sphere-link").click(@onSphereLinkClicked)
 
   onSphereLinkClicked: (e) =>
     id = parseInt(e.currentTarget.id)

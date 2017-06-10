@@ -580,12 +580,20 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
     display: initial;
   }
 
+  input[type=file] {
+    line-height: 0px;
+  }
+
+  .form-group {
+    margin-bottom: 2px;
+  }
+
   .sphere-file {
-    margin-bottom: 10px;
+    margin-bottom: 0px;
   }
 
   .sphere-caption {
-    margin-bottom: 14px;
+    margin-bottom: 2px;
   }
 
   .glyphicon {

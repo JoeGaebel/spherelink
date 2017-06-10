@@ -16,7 +16,7 @@ class PortalsController < ApplicationController
     portal.to_sphere_id = to_sphere.id
 
     if portal.save
-      render json: portal, status: :created
+      render json: portal.to_builder.target!, status: :created
     else
       render json: portal.errors, status: :not_found
     end
@@ -32,7 +32,7 @@ class PortalsController < ApplicationController
 
     portal = parent_sphere.portals.find(params[:id])
     if portal.present? && portal.destroy
-      render json: portal, status: :ok
+      render json: portal.to_builder.target!, status: :ok
     else
       render json: portal.errors, status: :not_found
     end

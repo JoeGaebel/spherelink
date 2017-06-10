@@ -15,6 +15,9 @@ class AddSphereView
       $caption: $('.sphere-caption')
       $file: $('.sphere-file')
 
+      $fileForm: $('.file-form')
+      $captionForm: $('.caption-form')
+
   bindHandlers: ->
     @ui.$addSphereLink.click(@onAddSphereLinkClick)
     @ui.$cancel.click(@resetPageState)
@@ -27,7 +30,7 @@ class AddSphereView
     @ui.$addSphereLink.removeClass('expanded')
     event.stopPropagation()
 
-  onSubmitClick: =>
+  createSphere: ->
     formData = new FormData()
     formData.append('sphere[panorama]', @ui.$file[0].files[0]);
     formData.append('sphere[caption]', @ui.$caption.val());
@@ -43,9 +46,22 @@ class AddSphereView
       success: @onCreateSphereSuccess
       error: @app.onAjaxError
 
+  onSubmitClick: =>
+    if !@ui.$file[0].files[0]
+      @ui.$fileForm.addClass('has-error')
 
-  onCreateSphereSuccess: =>
-    console.log("yayy")
+    if !@ui.$caption.val()
+      @ui.$captionForm.addClass('has-error')
+
+    if @ui.$file[0].files[0] && @ui.$caption.val()
+      @ui.$fileForm.removeClass('has-error')
+      @ui.$captionForm.removeClass('has-error')
+      @createSphere()
+
+  onCreateSphereSuccess: (sphere) =>
+    window.memory.spheres.push(sphere)
+    @ui.$addSphereLink.removeClass('expanded')
+    @app.refreshSphereSelectView()
 
 
 window.AddSphereView = AddSphereView
