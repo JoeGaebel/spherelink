@@ -81,7 +81,7 @@ class AddSphereView
     @ui.$addSphereLink.removeClass('expanded')
     @removeSpinner()
     @ui.$addSphereLink.click(@onAddSphereLinkClick)
-    @app.refreshSphereSelectView()
+    @app.handleNewSphere()
 
 
 window.AddSphereView = AddSphereView

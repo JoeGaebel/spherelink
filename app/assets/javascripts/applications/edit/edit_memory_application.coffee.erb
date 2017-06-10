@@ -50,8 +50,9 @@ class EditMemoryApplication extends MemoryApplication
     for view in @views
       view.resetViewState()
 
-  refreshSphereSelectView: ->
+  handleNewSphere: ->
     @sphereSelectView.renderSpheres()
+    @portalView.updateSelect()
 
 
 # Promises
