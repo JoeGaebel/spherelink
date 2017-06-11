@@ -1,6 +1,8 @@
 class Sphere < ApplicationRecord
   belongs_to :memory
   has_many :portals, foreign_key: 'from_sphere_id', dependent: :destroy
+  has_many :from_portals, class_name: 'Portal', foreign_key: 'to_sphere_id', dependent: :destroy
+
   has_many :markers, dependent: :destroy
 
   has_one :sound_context, as: :context

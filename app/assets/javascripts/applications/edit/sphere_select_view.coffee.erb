@@ -34,6 +34,19 @@ class SphereSelectView
     if indexOfCachedSphere isnt -1
       memory.spheres.splice(indexOfCachedSphere, 1)
 
+  removeAssociatedPortals: (sphereId) ->
+    portals = _.pluck(memory.spheres, 'portals')
+    portals = _.flatten(portals)
+    portalsToClean = _.where(portals, { to_sphere_id: sphereId })
+
+    for portal in portalsToClean
+      sphere = _.findWhere(memory.spheres, { id: portal.from_sphere_id })
+      index = sphere.portals.indexOf(portal)
+      sphere.portals.splice(index, 1)
+
+      if currentSphere.id == portal.from_sphere_id
+        window.PSV.removeMarker(portal.id)
+
   onSphereLinkClick: (e) =>
     id = parseInt(e.currentTarget.id)
     associatedSphere = _.findWhere(window.memory.spheres, { id })
@@ -49,6 +62,7 @@ class SphereSelectView
 
   onSphereDeleteSuccess: (sphere) =>
     @cleanSphereCache(sphere.id)
+    @removeAssociatedPortals(sphere.id)
 
     if currentSphere.id == sphere.id
       @app.setNextSphere(memory.spheres[0])

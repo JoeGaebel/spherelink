@@ -217,21 +217,8 @@ class PortalView
   onSavePortalSuccess: (savedRecord) =>
     portal = PSV.getMarker('new-portal')
     PSV.removeMarker('new-portal', false)
-
-    createdPortalAttrs =
-      id: "portal-#{savedRecord.id}"
-      polygon_px: portal.polygon_px
-      to_sphere_id: portal.to_sphere_id
-      tooltip:
-        content: portal.tooltip.content
-        position: 'right bottom'
-      svgStyle:
-        fill: "url(#points)"
-        stroke: "rgba(255, 50, 50, 0.8)"
-        'stroke-width': "2px"
-
-    PSV.addMarker(createdPortalAttrs)
-    currentSphere.portals.push createdPortalAttrs
+    PSV.addMarker(savedRecord)
+    currentSphere.portals.push(savedRecord)
 
     @app.resetPageState()
 

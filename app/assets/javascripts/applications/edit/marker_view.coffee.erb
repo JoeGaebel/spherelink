@@ -228,21 +228,8 @@ class MarkerView
     marker = PSV.getMarker('new-marker')
     PSV.removeMarker('new-marker', false)
 
-    createdMarkerAttrs =
-      id: "marker-#{savedRecord.id}"
-      x: marker.x
-      y: marker.y
-      tooltip:
-        content: marker.tooltip?.content || ''
-        position: 'right bottom'
-      content: marker.content
-      image: @app.pinUrl
-      width: @app.defaultMarkerDimension
-      height: @app.defaultMarkerDimension
-      sphere_id: currentSphere.id
-
-    PSV.addMarker(createdMarkerAttrs)
-    currentSphere.markers.push createdMarkerAttrs
+    PSV.addMarker(savedRecord)
+    currentSphere.markers.push savedRecord
 
     @app.resetPageState()
 
