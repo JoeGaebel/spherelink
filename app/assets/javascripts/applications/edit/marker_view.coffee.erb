@@ -55,6 +55,8 @@ class MarkerView
       toolbar:
         'fa': true
         'lists': false
+      events:
+        'save:dialog': @onMarkerContentChange
 
     @ui.$markerContentToolbar = $('.wysihtml5-toolbar')
     @ui.$markerContentToolbar.click => _.defer(@onMarkerContentChange)
