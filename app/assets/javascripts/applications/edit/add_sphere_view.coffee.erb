@@ -37,6 +37,7 @@ class AddSphereView
     formData.append('memory_id', window.memory.id);
 
     @appendSpinner()
+    @ui.$addSphereLink.hide()
 
     $.ajax
       url: '/spheres',
@@ -46,7 +47,7 @@ class AddSphereView
       processData: false,
       type: 'POST'
       success: @onCreateSphereSuccess
-      error: @app.onAjaxError
+      error: @onCreateSphereError
 
   appendSpinner: ->
     $addSphereLink = $('.add-sphere-link')
@@ -57,6 +58,12 @@ class AddSphereView
 
   removeSpinner: ->
     $('.spinner').remove()
+
+  resetViewState: ->
+    @removeSpinner()
+    @ui.$addSphereLink.removeClass('expanded')
+    @ui.$addSphereLink.show()
+    @ui.$addSphereLink.click(@onAddSphereLinkClick)
 
   onAddSphereLinkClick: (event) =>
     @ui.$addSphereLink.addClass('expanded')
@@ -78,10 +85,12 @@ class AddSphereView
 
   onCreateSphereSuccess: (sphere) =>
     window.memory.spheres.push(sphere)
-    @ui.$addSphereLink.removeClass('expanded')
-    @removeSpinner()
-    @ui.$addSphereLink.click(@onAddSphereLinkClick)
+    @resetViewState()
     @app.handleNewSphere()
+
+  onCreateSphereError: =>
+    @app.onAjaxError(arguments...)
+    @resetViewState()
 
 
 window.AddSphereView = AddSphereView

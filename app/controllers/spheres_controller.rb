@@ -5,7 +5,7 @@ class SpheresController < ApplicationController
     memory = current_user.memories.find(params[:memory_id])
 
     if memory.blank?
-      render json: { status: :not_found }
+      render json: {}, status: :not_found
       return
     end
 
@@ -24,12 +24,12 @@ class SpheresController < ApplicationController
     sphere = current_user.spheres.find(params[:id])
 
     if sphere.memory.spheres.count == 1
-      render json: { status: :forbidden }
+      render json: {}, status: :forbidden
       return
     end
 
     if sphere.blank?
-      render json: { status: :not_found }
+      render json: {}, status: :not_found
       return
     end
 
@@ -44,7 +44,7 @@ class SpheresController < ApplicationController
     sphere = current_user.spheres.find(params[:id])
 
     if sphere.blank?
-      render json: { status: :not_found }
+      render json: {}, status: :not_found
       return
     end
 
