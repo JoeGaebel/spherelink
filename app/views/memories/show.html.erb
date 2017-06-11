@@ -1,4 +1,4 @@
-<%= link_to "Login", login_path, class: "user-login josefin demo" if !logged_in? %>
+<%= link_to "Login", login_path, class: "move-left user-login josefin demo" if !logged_in? %>
 
 <div class="container">
   <div class="header user-header">
@@ -15,7 +15,7 @@
 </div>
 
 <% if logged_in? %>
-  <%= link_to "Back to memories...", memories_path, class: "memories-link josefin" %>
+  <%= link_to "Back to memories...", memories_path, class: "move-left memories-link josefin" %>
 <% else %>
-  <%= link_to "Create your own!", signup_path, class: "memories-link josefin" %>
+  <%= link_to "Create your own!", signup_path, class: "move-left memories-link josefin" %>
 <% end %>
