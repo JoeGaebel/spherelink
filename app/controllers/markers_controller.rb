@@ -5,7 +5,7 @@ class MarkersController < ApplicationController
     parent_sphere = current_user.spheres.find(params[:id])
 
     if parent_sphere.blank?
-      render json: { status: :not_found }
+      render json: {}, status: :bad_request
       return
     end
 
@@ -22,7 +22,7 @@ class MarkersController < ApplicationController
     if marker.save
       render json: marker.to_builder.target!, status: :created
     else
-      render json: marker.errors, status: :not_found
+      render json: marker.errors, status: :bad_request
     end
   end
 
@@ -30,7 +30,7 @@ class MarkersController < ApplicationController
     parent_sphere = current_user.spheres.find(params[:sphere_id])
 
     if parent_sphere.blank?
-      render json: { status: :not_found }
+      render json: {}, status: :not_found
       return
     end
 
@@ -38,7 +38,7 @@ class MarkersController < ApplicationController
     if marker.present? && marker.destroy
       render json: marker.to_builder.target!, status: :ok
     else
-      render json: marker.errors, status: :not_found
+      render json: marker.errors, status: :bad_request
     end
   end
 end
