@@ -18,5 +18,6 @@ module Saudade
 
     config.action_view.embed_authenticity_token_in_remote_forms = true
     config.assets.paths << Rails.root.join('node_modules')
+    config.autoload_paths << Rails.root.join('lib')
   end
 end
