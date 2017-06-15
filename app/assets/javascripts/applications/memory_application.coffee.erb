@@ -2,7 +2,6 @@ class MemoryApplication
   constructor: (options = {}) ->
     window.memory = options.memory
     window.currentSphere = memory.spheres[options.sphereNum]
-    window.hideNavBar = true
 
   start: ->
     @setupSoundManager()
@@ -108,7 +107,6 @@ class MemoryApplication
 
   onPSVReady: ->
     PSV.setCaption(currentSphere.caption)
-    PSV.hideNavbar() if window.hideNavBar
     setTimeout((-> PSV.zoom(currentSphere.defaultZoom)), 1)
 
 
@@ -120,8 +118,9 @@ class MemoryApplication
     loading_img: "<%= image_url('photosphere-logo.gif') %>",
     navbar: [
       title: 'Fullscreen',
-      content: '<%= image_tag("fullscreen.png", style: "width: 25px; height: 25px;") %>',
+      content: '<i class="glyphicon glyphicon-fullscreen"></i>',
       onClick: => window.PSV.toggleFullscreen(),
+      className: 'full-screen'
       'caption'
     ],
     sphere_segments: 128,
