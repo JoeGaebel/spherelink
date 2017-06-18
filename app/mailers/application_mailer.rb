@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'noreply@asaudade.herokuapp.com'
+  default from: 'noreply@spherelink.io'
   layout 'mailer'
 end
