@@ -27,4 +27,8 @@
   def demo
     @memory_json = Memory.second.to_builder.target!
   end
+
+  def letsencrypt
+    render text: "Bv58Dk9Pudj82oAyBwScNIKkbJ1nBEVSakWh1UOjW8g.y8WTLTOwWWbA4olBERIK4CspJS7ZCK6dcZfOO2kgCP8"
+  end
 end
