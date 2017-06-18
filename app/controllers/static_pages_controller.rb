@@ -29,8 +29,8 @@
   end
 
   def letsencrypt
-    if params[:id].match /0zkbTp/
-      render text: "0zkbTpj3qZU9SBpKo9HWZalyVKCWznTFL3VEFkSTKyU.y8WTLTOwWWbA4olBERIK4CspJS7ZCK6dcZfOO2kgCP8"
+    if params[:id].match /yysef/
+      render text: "yysef78qwgdDBZJoN6FEx2oCJrIeCCF6XKByFQR0njQ.y8WTLTOwWWbA4olBERIK4CspJS7ZCK6dcZfOO2kgCP8"
     else
       render text: "Bv58Dk9Pudj82oAyBwScNIKkbJ1nBEVSakWh1UOjW8g.y8WTLTOwWWbA4olBERIK4CspJS7ZCK6dcZfOO2kgCP8"
     end
