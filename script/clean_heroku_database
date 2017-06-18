@@ -1,3 +1,3 @@
-heroku pg:reset DATABASE --confirm asaudade &&
+heroku pg:reset DATABASE --confirm spherelink &&
 heroku run rails db:migrate &&
 heroku run rails db:seed
