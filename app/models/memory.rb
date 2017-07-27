@@ -13,7 +13,7 @@ class Memory < ApplicationRecord
   def to_builder
     Jbuilder.new do |json|
       json.(self, :id, :name)
-      json.spheres spheres.collect { |sphere| sphere.to_builder.attributes! }
+      json.spheres spheres.collect { |sphere| sphere.to_builder.attributes! }.order(:created_at)
       if default_sound.present?
         json.defaultSound default_sound.to_builder
       end
