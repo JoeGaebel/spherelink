@@ -27,6 +27,7 @@ gem 'tipsy-rails'
 gem 'font-awesome-rails'
 gem 'bootstrap-wysihtml5-rails'
 gem 'devise'
+gem 'omniauth'
 
 gem 'pg', group: :production
 

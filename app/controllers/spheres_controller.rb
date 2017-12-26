@@ -1,5 +1,5 @@
 class SpheresController < ApplicationController
-  before_action :ensure_user_logged_in
+  before_action :authenticate_user!
 
   def create
     memory = current_user.memories.find(params[:memory_id])

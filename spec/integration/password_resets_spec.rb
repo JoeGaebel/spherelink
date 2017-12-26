@@ -137,7 +137,7 @@ describe 'Password Resetting' do
             }
           })
 
-          expect(is_logged_in?).to be_truthy
+          expect(is_user_signed_in?).to be_truthy
           expect(flash[:success]).to be_present
           expect(response).to redirect_to(@user)
 
@@ -162,7 +162,7 @@ describe 'Password Resetting' do
             }
           })
 
-          expect(is_logged_in?).to be_falsey
+          expect(is_user_signed_in?).to be_falsey
           expect(flash[:danger]).to be_present
           expect(response).to redirect_to(new_password_reset_url)
 

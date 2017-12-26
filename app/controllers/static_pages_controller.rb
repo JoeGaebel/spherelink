@@ -1,6 +1,6 @@
   class StaticPagesController < ApplicationController
   def home
-    if logged_in?
+    if user_signed_in?
       @memories = current_user.memories
     else
       @body_class = 'demo'
@@ -34,6 +34,5 @@
     else
       render text: "Bv58Dk9Pudj82oAyBwScNIKkbJ1nBEVSakWh1UOjW8g.y8WTLTOwWWbA4olBERIK4CspJS7ZCK6dcZfOO2kgCP8"
     end
-
   end
 end

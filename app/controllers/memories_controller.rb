@@ -1,6 +1,6 @@
 class MemoriesController < ApplicationController
   before_action :ensure_allowed_access, only: [:show, :edit]
-  before_action :ensure_user_logged_in, only: [:index, :new, :edit, :create]
+  before_action :authenticate_user!, only: [:index, :new, :edit, :create]
 
   def create
     @hideFlash = true
@@ -54,7 +54,7 @@ class MemoriesController < ApplicationController
     not_found if memory.blank?
 
     if memory.private
-      if logged_in? && memory.user_id == current_user.id
+      if user_signed_in? && memory.user_id == current_user.id
         set_instance_vars(memory)
       else
         redirect_to_home

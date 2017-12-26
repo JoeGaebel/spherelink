@@ -28,7 +28,7 @@ describe UsersController do
       }.by(1)
 
       expect(response).to redirect_to root_url
-      expect(is_logged_in?).to be_falsey
+      expect(is_user_signed_in?).to be_falsey
     end
 
     it 'does not create a User with invalid attributes' do
@@ -164,7 +164,7 @@ describe UsersController do
 
     context 'when not logged in' do
       before do
-        expect(is_logged_in?).to eq(false)
+        expect(is_user_signed_in?).to eq(false)
       end
 
       it 'redirects to login' do
@@ -189,7 +189,7 @@ describe UsersController do
 
     context 'when not logged in' do
       before do
-        expect(is_logged_in?).to eq(false)
+        expect(is_user_signed_in?).to eq(false)
       end
 
       it 'should redirect' do

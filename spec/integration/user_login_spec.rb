@@ -11,7 +11,7 @@ describe 'user login' do
     it 'manages the session and links' do
       get login_path
       do_request(email: @user.email, password: 'password')
-      assert is_logged_in?
+      assert is_user_signed_in?
       assert_redirected_to @user
       follow_redirect!
       assert_template 'users/show'
@@ -19,7 +19,7 @@ describe 'user login' do
       assert_select "a[href=?]", logout_path
       assert_select "a[href=?]", user_path(@user)
       delete logout_path
-      assert !is_logged_in?
+      assert !is_user_signed_in?
       assert_redirected_to root_url
       delete logout_path
       follow_redirect!
@@ -72,7 +72,7 @@ describe 'user login' do
 
     it 'flashes that you are not activated' do
       do_request(email: @user.email, password: 'password')
-      expect(is_logged_in?).to be_falsey
+      expect(is_user_signed_in?).to be_falsey
       expect(response).to redirect_to(root_url)
       expect(flash[:warning]).to be_present
     end

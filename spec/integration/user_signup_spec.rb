@@ -56,21 +56,21 @@ describe 'user signup' do
       expect(user.activation_token).to be_present
 
       log_in_as(user)
-      expect(is_logged_in?).to eq(false)
+      expect(is_user_signed_in?).to eq(false)
 
       do_activate_request("invalid token", email: user.email)
-      expect(is_logged_in?).to eq(false)
+      expect(is_user_signed_in?).to eq(false)
 
 
       do_activate_request(user.activation_token, email: 'wrong')
-      expect(is_logged_in?).to eq(false)
+      expect(is_user_signed_in?).to eq(false)
 
       do_activate_request(user.activation_token, email: user.email)
       expect(user.reload).to be_activated
 
       follow_redirect!
       assert_template 'users/show'
-      expect(is_logged_in?).to eq(true)
+      expect(is_user_signed_in?).to eq(true)
     end
   end
 end

@@ -66,7 +66,7 @@ RSpec.configure do |config|
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
   end
 
-  def is_logged_in?
+  def is_user_signed_in?
     !session[:user_id].nil?
   end
 

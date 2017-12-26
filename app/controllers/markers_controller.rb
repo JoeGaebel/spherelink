@@ -1,5 +1,5 @@
 class MarkersController < ApplicationController
-  before_action :ensure_user_logged_in, only: [:create, :destroy]
+  before_action :authenticate_user!, only: [:create, :destroy]
 
   def create
     parent_sphere = current_user.spheres.find(params[:id])

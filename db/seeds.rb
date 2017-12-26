@@ -14,6 +14,8 @@ joe = User.create!({
   activated_at: Time.zone.now
 })
 
+joe.confirm
+
 puts "Creating memory stuff"
 
 memory = Memory.create!({
