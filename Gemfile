@@ -26,6 +26,7 @@ gem 'nested_form_fields'
 gem 'tipsy-rails'
 gem 'font-awesome-rails'
 gem 'bootstrap-wysihtml5-rails'
+gem 'bitfields', '0.7.0'
 
 gem 'pg', group: :production
 

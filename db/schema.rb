@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170430230323) do
+ActiveRecord::Schema.define(version: 20171229183743) do
 
   create_table "markers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "image"
@@ -63,16 +63,6 @@ ActiveRecord::Schema.define(version: 20170430230323) do
     t.decimal  "fov_lng",                           precision: 18, scale: 17, default: "0.0"
   end
 
-  create_table "relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "follower_id"
-    t.integer  "followed_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
-    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
-    t.index ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
-  end
-
   create_table "sound_contexts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string  "context_type"
     t.integer "context_id"
@@ -94,9 +84,12 @@ ActiveRecord::Schema.define(version: 20170430230323) do
     t.string   "panorama"
     t.string   "caption"
     t.integer  "memory_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "default_zoom", default: 50
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "default_zoom",    default: 50
+    t.string   "guid"
+    t.integer  "processing_bits", default: 0,  null: false
+    t.index ["guid"], name: "index_spheres_on_guid", using: :btree
     t.index ["memory_id"], name: "index_spheres_on_memory_id", using: :btree
   end
 
