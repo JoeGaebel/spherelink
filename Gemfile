@@ -27,6 +27,8 @@ gem 'tipsy-rails'
 gem 'font-awesome-rails'
 gem 'bootstrap-wysihtml5-rails'
 gem 'bitfields', '0.7.0'
+gem 'delayed_job_active_record'
+gem 'carrierwave_backgrounder'
 
 gem 'pg', group: :production
 

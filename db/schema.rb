@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171229183743) do
+ActiveRecord::Schema.define(version: 20171231030248) do
+
+  create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "priority",                 default: 0, null: false
+    t.integer  "attempts",                 default: 0, null: false
+    t.text     "handler",    limit: 65535,             null: false
+    t.text     "last_error", limit: 65535
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+  end
 
   create_table "markers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "image"
@@ -84,11 +99,12 @@ ActiveRecord::Schema.define(version: 20171229183743) do
     t.string   "panorama"
     t.string   "caption"
     t.integer  "memory_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.integer  "default_zoom",    default: 50
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.integer  "default_zoom",        default: 50
     t.string   "guid"
-    t.integer  "processing_bits", default: 0,  null: false
+    t.boolean  "panorama_processing", default: false, null: false
+    t.string   "panorama_tmp"
     t.index ["guid"], name: "index_spheres_on_guid", using: :btree
     t.index ["memory_id"], name: "index_spheres_on_memory_id", using: :btree
   end

@@ -40,7 +40,9 @@ describe SpheresController, type: :controller do
 
         it "sets the caption, panorama, and guid" do
           log_in(user)
-          do_request(params)
+          expect { do_request(params) }.to change { Delayed::Job.count }.by(1)
+
+          Delayed::Job.last.invoke_job
 
           expect(last_created_sphere.guid).to eq(fake_guid)
           expect(last_created_sphere.panorama.url).to be_present
@@ -49,7 +51,9 @@ describe SpheresController, type: :controller do
 
         it "returns the guid, and processing status" do
           log_in(user)
-          do_request(params)
+          expect { do_request(params) }.to change { Delayed::Job.count }.by(1)
+
+          Delayed::Job.last.invoke_job
 
           expect(response).to have_http_status(:accepted)
           expect(response.body).to eq(expected_response)
@@ -61,33 +65,20 @@ describe SpheresController, type: :controller do
           end
 
           context "during initial create" do
-            before do
-              # Below is a janky way of stubbing out the callback
-              # # Unfortunately this was the only way that worked.
-              SphereUploader._after_callbacks[:store].delete(:update_processing_status)
-            end
-
-            after do
-              SphereUploader._after_callbacks[:store] << :update_processing_status
-            end
-
             it "sets the processing flag to true" do
               log_in(user)
-              do_request(params)
+              expect { do_request(params) }.to change { Delayed::Job.count }.by(1)
 
               expect(last_created_sphere).to be_processing
             end
           end
 
           context "after processing" do
-            before do
-              # :'(
-              expect(SphereUploader._after_callbacks[:store]).to include(:update_processing_status)
-            end
-
             it "sets the processing flag to false" do
               log_in(user)
-              do_request(params)
+              expect { do_request(params) }.to change { Delayed::Job.count }.by(1)
+
+              Delayed::Job.last.invoke_job
 
               expect(last_created_sphere).not_to be_processing
             end
@@ -195,13 +186,12 @@ describe SpheresController, type: :controller do
       end
 
       context "when the sphere is being processed" do
-        before do
-          sphere.update_attribute(:processing_bits, Sphere::MAX_PROCESSING_BIT)
-        end
-
         it "returns the guid and processing status" do
           log_in(user)
           do_request
+
+          expect(sphere).to be_processing
+
           expect(response).to have_http_status(:accepted)
           expect(response.body).to eq(expected_response)
         end
@@ -211,7 +201,7 @@ describe SpheresController, type: :controller do
         let(:json_data) { sphere.to_builder.target! }
 
         before do
-          expect(sphere).not_to be_processing
+          sphere.update_attribute(:panorama_processing, false)
         end
 
         it "returns json and created status" do

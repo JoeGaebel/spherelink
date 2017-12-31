@@ -1,8 +1,6 @@
 class Sphere < ApplicationRecord
   include Bitfields
 
-  MAX_PROCESSING_BIT = 2
-
   belongs_to :memory
   has_many :portals, foreign_key: 'from_sphere_id', dependent: :destroy
   has_many :from_portals, class_name: 'Portal', foreign_key: 'to_sphere_id', dependent: :destroy
@@ -13,15 +11,11 @@ class Sphere < ApplicationRecord
   has_one :sound, through: :sound_context, source: :sound
 
   mount_uploader :panorama, SphereUploader
-
-  # Please update the MAX_PROCESSING_BIT if this changes
-  bitfield :processing_bits, {
-    1 => :main_processing,
-    2 => :thumb_processing
-  }
+  process_in_background :panorama
+  store_in_background :panorama
 
   def processing?
-    processing_bits > 0
+    panorama_processing
   end
 
   validates_presence_of :caption

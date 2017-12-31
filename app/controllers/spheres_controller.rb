@@ -19,7 +19,6 @@ class SpheresController < ApplicationController
     sphere = memory.spheres.build
     sphere.caption = create_params[:caption]
     sphere.panorama = create_params[:panorama]
-    sphere.processing_bits = Sphere::MAX_PROCESSING_BIT
 
     guid = SecureRandom.hex
     sphere.guid = guid

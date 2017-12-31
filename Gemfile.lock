@@ -74,6 +74,8 @@ GEM
       json (>= 1.7)
       mime-types (>= 1.16)
       mimemagic (>= 0.3.0)
+    carrierwave_backgrounder (0.4.2)
+      carrierwave (~> 0.5)
     case_transform (0.2)
       activesupport
     childprocess (0.5.9)
@@ -92,6 +94,11 @@ GEM
     concurrent-ruby (1.0.2)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
+    delayed_job (4.1.4)
+      activesupport (>= 3.0, < 5.2)
+    delayed_job_active_record (4.1.2)
+      activerecord (>= 3.0, < 5.2)
+      delayed_job (>= 3.0, < 5)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     excon (0.54.0)
@@ -429,9 +436,11 @@ DEPENDENCIES
   bootstrap-wysihtml5-rails
   capybara (~> 2.10, >= 2.10.1)
   carrierwave (= 0.11.2)
+  carrierwave_backgrounder
   chromedriver-helper
   coffee-rails (= 4.2.1)
   database_cleaner
+  delayed_job_active_record
   factory_girl_rails
   faker
   figaro
