@@ -95,7 +95,7 @@ class AddSphereView
       @newSphere()
 
   onNewSphereSuccess: (response) =>
-    @intervalID = setInterval((=> @pollForCompletion(response.guid)), 1000)
+    @intervalID = setInterval((=> @pollForCompletion(response.guid)), 5000)
     SpinnerView::showProgress();
 
   onCreateSphereSuccess: (response) =>
