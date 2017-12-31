@@ -50,7 +50,7 @@ describe SpheresController, type: :controller do
           log_in(user)
           do_request(params)
 
-          expect(response).to have_http_status(:processing)
+          expect(response).to have_http_status(:accepted)
           expect(response.body).to eq(fake_guid)
         end
 
@@ -200,7 +200,7 @@ describe SpheresController, type: :controller do
         it "returns the guid and processing status" do
           log_in(user)
           do_request
-          expect(response).to have_http_status(:processing)
+          expect(response).to have_http_status(:accepted)
           expect(response.body).to eq(guid)
         end
       end
