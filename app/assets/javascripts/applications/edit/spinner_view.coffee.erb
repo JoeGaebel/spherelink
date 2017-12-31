@@ -3,7 +3,7 @@ class SpinnerView
     """
       <div class="sphere-item-view spinner">
         <%= image_tag('spinner') %>
-        <div class="processing">Processing...</div>
+        <div class="status-text josefin">Uploading...</div>
       </div>
     """
 
@@ -11,9 +11,9 @@ class SpinnerView
     @template()
 
   showProgress: ->
-    $('.processing').show()
+    $('.status-text').text("Processing...")
 
   hideProgress: ->
-    $('.processing').hide()
+    $('.status-text').hide()
 
 window.SpinnerView = SpinnerView

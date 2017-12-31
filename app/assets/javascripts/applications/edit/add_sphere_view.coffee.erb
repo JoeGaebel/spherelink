@@ -58,7 +58,7 @@ class AddSphereView
       processData: false,
       type: 'GET'
       success: @onCreateSphereSuccess
-      error: @app.onAjaxError
+      error: @onPollError
 
   appendSpinner: ->
     $addSphereLink = $('.add-sphere-link')
@@ -98,14 +98,21 @@ class AddSphereView
     @intervalID = setInterval((=> @pollForCompletion(response.guid)), 1000)
     SpinnerView::showProgress();
 
-  onCreateSphereSuccess: (sphere) =>
+  onCreateSphereSuccess: (response) =>
+    return if response.guid
+
     clearInterval(@intervalID)
     SpinnerView::hideProgress();
-    window.memory.spheres.push(sphere)
+    window.memory.spheres.push(response)
     @resetViewState()
     @app.handleNewSphere()
 
   onNewSphereError: =>
+    @app.onAjaxError(arguments...)
+    @resetViewState()
+
+  onPollError: =>
+    clearInterval(@intervalID)
     @app.onAjaxError(arguments...)
     @resetViewState()
 
