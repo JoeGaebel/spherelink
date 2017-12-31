@@ -69,7 +69,7 @@ describe 'user signup' do
       expect(user.reload).to be_activated
 
       follow_redirect!
-      assert_template 'users/show'
+      assert_template 'memories/index'
       expect(is_logged_in?).to eq(true)
     end
   end

@@ -14,7 +14,7 @@ class User < ApplicationRecord
   before_save   :downcase_email
   before_create :create_activation_digest
 
-  has_many :memories
+  has_many :memories, dependent: :destroy
   has_many :spheres, through: :memories
 
   has_secure_password

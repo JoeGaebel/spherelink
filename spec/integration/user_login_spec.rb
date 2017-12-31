@@ -6,18 +6,21 @@ describe 'user login' do
   context 'with valid information followed by a logout' do
     before do
       @user = create(:user, password: 'password')
+
+      2.times do
+        create(:memory)
+      end
     end
 
     it 'manages the session and links' do
       get login_path
       do_request(email: @user.email, password: 'password')
       assert is_logged_in?
-      assert_redirected_to @user
+      assert_redirected_to memories_path
       follow_redirect!
-      assert_template 'users/show'
+      assert_template 'memories/index'
       assert_select "a[href=?]", login_path, count: 0
       assert_select "a[href=?]", logout_path
-      assert_select "a[href=?]", user_path(@user)
       delete logout_path
       assert !is_logged_in?
       assert_redirected_to root_url

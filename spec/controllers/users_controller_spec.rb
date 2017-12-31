@@ -259,30 +259,4 @@ describe UsersController do
       end
     end
   end
-
-  describe 'following' do
-    before do
-      @user = create(:user)
-    end
-
-    def following_request(user)
-      get :following, params: { id: user.id }
-    end
-
-    def followers_request(user)
-      get :followers, params: { id: user.id }
-    end
-
-    context 'when not logged in' do
-      it 'should redirect following' do
-        following_request(@user)
-        expect(response).to redirect_to(login_url)
-      end
-
-      it 'should redirect followers' do
-        followers_request(@user)
-        expect(response).to redirect_to(login_url)
-      end
-    end
-  end
 end

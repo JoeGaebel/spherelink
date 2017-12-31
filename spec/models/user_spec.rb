@@ -6,7 +6,8 @@ describe User do
       @user = build(:user)
     end
 
-    it { should have_many(:microposts).dependent(:destroy) }
+    it { should have_many(:memories).dependent(:destroy) }
+    it { should have_many(:spheres) }
 
     describe 'name' do
       it 'should be valid' do
@@ -91,58 +92,6 @@ describe User do
 
     it 'should return false for a user with nil digest' do
       expect(@user.authenticated?(:remember, '')).to eq(false)
-    end
-  end
-
-  describe 'following' do
-    before do
-      @user = create(:user)
-      @other_guy = create(:user)
-    end
-
-    it 'should follow and unfollow a user' do
-      expect(@user).not_to be_following(@other_guy)
-      @user.follow(@other_guy)
-
-      expect(@user).to be_following(@other_guy)
-      expect(@other_guy.followers).to include(@user)
-      @user.unfollow(@other_guy)
-
-      expect(@user).not_to be_following(@other_guy)
-    end
-  end
-
-  describe 'feed' do
-    before do
-      @user = create(:user)
-      @followed_user = create(:user)
-      @not_followed_user = create(:user)
-
-      5.times do
-        create(:micropost, user: @user)
-        create(:micropost, user: @followed_user)
-        create(:micropost, user: @not_followed_user)
-      end
-
-      create(:relationship, {
-        follower_id: @user.id,
-        followed_id: @followed_user.id
-      })
-    end
-
-
-    it 'should have the right posts' do
-      @followed_user.microposts.each do |post_following|
-        expect(@user.feed).to include(post_following)
-      end
-
-      @user.microposts.each do |post_self|
-        expect(@user.feed).to include(post_self)
-      end
-
-      @not_followed_user.microposts.each do |post_unfollowed|
-        expect(@user.feed).not_to include(post_unfollowed)
-      end
     end
   end
 end
