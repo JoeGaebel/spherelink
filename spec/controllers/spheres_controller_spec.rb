@@ -32,6 +32,7 @@ describe SpheresController, type: :controller do
         let(:params) { valid_params }
         let(:last_created_sphere) { Sphere.last }
         let(:fake_guid) { "hexadecimal! Rhombus!" }
+        let(:expected_response) { { guid: fake_guid }.to_json }
 
         before do
           allow(SecureRandom).to receive(:hex).and_return(fake_guid)
@@ -51,7 +52,7 @@ describe SpheresController, type: :controller do
           do_request(params)
 
           expect(response).to have_http_status(:accepted)
-          expect(response.body).to eq(fake_guid)
+          expect(response.body).to eq(expected_response)
         end
 
         describe "processing status" do
@@ -146,14 +147,14 @@ describe SpheresController, type: :controller do
 
   describe "#show" do
     def do_request
-      get :show, params: { id: guid }
+      get :show, params: { id: fake_guid }
     end
 
     context "when the sphere does not exist" do
-      let(:guid) { "definitely does not exist" }
+      let(:fake_guid) { "definitely does not exist" }
 
       before do
-        expect(Sphere.where(guid: guid)).not_to be_exists
+        expect(Sphere.where(guid: fake_guid)).not_to be_exists
       end
 
       it "returns not found" do
@@ -167,11 +168,11 @@ describe SpheresController, type: :controller do
       let(:other_user) { create(:user) }
       let(:memory) { create(:memory, user: other_user) }
       let(:sphere) { memory.spheres.first }
-      let(:guid) { "some unique id" }
+      let(:fake_guid) { "some unique id" }
 
       before do
         expect(memory.user_id).to eq(other_user.id)
-        sphere.update_attribute(:guid, guid)
+        sphere.update_attribute(:guid, fake_guid)
       end
 
       it "returns not found" do
@@ -185,11 +186,12 @@ describe SpheresController, type: :controller do
       let(:user) { create(:user) }
       let(:memory) { create(:memory, user: user) }
       let(:sphere) { memory.spheres.first }
-      let(:guid) { "some other unique id" }
+      let(:fake_guid) { "some other unique id" }
+      let(:expected_response) { { guid: fake_guid }.to_json }
 
       before do
         expect(memory.user_id).to eq(user.id)
-        sphere.update_attribute(:guid, guid)
+        sphere.update_attribute(:guid, fake_guid)
       end
 
       context "when the sphere is being processed" do
@@ -201,7 +203,7 @@ describe SpheresController, type: :controller do
           log_in(user)
           do_request
           expect(response).to have_http_status(:accepted)
-          expect(response.body).to eq(guid)
+          expect(response.body).to eq(expected_response)
         end
       end
 

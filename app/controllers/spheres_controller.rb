@@ -25,7 +25,7 @@ class SpheresController < ApplicationController
     sphere.guid = guid
 
     if sphere.valid?
-      render json: guid, status: :accepted
+      render json: { guid: guid }, status: :accepted
       sphere.save!
     else
       render json: sphere.errors, status: :unprocessable_entity
@@ -41,7 +41,7 @@ class SpheresController < ApplicationController
     end
 
     if sphere.processing?
-      render json: sphere.guid, status: :accepted
+      render json: { guid: sphere.guid }, status: :accepted
       return
     end
 
