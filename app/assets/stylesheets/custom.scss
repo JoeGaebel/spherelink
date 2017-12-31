@@ -479,8 +479,8 @@ span.picture {
 }
 
 .sphere-item-view {
+  width: 100px;
   position: relative;
-  margin-right: 10px;
   float: left;
   text-align: center;
   p.caption {
@@ -491,7 +491,7 @@ span.picture {
   .delete-sphere {
     position: absolute;
     color: white;
-    right: 3px;
+    right: 13px;
     top: 5px;
     cursor: pointer;
     font-size: 14px;
@@ -558,7 +558,7 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
   border: 1px solid #ccc;
   width: 80px;
   height: 80px;
-  margin-right: 10px;
+  margin: 0 10px 0 10px;
   float: left;
   text-align: center;
   vertical-align: middle;
