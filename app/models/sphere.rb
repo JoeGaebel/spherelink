@@ -12,7 +12,6 @@ class Sphere < ApplicationRecord
 
   mount_uploader :panorama, SphereUploader
   process_in_background :panorama
-  store_in_background :panorama
 
   def processing?
     panorama_processing
