@@ -1,4 +1,4 @@
-  class StaticPagesController < ApplicationController
+class StaticPagesController < ApplicationController
   def home
     if user_signed_in?
       @memories = current_user.memories

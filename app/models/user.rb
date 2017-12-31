@@ -5,6 +5,6 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 50 }
 
-  has_many :memories
+  has_many :memories, dependent: :destroy
   has_many :spheres, through: :memories
 end

@@ -30,7 +30,7 @@ class AddSphereView
     @ui.$addSphereLink.removeClass('expanded')
     event.stopPropagation()
 
-  createSphere: ->
+  newSphere: ->
     formData = new FormData()
     formData.append('sphere[panorama]', @ui.$file[0].files[0]);
     formData.append('sphere[caption]', @ui.$caption.val());
@@ -46,8 +46,19 @@ class AddSphereView
       contentType: false,
       processData: false,
       type: 'POST'
+      success: @onNewSphereSuccess
+      error: @onNewSphereError
+
+  pollForCompletion: (guid) ->
+    $.ajax
+      url: "/spheres/#{guid}",
+      data: { id: guid },
+      cache: false,
+      contentType: false,
+      processData: false,
+      type: 'GET'
       success: @onCreateSphereSuccess
-      error: @onCreateSphereError
+      error: @onPollError
 
   appendSpinner: ->
     $addSphereLink = $('.add-sphere-link')
@@ -81,14 +92,27 @@ class AddSphereView
     if @ui.$file[0].files[0] && @ui.$caption.val()
       @ui.$fileForm.removeClass('has-error')
       @ui.$captionForm.removeClass('has-error')
-      @createSphere()
+      @newSphere()
 
-  onCreateSphereSuccess: (sphere) =>
-    window.memory.spheres.push(sphere)
+  onNewSphereSuccess: (response) =>
+    @intervalID = setInterval((=> @pollForCompletion(response.guid)), 5000)
+    SpinnerView::showProgress();
+
+  onCreateSphereSuccess: (response) =>
+    return if response.guid
+
+    clearInterval(@intervalID)
+    SpinnerView::hideProgress();
+    window.memory.spheres.push(response)
     @resetViewState()
     @app.handleNewSphere()
 
-  onCreateSphereError: =>
+  onNewSphereError: =>
+    @app.onAjaxError(arguments...)
+    @resetViewState()
+
+  onPollError: =>
+    clearInterval(@intervalID)
     @app.onAjaxError(arguments...)
     @resetViewState()
 

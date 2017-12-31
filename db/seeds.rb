@@ -26,12 +26,14 @@ memory = Memory.create!({
 })
 
 livingroom_sphere = Sphere.create!({
+  processing_bits: 2,
   memory: memory,
   panorama: File.open("#{Rails.root}/app/assets/images/livingroom.jpg"),
   caption: 'living room!'
 })
 
 kitchen_sphere = Sphere.create!({
+  processing_bits: 2,
   memory: memory,
   panorama: File.open("#{Rails.root}/app/assets/images/kitchen.jpg"),
   caption: 'kitchen!'
@@ -83,6 +85,7 @@ boat = Memory.create!({
 })
 
 marina = Sphere.create!({
+  processing_bits: 2,
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/marina.jpg"),
   caption: 'Marina',
@@ -90,6 +93,7 @@ marina = Sphere.create!({
 })
 
 boat_livingroom = Sphere.create!({
+  processing_bits: 2,
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_livingroom.jpg"),
   caption: 'Boat Livingroom',
@@ -97,6 +101,7 @@ boat_livingroom = Sphere.create!({
 })
 
 boat_bed = Sphere.create!({
+  processing_bits: 2,
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_bed.jpg"),
   caption: 'Boat Bedroom',
@@ -104,6 +109,7 @@ boat_bed = Sphere.create!({
 })
 
 night_time = Sphere.create!({
+  processing_bits: 2,
   memory: boat,
   panorama: File.open("#{Rails.root}/app/assets/images/boat_night.jpg"),
   default_zoom: 43,

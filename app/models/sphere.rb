@@ -1,4 +1,6 @@
 class Sphere < ApplicationRecord
+  include Bitfields
+
   belongs_to :memory
   has_many :portals, foreign_key: 'from_sphere_id', dependent: :destroy
   has_many :from_portals, class_name: 'Portal', foreign_key: 'to_sphere_id', dependent: :destroy
@@ -9,6 +11,11 @@ class Sphere < ApplicationRecord
   has_one :sound, through: :sound_context, source: :sound
 
   mount_uploader :panorama, SphereUploader
+  process_in_background :panorama
+
+  def processing?
+    panorama_processing
+  end
 
   validates_presence_of :caption
   validates_presence_of :panorama

@@ -84,3 +84,13 @@ RSpec.configure do |config|
     Faker::Hipster.sentence(4, false, 4)
   end
 end
+
+
+# Remove uploaded panoramas after request
+RSpec.configure do |config|
+  config.after(:each) do
+    if Rails.env.test?
+      FileUtils.rm_rf(Dir["#{Rails.root}/spec/support/uploads"])
+    end
+  end
+end

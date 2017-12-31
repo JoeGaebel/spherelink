@@ -473,14 +473,13 @@ span.picture {
 
 .sphere-container {
   width: 100%;
-  overflow: hidden;
   padding-bottom: 10px;
   margin: 0 auto;
 }
 
 .sphere-item-view {
+  width: 100px;
   position: relative;
-  margin-right: 10px;
   float: left;
   text-align: center;
   p.caption {
@@ -491,7 +490,7 @@ span.picture {
   .delete-sphere {
     position: absolute;
     color: white;
-    right: 3px;
+    right: 13px;
     top: 5px;
     cursor: pointer;
     font-size: 14px;
@@ -558,7 +557,7 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
   border: 1px solid #ccc;
   width: 80px;
   height: 80px;
-  margin-right: 10px;
+  margin: 0 10px 0 10px;
   float: left;
   text-align: center;
   vertical-align: middle;
@@ -626,4 +625,9 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 .signup-page {
   width: 40%;
   margin: auto;
+}
+.status-text {
+  padding: 1px 0 0 11px;
+  color: #696969;
+  font-size: 1em;
 }

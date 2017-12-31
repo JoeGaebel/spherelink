@@ -51,6 +51,7 @@ GEM
     autoprefixer-rails (6.5.1.1)
       execjs
     bcrypt (3.1.11)
+    bitfields (0.7.0)
     bootstrap-sass (3.3.6)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -73,6 +74,8 @@ GEM
       json (>= 1.7)
       mime-types (>= 1.16)
       mimemagic (>= 0.3.0)
+    carrierwave_backgrounder (0.4.2)
+      carrierwave (~> 0.5)
     case_transform (0.2)
       activesupport
     childprocess (0.5.9)
@@ -91,6 +94,11 @@ GEM
     concurrent-ruby (1.0.2)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
+    delayed_job (4.1.4)
+      activesupport (>= 3.0, < 5.2)
+    delayed_job_active_record (4.1.2)
+      activerecord (>= 3.0, < 5.2)
+      delayed_job (>= 3.0, < 5)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -438,14 +446,17 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
   bcrypt
+  bitfields (= 0.7.0)
   bootstrap-sass (= 3.3.6)
   bootstrap-will_paginate
   bootstrap-wysihtml5-rails
   capybara (~> 2.10, >= 2.10.1)
   carrierwave (= 0.11.2)
+  carrierwave_backgrounder
   chromedriver-helper
   coffee-rails (= 4.2.1)
   database_cleaner
+  delayed_job_active_record
   devise
   factory_girl_rails
   faker
