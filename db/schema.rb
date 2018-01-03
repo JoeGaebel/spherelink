@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171231030248) do
+ActiveRecord::Schema.define(version: 20171231180543) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "priority",                 default: 0, null: false
@@ -114,14 +114,7 @@ ActiveRecord::Schema.define(version: 20171231030248) do
     t.string   "email"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
-    t.string   "password_digest"
-    t.string   "remember_digest"
     t.boolean  "admin",                  default: false
-    t.string   "activation_digest"
-    t.boolean  "activated",              default: false
-    t.datetime "activated_at"
-    t.string   "reset_digest"
-    t.datetime "reset_sent_at"
     t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

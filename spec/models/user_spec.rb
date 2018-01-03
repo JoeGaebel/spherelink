@@ -49,8 +49,8 @@ describe User do
         invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.
                            foo@bar_baz.com foo@bar+baz.com]
         invalid_addresses.each do |invalid_address|
-          @user.email = invalid_address
-          expect(@user).to_not be_valid
+          user = build(:user, email: invalid_address)
+          expect(user).to_not be_valid
         end
       end
 
@@ -68,7 +68,7 @@ describe User do
     end
 
     describe 'passwords' do
-      let(:valid_length) { User::VALID_PASSWORD_LENGTH }
+      let(:minimum_length) { User::MINIMUM_PASSWORD_LENGTH }
 
       it 'requires a password' do
         expect(@user).to be_valid
@@ -78,20 +78,9 @@ describe User do
       end
 
       it 'should have a minimum length' do
-        @user.password = @user.password_confirmation = 'a' * (valid_length - 1)
+        @user.password = @user.password_confirmation = 'a' * (minimum_length - 1)
         expect(@user).to_not be_valid
       end
-    end
-  end
-
-  describe '#authenticated?' do
-    before do
-      @user = build(:user)
-      expect(@user.remember_digest).to eq(nil)
-    end
-
-    it 'should return false for a user with nil digest' do
-      expect(@user.authenticated?(:remember, '')).to eq(false)
     end
   end
 end

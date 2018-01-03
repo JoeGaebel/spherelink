@@ -31,6 +31,7 @@ gem 'omniauth'
 gem 'bitfields', '0.7.0'
 gem 'delayed_job_active_record'
 gem 'carrierwave_backgrounder'
+gem 'daemons'
 
 gem 'pg', group: :production
 

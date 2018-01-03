@@ -39,7 +39,7 @@ describe SpheresController, type: :controller do
         end
 
         it "sets the caption, panorama, and guid" do
-          log_in(user)
+          sign_in(user)
           expect { do_request(params) }.to change { Delayed::Job.count }.by(1)
 
           Delayed::Job.last.invoke_job
@@ -50,7 +50,7 @@ describe SpheresController, type: :controller do
         end
 
         it "returns the guid, and processing status" do
-          log_in(user)
+          sign_in(user)
           expect { do_request(params) }.to change { Delayed::Job.count }.by(1)
 
           Delayed::Job.last.invoke_job
@@ -66,7 +66,7 @@ describe SpheresController, type: :controller do
 
           context "during initial create" do
             it "sets the processing flag to true" do
-              log_in(user)
+              sign_in(user)
               expect { do_request(params) }.to change { Delayed::Job.count }.by(1)
 
               expect(last_created_sphere).to be_processing
@@ -75,7 +75,7 @@ describe SpheresController, type: :controller do
 
           context "after processing" do
             it "sets the processing flag to false" do
-              log_in(user)
+              sign_in(user)
               expect { do_request(params) }.to change { Delayed::Job.count }.by(1)
 
               Delayed::Job.last.invoke_job
@@ -93,7 +93,7 @@ describe SpheresController, type: :controller do
         end
 
         it "returns the errors and unprocessable_entity status" do
-          log_in(user)
+          sign_in(user)
           do_request(missing_params)
 
           expect(response).to have_http_status(:unprocessable_entity)
@@ -111,7 +111,7 @@ describe SpheresController, type: :controller do
         let(:error_hash) { { caption: ["can't be blank"] }.to_json }
 
         it "returns the errors and unprocessable_entity status" do
-          log_in(user)
+          sign_in(user)
           do_request(invalid_params)
 
           expect(response).to have_http_status(:unprocessable_entity)
@@ -129,7 +129,7 @@ describe SpheresController, type: :controller do
       end
 
       it "returns not found status" do
-        log_in(user)
+        sign_in(user)
         do_request(valid_params)
         expect(response).to have_http_status(:not_found)
       end
@@ -149,7 +149,7 @@ describe SpheresController, type: :controller do
       end
 
       it "returns not found" do
-        log_in(user)
+        sign_in(user)
         do_request
         expect(response).to have_http_status(:not_found)
       end
@@ -167,7 +167,7 @@ describe SpheresController, type: :controller do
       end
 
       it "returns not found" do
-        log_in(user)
+        sign_in(user)
         do_request
         expect(response).to have_http_status(:not_found)
       end
@@ -187,7 +187,7 @@ describe SpheresController, type: :controller do
 
       context "when the sphere is being processed" do
         it "returns the guid and processing status" do
-          log_in(user)
+          sign_in(user)
           do_request
 
           expect(sphere).to be_processing
@@ -205,7 +205,7 @@ describe SpheresController, type: :controller do
         end
 
         it "returns json and created status" do
-          log_in(user)
+          sign_in(user)
           do_request
 
           expect(response).to have_http_status(:created)

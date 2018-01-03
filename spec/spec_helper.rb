@@ -66,20 +66,6 @@ RSpec.configure do |config|
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
   end
 
-  def is_user_signed_in?
-    !session[:user_id].nil?
-  end
-
-  def log_in(user)
-    session[:user_id] = user.id
-  end
-
-  def log_in_as(user, remember_me: '1')
-    post login_path, params: { session: { email: user.email,
-      password: user.password,
-      remember_me: remember_me } }
-  end
-
   def hipster_ipsum
     Faker::Hipster.sentence(4, false, 4)
   end
@@ -94,3 +80,10 @@ RSpec.configure do |config|
     end
   end
 end
+
+# Set Warden config
+RSpec.configure do |config|
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include ValidUserRequestHelper, :type => :request
+end
+
