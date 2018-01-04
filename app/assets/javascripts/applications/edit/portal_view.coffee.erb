@@ -122,10 +122,10 @@ class PortalView
     @isDeletingPortal = false
 
   setCursorToPortalCreate: ->
-    $('.psv-hud').awesomeCursor('pencil', {
+    $($('.psv-hud').awesomeCursor('pencil', {
       hotspot: 'bottom left',
       outline: 'white'
-    })
+    }))
 
   resetCursor: ->
     $('.psv-hud').css('cursor', 'move')
