@@ -17,5 +17,5 @@
 <% if user_signed_in? %>
   <%= link_to "Back to memories...", memories_path, class: "move-left memories-link josefin" %>
 <% else %>
-  <%= link_to "Create your own!", signup_path, class: "move-left memories-link josefin" %>
+  <%= link_to "Sign up", new_user_registration_path, class: "move-left memories-link josefin" %>
 <% end %>
