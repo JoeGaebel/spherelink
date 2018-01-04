@@ -142,6 +142,8 @@ class MarkerView
       try
         marker = PSV.getMarker('new-marker')
       catch
+        caption = @ui.$markerCaption.val()
+
         PSV.addMarker
           id: 'new-marker'
           x: e.texture_x
@@ -151,8 +153,7 @@ class MarkerView
           height: @app.defaultMarkerDimension
           sphere_id: currentSphere.id
           content: @getEditorContent()
-          tooltip:
-            content: @ui.$markerCaption.val()
+          tooltip: if caption then { content: caption, position: 'right bottom' } else undefined
 
         @ui.$saveMarker.prop('disabled', false)
         @ui.$markerCaption.show()
@@ -168,6 +169,7 @@ class MarkerView
 
   onAddMarkerClick: =>
     @app.freezeOtherViews(@)
+    @app.setCursorToPencil()
 
     @ui.$addMarker.prop('disabled', true)
     @ui.$resetMarker.prop('disabled', false)
@@ -177,6 +179,7 @@ class MarkerView
 
   onSaveMarkerClick: =>
     marker = PSV.getMarker('new-marker')
+    @app.resetCursor()
 
     $.ajax
       url: '/markers'
@@ -206,6 +209,7 @@ class MarkerView
         id: 'new-marker'
         tooltip:
           content: @ui.$markerCaption.val()
+          position: 'right bottom'
     else
       PSV.updateMarker
         id: 'new-marker'
@@ -241,7 +245,6 @@ class MarkerView
 
     @markerToDelete = null
     @app.resetPageState()
-
 
 
 window.MarkerView = MarkerView

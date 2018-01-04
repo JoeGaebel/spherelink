@@ -8,7 +8,6 @@ class PortalView
     @bindHandlers()
     @updateSelect()
     @createTipsies()
-    @hackThePencil()
 
   createUIHash: ->
     @ui =
@@ -106,7 +105,6 @@ class PortalView
     catch
       return
 
-    @resetCursor()
     PSV.removeMarker('new-portal')
 
   freeze: ->
@@ -121,18 +119,6 @@ class PortalView
 
     @isCreatingPortal = false
     @isDeletingPortal = false
-
-  setCursorToPortalCreate: ->
-    $('.psv-hud').awesomeCursor('pencil', {
-      hotspot: [3, 22]
-      outline: 'white'
-    })
-
-  resetCursor: ->
-    $('.psv-hud').css('cursor', 'move')
-
-  hackThePencil: ->
-    $('body').append("<i class='fa fa-pencil' style='width:0px; height:0px; overflow:hidden'>");
 
 # Event Handlers
 
@@ -158,7 +144,7 @@ class PortalView
 
   onAddPortalClicked: =>
     @app.freezeOtherViews(@)
-    @setCursorToPortalCreate()
+    @app.setCursorToPencil()
 
     @ui.$addPortal.prop('disabled', true)
     @ui.$resetPortal.prop('disabled', false)
@@ -190,7 +176,7 @@ class PortalView
 
   onSavePortalClicked: =>
     portal = PSV.getMarker('new-portal')
-    @resetCursor()
+    @app.resetCursor()
 
     $.ajax
       url: '/portals'

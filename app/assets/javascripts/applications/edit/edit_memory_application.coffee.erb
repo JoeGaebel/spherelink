@@ -18,6 +18,10 @@ class EditMemoryApplication extends MemoryApplication
     super
     PSV.off 'select-marker'
 
+  start: ->
+    super
+    @hackThePencil()
+
 # Helpers
 
   getPSVOptions: ->
@@ -47,12 +51,30 @@ class EditMemoryApplication extends MemoryApplication
       view.resetViewState()
 
   resetPageState: =>
+    @resetCursor()
+
     for view in @views
       view.resetViewState()
 
   handleNewSphere: ->
     @sphereSelectView.renderSpheres()
     @portalView.updateSelect()
+
+  doTransition: ->
+    super(arguments...)
+    @resetPageState()
+
+  setCursorToPencil: ->
+    $('.psv-hud').awesomeCursor('pencil', {
+      hotspot: [3, 22]
+      outline: 'white'
+    })
+
+  resetCursor: ->
+    $('.psv-hud').css('cursor', 'move')
+
+  hackThePencil: ->
+    $('body').append("<i class='fa fa-pencil' style='width:0px; height:0px; overflow:hidden'>");
 
 
 # Promises
