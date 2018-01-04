@@ -661,3 +661,22 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
   color: #468847;
   text-align: left;
 }
+
+.actions {
+  input[type=submit] {
+    margin-bottom: 10px;
+  }
+}
+
+.remember-me {
+  display: flex;
+
+  input[type=checkbox] {
+    width: initial;
+  }
+
+  label {
+    padding-left: 7px;
+    line-height: 18px;
+  }
+}
