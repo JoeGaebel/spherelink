@@ -23,7 +23,6 @@ gem 'underscore-rails'
 gem 'figaro'
 gem 'nested_form_fields'
 gem 'tipsy-rails'
-gem 'font-awesome-rails'
 gem 'bootstrap-wysihtml5-rails'
 gem 'devise'
 gem 'omniauth'
@@ -31,6 +30,7 @@ gem 'bitfields', '0.7.0'
 gem 'delayed_job_active_record'
 gem 'carrierwave_backgrounder'
 gem 'daemons'
+gem 'font-awesome-rails'
 
 gem 'pg', group: :production
 

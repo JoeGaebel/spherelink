@@ -14,7 +14,6 @@
  *= require_self
  *= require photo-sphere-viewer/dist/photo-sphere-viewer.min
  *= require tipsy
- *= require font-awesome
  *= require bootstrap-wysihtml5
  *= require bootstrap-slider/dist/css/bootstrap-slider.min
  */

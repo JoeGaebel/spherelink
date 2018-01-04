@@ -8,6 +8,7 @@ class PortalView
     @bindHandlers()
     @updateSelect()
     @createTipsies()
+    @hackThePencil()
 
   createUIHash: ->
     @ui =
@@ -122,13 +123,16 @@ class PortalView
     @isDeletingPortal = false
 
   setCursorToPortalCreate: ->
-    $($('.psv-hud').awesomeCursor('pencil', {
+    $('.psv-hud').awesomeCursor('pencil', {
       hotspot: 'bottom left',
       outline: 'white'
-    }))
+    })
 
   resetCursor: ->
     $('.psv-hud').css('cursor', 'move')
+
+  hackThePencil: ->
+    $('body').append("<i class='fa fa-pencil' style='width:0px; height:0px;'>");
 
 # Event Handlers
 

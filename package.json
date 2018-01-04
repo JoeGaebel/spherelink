@@ -15,7 +15,6 @@
     "soundmanager2": "2.97.20150601-a",
     "three": "0.84.0",
     "uevent": "1.0.0",
-    "font-awesome": "4.7.0",
     "jquery-awesome-cursor": "0.3.1"
   },
   "license": "ISC"
