@@ -105,6 +105,7 @@ class PortalView
     catch
       return
 
+    @resetCursor()
     PSV.removeMarker('new-portal')
 
   freeze: ->
@@ -120,6 +121,14 @@ class PortalView
     @isCreatingPortal = false
     @isDeletingPortal = false
 
+  setCursorToPortalCreate: ->
+    $('.psv-hud').awesomeCursor('pencil', {
+      hotspot: 'bottom left',
+      outline: 'white'
+    })
+
+  resetCursor: ->
+    $('.psv-hud').css('cursor', 'move')
 
 # Event Handlers
 
@@ -145,6 +154,7 @@ class PortalView
 
   onAddPortalClicked: =>
     @app.freezeOtherViews(@)
+    @setCursorToPortalCreate()
 
     @ui.$addPortal.prop('disabled', true)
     @ui.$resetPortal.prop('disabled', false)
@@ -177,6 +187,7 @@ class PortalView
 
   onSavePortalClicked: =>
     portal = PSV.getMarker('new-portal')
+    @resetCursor()
 
     $.ajax
       url: '/portals'

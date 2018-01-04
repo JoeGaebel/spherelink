@@ -11,7 +11,7 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
+//= require jquery-ujs
 //= require bootstrap
 //= require underscore
 //= require three/build/three
@@ -24,5 +24,6 @@
 //= require tipsy
 //= require bootstrap-wysihtml5
 //= require bootstrap-slider/dist/bootstrap-slider
+//= require jquery-awesome-cursor/dist/jquery.awesome-cursor
 //= require_tree ./applications/
 //= require_tree .

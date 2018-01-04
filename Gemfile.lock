@@ -467,7 +467,6 @@ DEPENDENCIES
   font-awesome-rails
   guard (= 2.13.0)
   jbuilder (= 2.4.1)
-  jquery-rails (= 4.1.1)
   listen (~> 3.0.5)
   mini_magick (= 4.5.1)
   mysql2
