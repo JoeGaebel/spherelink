@@ -124,7 +124,7 @@ class PortalView
 
   setCursorToPortalCreate: ->
     $('.psv-hud').awesomeCursor('pencil', {
-      hotspot: 'bottom left',
+      hotspot: [3, 22]
       outline: 'white'
     })
 
@@ -132,7 +132,7 @@ class PortalView
     $('.psv-hud').css('cursor', 'move')
 
   hackThePencil: ->
-    $('body').append("<i class='fa fa-pencil' style='width:0px; height:0px;'>");
+    $('body').append("<i class='fa fa-pencil' style='width:0px; height:0px; overflow:hidden'>");
 
 # Event Handlers
 
