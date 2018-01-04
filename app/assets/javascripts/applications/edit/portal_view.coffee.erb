@@ -67,7 +67,7 @@ class PortalView
       portal:
         polygon_px: portal.polygon_px
         to_sphere_id: portal.to_sphere_id
-        content: portal.tooltip.content
+        content: portal.tooltip?.content
 
     JSON.stringify(params)
 
@@ -169,14 +169,13 @@ class PortalView
     @ui.$deletePortal.prop('disabled', true)
 
     @isCreatingPortal = true
+    caption = @ui.$portalCaption.val()
 
     PSV.addMarker
       id: 'new-portal',
       polygon_px: [[]]
       to_sphere_id: @ui.$toSphereSelect.val()
-      tooltip:
-        content: @ui.$portalCaption.val()
-        position: 'right bottom'
+      tooltip:  if caption then { content: caption, position: 'right bottom' } else undefined
       svgStyle:
         fill: "url(#points)"
         stroke: "rgba(255, 50, 50, 0.8)"
@@ -205,7 +204,14 @@ class PortalView
   onPortalCaptionChanged: =>
     if @isCreatingPortal
       newPortal = PSV.getMarker('new-portal')
-      newPortal.tooltip.content = @ui.$portalCaption.val()
+      caption = @ui.$portalCaption.val()
+
+      if caption
+        newPortal.tooltip =
+          content: caption
+          position: 'right bottom'
+      else
+        delete newPortal.tooltip
 
       PSV.updateMarker(newPortal)
 

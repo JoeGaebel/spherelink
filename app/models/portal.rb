@@ -25,9 +25,12 @@ class Portal < ApplicationRecord
         json.stroke hex2rgba(stroke, stroke_transparency)
         json.stroke_width "#{stroke_width}px"
       end
-      json.tooltip do
-        json.content tooltip_content
-        json.position tooltip_position
+
+      if tooltip_content.present?
+        json.tooltip do
+          json.content tooltip_content
+          json.position tooltip_position
+        end
       end
     end
   end
