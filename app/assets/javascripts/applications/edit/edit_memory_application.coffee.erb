@@ -16,8 +16,6 @@ class EditMemoryApplication extends MemoryApplication
     @views = [@portalView, @markerView]
     @viewsToHide = [@portalView, @markerView, @zoomView]
 
-    $(@onDocumentReady)
-
   bindHandlers: ->
     super
     PSV.off 'select-marker'
@@ -26,7 +24,6 @@ class EditMemoryApplication extends MemoryApplication
 
   handleEmptyPage: ->
     return if window.currentSphere
-
     $('.link-viewer').hide()
     view.hide() for view in @viewsToHide
 

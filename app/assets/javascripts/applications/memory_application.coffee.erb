@@ -3,6 +3,8 @@ class MemoryApplication
     window.memory = options.memory
     window.currentSphere = memory.spheres[options.sphereNum]
 
+    $(@onDocumentReady)
+
   start: ->
     @setupSoundManager()
     window.PSV = new PhotoSphereViewer(@getPSVOptions())
@@ -109,6 +111,9 @@ class MemoryApplication
   onPSVReady: ->
     PSV.setCaption(currentSphere?.caption || "")
     setTimeout((-> PSV.zoom(currentSphere?.defaultZoom || 50)), 1)
+
+  onDocumentReady: =>
+    $('#photosphere').hide() unless window.currentSphere
 
 
 # Constants
