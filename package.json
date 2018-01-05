@@ -11,8 +11,8 @@
     "bootstrap-slider": "^9.8.0",
     "d.js": "0.7.5",
     "dot": "1.1.1",
-    "photo-sphere-viewer": "3.2.3",
-    "soundmanager2": "2.97.20150601-a",
+    "photo-sphere-viewer": "3.2.4",
+    "soundmanager2": "2.97.20170602",
     "three": "0.84.0",
     "uevent": "1.0.0",
     "jquery-awesome-cursor": "0.3.1"
