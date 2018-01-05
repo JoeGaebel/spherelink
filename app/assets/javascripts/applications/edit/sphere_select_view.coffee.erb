@@ -20,8 +20,6 @@ class SphereSelectView
         $("##{sphere.id}.sphere-link").click(@onSphereLinkClick)
         $("##{sphere.id}.delete-sphere").click(@onSphereDeleteClick)
 
-    @handleTrashCanVisibility()
-
   deleteSphere: (sphereId) ->
     $.ajax
       url: "/spheres/#{sphereId}"
@@ -49,14 +47,6 @@ class SphereSelectView
       if currentSphere.id == portal.from_sphere_id
         window.PSV.removeMarker(portal.id)
 
-  handleTrashCanVisibility: ->
-    $trashCans = $('.delete-sphere')
-
-    if $('.sphere-item-view').length > 1
-      $trashCans.show()
-    else
-      $trashCans.hide()
-
   onSphereLinkClick: (e) =>
     id = parseInt(e.currentTarget.id)
     associatedSphere = _.findWhere(window.memory.spheres, { id })
@@ -75,10 +65,13 @@ class SphereSelectView
     @removeAssociatedPortals(sphere.id)
 
     if currentSphere.id == sphere.id
-      @app.setNextSphere(memory.spheres[0])
+      if memory.spheres.length
+        @app.setNextSphere(memory.spheres[0])
+      else
+        delete window.currentSphere
+        @app.handleEmptyPage()
 
     $(".add-sphere-view #sphere-#{sphere.id}").remove()
-    @handleTrashCanVisibility()
 
 
 window.SphereSelectView = SphereSelectView

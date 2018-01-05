@@ -50,11 +50,6 @@ class SpheresController < ApplicationController
   def destroy
     sphere = current_user.spheres.find(params[:id])
 
-    if sphere.memory.spheres.count == 1
-      render json: {}, status: :forbidden
-      return
-    end
-
     if sphere.blank?
       render json: {}, status: :not_found
       return

@@ -14,22 +14,21 @@ class EditMemoryApplication extends MemoryApplication
     @headerView = new HeaderView({ app: @ })
 
     @views = [@portalView, @markerView]
-    @PSVSensitiveViews = [@portalView, @markerView, @zoomView]
+    @viewsToHide = [@portalView, @markerView, @zoomView]
+
+    $(@onDocumentReady)
 
   bindHandlers: ->
     super
     PSV.off 'select-marker'
 
-  start: ->
-    super
-    @hackThePencil()
-    @handleEmptyPage()
-
 # Helpers
 
   handleEmptyPage: ->
     return if window.currentSphere
+
     $('.link-viewer').hide()
+    view.hide() for view in @viewsToHide
 
   setUpPSV: ->
     $('.link-viewer').show()
@@ -37,8 +36,7 @@ class EditMemoryApplication extends MemoryApplication
     @_preload(currentSphere.panorama)
     @setNextSphere(window.currentSphere)
 
-    for view in @PSVSensitiveViews
-      view.show()
+    view.show() for view in @viewsToHide
 
   _preload: (url) ->
     image = new Image()
@@ -93,6 +91,10 @@ class EditMemoryApplication extends MemoryApplication
 
   hackThePencil: ->
     $('body').append("<i class='fa fa-pencil' style='width:0px; height:0px; overflow:hidden'>");
+
+  onDocumentReady: =>
+    @hackThePencil()
+    @handleEmptyPage()
 
 
 # Promises
