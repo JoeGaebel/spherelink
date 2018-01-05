@@ -38,7 +38,7 @@ group :development, :test do
   gem 'pry'
   gem 'factory_girl_rails'
   gem 'rspec-rails',              '~> 3.5'
-  gem 'capybara',                 '~> 2.10', '>= 2.10.1'
+  gem 'capybara'
   gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
