@@ -15,7 +15,7 @@ gem 'coffee-rails', '4.2.1'
 gem 'jbuilder',     '2.4.1'
 gem 'carrierwave', '0.11.2'
 gem 'mini_magick', '4.5.1'
-gem 'fog'
+gem 'fog-aws'
 gem 'rename'
 gem 'rails_12factor', group: :production
 gem 'active_model_serializers', '~> 0.10.0'
@@ -31,12 +31,13 @@ gem 'delayed_job_active_record'
 gem 'carrierwave_backgrounder'
 gem 'daemons'
 gem 'font-awesome-rails'
+gem 'nokogiri', '~> 1.8.1'
 
 gem 'pg', group: :production
 
 group :development, :test do
   gem 'pry'
-  gem 'factory_girl_rails'
+  gem 'factory_bot'
   gem 'rspec-rails',              '~> 3.5'
   gem 'capybara'
   gem 'database_cleaner'

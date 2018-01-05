@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :memory do
     transient do
       sphere_count 1

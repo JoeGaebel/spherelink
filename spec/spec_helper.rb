@@ -87,3 +87,6 @@ RSpec.configure do |config|
   config.include ValidUserRequestHelper, :type => :request
 end
 
+#Tell factory bot where the defs are
+FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+FactoryBot.find_definitions

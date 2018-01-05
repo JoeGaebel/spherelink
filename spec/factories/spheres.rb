@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :sphere do
     memory
     guid { SecureRandom.hex }
