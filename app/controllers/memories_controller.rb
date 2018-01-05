@@ -47,6 +47,24 @@ class MemoriesController < ApplicationController
     redirect_to memories_path
   end
 
+  def set_details
+    memory = current_user.memories.find_by(id: params[:id])
+
+    if memory.blank?
+      render json: {}, status: :not_found
+      return
+    end
+
+    memory.name = sanitize(params[:name]) if params[:name].present?
+    memory.description = sanitize(params[:description]) if params[:description].present?
+
+    if memory.save
+      render json: { name: memory.name, description: memory.description }, status: :created
+    else
+      render json: memory.errors, status: :not_found
+    end
+  end
+
   private
 
   def ensure_allowed_access

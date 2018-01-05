@@ -1,0 +1,12 @@
+class SmallSpinnerView
+  template: ->
+    """
+      <div class="small-spinner">
+        <%= image_tag('small-spinner') %>
+      </div>
+    """
+
+  render: ->
+    @template()
+
+window.SmallSpinnerView = SmallSpinnerView

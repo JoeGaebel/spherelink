@@ -680,3 +680,26 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
     line-height: 18px;
   }
 }
+
+.title-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#title-input, #description-input {
+  display: none;
+  text-align: center;
+}
+
+#title, #description {
+  cursor: pointer;
+}
+
+.small-spinner {
+  padding-bottom: 10px;
+
+  img {
+    width: 60px;
+  }
+}

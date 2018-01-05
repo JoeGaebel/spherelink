@@ -18,9 +18,14 @@ Rails.application.routes.draw do
   resources :users, only: [:edit]
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
-  resources :memories
   resources :portals,             only: [:create, :destroy]
   resources :markers,             only: [:create, :destroy]
+
+  resources :memories do
+    member do
+      post :set_details
+    end
+  end
 
   resources :spheres do
     member do

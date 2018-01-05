@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include ActionView::Helpers::SanitizeHelper
+
   protect_from_forgery with: :exception
 
   private

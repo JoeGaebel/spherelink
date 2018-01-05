@@ -22,10 +22,10 @@ class AddSphereView
 
   bindHandlers: ->
     @ui.$addSphereLink.click(@onAddSphereLinkClick)
-    @ui.$cancel.click(@resetPageState)
+    @ui.$cancel.click(@resetWidget)
     @ui.$submit.click(@onSubmitClick)
 
-  resetPageState: =>
+  resetWidget: =>
     @ui.$addSphereLink.click(@onAddSphereLinkClick)
     @ui.$addSphereLink.removeClass('expanded')
     event.stopPropagation()

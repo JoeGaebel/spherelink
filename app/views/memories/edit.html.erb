@@ -1,6 +1,14 @@
 <div class="container">
   <div class="header link-header">
-    <span class="title"><%= @memory.name %></span>
+    <div class="title-widget">
+      <div id="title" class="title"><%= @memory.name %></div>
+      <input id="title-input" class="title" />
+    </div>
+
+    <div class="description-widget">
+      <div id="description"><%= @memory.description %></div>
+      <input id="description-input" />
+    </div>
   </div>
 
   <div class="row">
