@@ -11,6 +11,7 @@ class HeaderView
   onDocumentReady: =>
     @createUIHash()
     @bindHandlers()
+    @setDefaultDescription()
 
   createUIHash: ->
     @ui =
@@ -32,6 +33,10 @@ class HeaderView
 
     @ui.$descriptionInput.blur(@debouncedSetDescription)
     @ui.$descriptionInput.keydown(@onDescriptionInputKeydown)
+
+  setDefaultDescription: ->
+    if @ui.$descriptionLabel.text() == ""
+      @ui.$descriptionLabel.text("Click to add a description")
 
   _setTitle: =>
     @ui.$titleInput.hide()
@@ -102,9 +107,6 @@ class HeaderView
 
   onDescriptionInputKeydown: (e) =>
     @debouncedSetDescription() if e.keyCode == 13
-
-
-
 
 
 window.HeaderView = HeaderView
