@@ -11,7 +11,9 @@ class AddSphereView
 
   createUIHash: ->
     @ui =
-      $addSphereLink: $('.add-sphere-link')
+      $addSphereButton: $('.add-button')
+      $addForm: $('.add-form')
+
       $submit: $('#upload-submit')
       $cancel: $('#upload-cancel')
       $caption: $('.sphere-caption')
@@ -21,13 +23,13 @@ class AddSphereView
       $captionForm: $('.caption-form')
 
   bindHandlers: ->
-    @ui.$addSphereLink.click(@onAddSphereLinkClick)
+    @ui.$addSphereButton.click(@onAddSphereButtonClick)
     @ui.$cancel.click(@resetWidget)
     @ui.$submit.click(@onSubmitClick)
 
   resetWidget: =>
-    @ui.$addSphereLink.click(@onAddSphereLinkClick)
-    @ui.$addSphereLink.removeClass('expanded')
+    @ui.$addForm.hide()
+    @ui.$addSphereButton.show()
     event.stopPropagation()
 
   newSphere: ->
@@ -37,7 +39,7 @@ class AddSphereView
     formData.append('memory_id', window.memory.id);
 
     @appendSpinner()
-    @ui.$addSphereLink.hide()
+    @ui.$addForm.hide()
 
     $.ajax
       url: '/spheres',
@@ -72,13 +74,14 @@ class AddSphereView
 
   resetViewState: ->
     @removeSpinner()
-    @ui.$addSphereLink.removeClass('expanded')
-    @ui.$addSphereLink.show()
-    @ui.$addSphereLink.click(@onAddSphereLinkClick)
 
-  onAddSphereLinkClick: (event) =>
-    @ui.$addSphereLink.addClass('expanded')
-    @ui.$addSphereLink.off('click')
+    @ui.$addForm.hide()
+    @ui.$addSphereButton.show()
+
+  onAddSphereButtonClick: (event) =>
+    @ui.$addForm.show()
+    @ui.$addSphereButton.hide()
+
     @ui.$caption.val("")
     @ui.$file.val("")
 

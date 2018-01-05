@@ -77,7 +77,7 @@ class SphereSelectView
     if currentSphere.id == sphere.id
       @app.setNextSphere(memory.spheres[0])
 
-    $(".sphere-container #sphere-#{sphere.id}").remove()
+    $(".add-sphere-view #sphere-#{sphere.id}").remove()
     @handleTrashCanVisibility()
 
 

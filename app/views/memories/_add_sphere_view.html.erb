@@ -1,15 +1,20 @@
 <div class="add-sphere-view">
   <div class="add-sphere-link">
-    <div class="glyphicon glyphicon-plus"></div>
-    <div class="form-group file-form">
-      <%= file_field_tag 'sphere', accept: 'image/png,image/gif,image/jpeg', class: 'sphere-file form-control' %>
+    <div class="add-button">
+      <div class="glyphicon glyphicon-plus"></div>
     </div>
-    <div class="form-group caption-form">
-      <%= text_field_tag 'caption', nil, class: 'sphere-caption form-control', placeholder: 'New sphere caption' %>
-    </div>
-    <div class="actions">
-      <%= button_tag 'Add new sphere', id: 'upload-submit', class: 'btn btn-success' %>
-      <%= button_tag 'cancel', id: 'upload-cancel', class: 'btn btn-warning' %>
+
+    <div class="add-form">
+      <div class="form-group file-form">
+        <%= file_field_tag 'sphere', accept: 'image/png,image/gif,image/jpeg', class: 'sphere-file form-control' %>
+      </div>
+      <div class="form-group caption-form">
+        <%= text_field_tag 'caption', nil, class: 'sphere-caption form-control', placeholder: 'New sphere caption' %>
+      </div>
+      <div class="actions">
+        <%= button_tag 'Add new sphere', id: 'upload-submit', class: 'btn btn-success' %>
+        <%= button_tag 'cancel', id: 'upload-cancel', class: 'btn btn-warning' %>
+      </div>
     </div>
   </div>
 </div>

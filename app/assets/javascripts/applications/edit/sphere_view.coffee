@@ -12,7 +12,7 @@ class SphereView
         <a href="javascript:;" id="#{ @id }" class="sphere-link">
           <img src="#{ @thumb }">
         </a>
-        <p class="caption">#{ _.escape(@caption) }</p>
+        <div class="caption">#{ _.escape(@caption) }</div>
       </div>
     """
 
