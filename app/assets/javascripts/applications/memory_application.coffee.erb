@@ -20,8 +20,8 @@ class MemoryApplication
 
   getPSVOptions: ->
     $.extend
-      panorama: window.currentSphere.panorama,
-      caption: window.currentSphere.caption,
+      panorama: window.currentSphere?.panorama || @whiteImageUrl,
+      caption: window.currentSphere?.caption || "",
       markers: @getPortalsAndMarkers(currentSphere)
     , @defaultPanoramaSettings
 
@@ -54,6 +54,7 @@ class MemoryApplication
     window.currentSphere = sphere;
 
   getPortalsAndMarkers: (sphere) ->
+    return [] unless sphere?
     sphere.markers.concat sphere.portals
 
   playSound: (sphere) ->
@@ -106,8 +107,8 @@ class MemoryApplication
     @doTransition(marker) if marker.isPolygon()
 
   onPSVReady: ->
-    PSV.setCaption(currentSphere.caption)
-    setTimeout((-> PSV.zoom(currentSphere.defaultZoom)), 1)
+    PSV.setCaption(currentSphere?.caption || "")
+    setTimeout((-> PSV.zoom(currentSphere?.defaultZoom || 50)), 1)
 
 
 # Constants
@@ -153,5 +154,7 @@ class MemoryApplication
   defaultSoundSettings:
     autoLoad: true,
     autoPlay: false
+
+  whiteImageUrl: "<%= image_url('white.jpg') %>"
 
 window.MemoryApplication = MemoryApplication

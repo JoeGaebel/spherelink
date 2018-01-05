@@ -1,4 +1,8 @@
-class PortalView
+#= require applications/edit/base_view
+
+class PortalView extends BaseView
+  viewClass: '.portal-view'
+
   constructor: (options = {}) ->
     @app = options.app
     $(document).ready(@onDocumentReady)
@@ -8,6 +12,8 @@ class PortalView
     @bindHandlers()
     @updateSelect()
     @createTipsies()
+
+    @hide() unless window.currentSphere?
 
   createUIHash: ->
     @ui =

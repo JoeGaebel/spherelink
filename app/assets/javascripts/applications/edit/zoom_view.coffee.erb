@@ -1,4 +1,8 @@
-class ZoomView
+#= require applications/edit/base_view
+
+class ZoomView extends BaseView
+  viewClass: '.zoom-view'
+
   constructor: (options = {}) ->
     @app = options.app
     $(document).ready(@onDocumentReady)
@@ -7,6 +11,8 @@ class ZoomView
     @createUIHash()
     @bindHandlers()
     @resetSliderValue()
+
+    @hide() unless window.currentSphere?
 
   createUIHash: ->
     @ui = {}
@@ -19,7 +25,7 @@ class ZoomView
     @ui.slider.on 'slideStop', @saveZoomLevel
 
   resetSliderValue: ->
-    @ui.$slider.slider('setValue', currentSphere.defaultZoom)
+    @ui.$slider.slider('setValue', currentSphere?.defaultZoom || 50)
 
   getLevel: ->
     parseInt(@ui.$slider.val())

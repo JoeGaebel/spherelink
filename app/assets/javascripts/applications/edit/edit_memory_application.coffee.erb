@@ -14,6 +14,7 @@ class EditMemoryApplication extends MemoryApplication
     @headerView = new HeaderView({ app: @ })
 
     @views = [@portalView, @markerView]
+    @PSVSensitiveViews = [@portalView, @markerView, @zoomView]
 
   bindHandlers: ->
     super
@@ -22,15 +23,29 @@ class EditMemoryApplication extends MemoryApplication
   start: ->
     super
     @hackThePencil()
+    @handleEmptyPage()
 
 # Helpers
 
+  handleEmptyPage: ->
+    return if window.currentSphere
+    $('.link-viewer').hide()
+
+  setUpPSV: ->
+    $('.link-viewer').show()
+    window.currentSphere = window.memory.spheres[0]
+    @_preload(currentSphere.panorama)
+    @setNextSphere(window.currentSphere)
+
+    for view in @PSVSensitiveViews
+      view.show()
+
+  _preload: (url) ->
+    image = new Image()
+    image.src = url
+
   getPSVOptions: ->
-    $.extend
-      panorama: window.currentSphere.panorama,
-      caption: window.currentSphere.caption,
-      markers: @getPortalsAndMarkers(currentSphere)
-    , @defaultPanoramaSettings, @editPanoramaSettings
+    $.extend super, @editPanoramaSettings
 
   _setNextSphereMakers: (sphere) ->
     super
@@ -58,6 +73,8 @@ class EditMemoryApplication extends MemoryApplication
       view.resetViewState()
 
   handleNewSphere: ->
+    @setUpPSV() unless window.currentSphere?
+
     @sphereSelectView.renderSpheres()
     @portalView.updateSelect()
 

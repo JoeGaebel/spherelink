@@ -1,4 +1,8 @@
-class MarkerView
+#= require applications/edit/base_view
+
+class MarkerView extends BaseView
+  viewClass: '.marker-view'
+
   constructor: (options = {}) ->
     @app = options.app
     $(document).ready(@onDocumentReady)
@@ -8,6 +12,8 @@ class MarkerView
     @bindHandlers()
     @createTipsies()
     @createEditor()
+
+    @hide() unless window.currentSphere?
 
   createUIHash: ->
     @ui =

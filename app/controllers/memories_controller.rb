@@ -1,37 +1,13 @@
 class MemoriesController < ApplicationController
   before_action :ensure_allowed_access, only: [:show, :edit]
-  before_action :authenticate_user!, only: [:index, :new, :edit, :create]
-
-  def create
-    @hideFlash = true
-    @memory = current_user.memories.build(memory_params)
-
-    if @memory.save
-      sphere_params = params[:memory][:spheres_attributes]
-      build_spheres(@memory, sphere_params) if sphere_params
-
-      @memory.valid?
-
-      if @memory.errors.present?
-        @memory.destroy
-        flash[:danger] = @memory.errors.full_messages.join(",")
-        render :new
-        return
-      end
-
-      flash[:success] = "Memory created! Now add the finishing touches"
-      redirect_to edit_memory_path(@memory)
-    else
-      flash[:danger] = @memory.errors.full_messages.join(", ")
-      render :new
-    end
-  end
+  before_action :authenticate_user!, only: [:index, :new, :edit]
 
   def edit
   end
 
   def new
-    @memory = current_user.memories.build
+    @memory = current_user.memories.create({ name: "New Memory" })
+    redirect_to edit_memory_path(@memory)
   end
 
   def show
