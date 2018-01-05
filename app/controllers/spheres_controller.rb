@@ -17,7 +17,7 @@ class SpheresController < ApplicationController
     end
 
     sphere = memory.spheres.build
-    sphere.caption = create_params[:caption]
+    sphere.caption = sanitize(create_params[:caption])
     sphere.panorama = create_params[:panorama]
 
     guid = SecureRandom.hex

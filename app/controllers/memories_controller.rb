@@ -57,9 +57,10 @@ class MemoriesController < ApplicationController
 
     memory.name = sanitize(params[:name]) if params[:name].present?
     memory.description = sanitize(params[:description]) if params[:description].present?
+    memory.private = params[:private] if is_boolean?(params[:private])
 
     if memory.save
-      render json: { name: memory.name, description: memory.description }, status: :created
+      render json: { name: memory.name, description: memory.description, private: memory.private }, status: :created
     else
       render json: memory.errors, status: :not_found
     end

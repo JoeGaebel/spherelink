@@ -139,8 +139,9 @@ p, .josefin {
 }
 
 .link-header {
-  margin-bottom: 0px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .link-sphere-header {
@@ -702,4 +703,13 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
   img {
     width: 60px;
   }
+}
+
+.privacy-widget {
+  align-self: left;
+}
+
+.private, .public {
+  cursor: pointer;
+  user-select: none;
 }

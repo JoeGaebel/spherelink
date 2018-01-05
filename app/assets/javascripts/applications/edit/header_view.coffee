@@ -12,6 +12,7 @@ class HeaderView
     @createUIHash()
     @bindHandlers()
     @setDefaultDescription()
+    @setPrivacy()
 
   createUIHash: ->
     @ui =
@@ -24,6 +25,10 @@ class HeaderView
       $titleInput: $('#title-input')
       $descriptionInput: $('#description-input')
 
+      $privacyWidget: $('.privacy-widget')
+      $privateLabel: $('.private')
+      $publicLabel: $('.public')
+
   bindHandlers: ->
     @ui.$titleLabel.click(@onTitleLabelClick)
     @ui.$descriptionLabel.click(@onDescriptionLabelClick)
@@ -33,6 +38,9 @@ class HeaderView
 
     @ui.$descriptionInput.blur(@debouncedSetDescription)
     @ui.$descriptionInput.keydown(@onDescriptionInputKeydown)
+
+    @ui.$privateLabel.click(@onPrivateLabelClick)
+    @ui.$publicLabel.click(@onPublicLabelClick)
 
   setDefaultDescription: ->
     if @ui.$descriptionLabel.text() == ""
@@ -84,6 +92,14 @@ class HeaderView
     @ui.$descriptionInput.hide()
     @ui.$descriptionLabel.show()
 
+  setPrivacy: ->
+    if window.memory.private
+      @ui.$privateLabel.show()
+      @ui.$publicLabel.hide()
+    else
+      @ui.$publicLabel.show()
+      @ui.$privateLabel.hide()
+
 
 # Event Handlers
 
@@ -107,6 +123,18 @@ class HeaderView
 
   onDescriptionInputKeydown: (e) =>
     @debouncedSetDescription() if e.keyCode == 13
+
+  onPrivateLabelClick: =>
+    answer = confirm("Are you sure you want to make this memory public?")
+    @sendDetails({ private: false }, @onPrivacyChangeSuccess) if answer
+
+  onPublicLabelClick: =>
+    answer = confirm("Are you sure you want to make this memory private?")
+    @sendDetails({ private: true }, @onPrivacyChangeSuccess) if answer
+
+  onPrivacyChangeSuccess: (response) =>
+    window.memory.private = response.private
+    @setPrivacy()
 
 
 window.HeaderView = HeaderView
