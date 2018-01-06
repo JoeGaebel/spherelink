@@ -48,7 +48,7 @@ class SpheresController < ApplicationController
   end
 
   def destroy
-    sphere = current_user.spheres.find(params[:id])
+    sphere = current_user.spheres.find_by(id: params[:id])
 
     if sphere.blank?
       render json: {}, status: :not_found

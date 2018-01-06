@@ -45,7 +45,7 @@ class MemoriesController < ApplicationController
   private
 
   def ensure_allowed_access
-    memory = Memory.find(params[:id])
+    memory = Memory.find_by(id: params[:id])
     not_found if memory.blank?
 
     if memory.private

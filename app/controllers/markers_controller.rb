@@ -2,7 +2,7 @@ class MarkersController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
 
   def create
-    parent_sphere = current_user.spheres.find(params[:id])
+    parent_sphere = current_user.spheres.find_by(id: params[:id])
 
     if parent_sphere.blank?
       render json: {}, status: :bad_request
@@ -27,14 +27,14 @@ class MarkersController < ApplicationController
   end
 
   def destroy
-    parent_sphere = current_user.spheres.find(params[:sphere_id])
+    parent_sphere = current_user.spheres.find_by(id: params[:sphere_id])
 
     if parent_sphere.blank?
       render json: {}, status: :not_found
       return
     end
 
-    marker = parent_sphere.markers.find(params[:id])
+    marker = parent_sphere.markers.find_by(id: params[:id])
     if marker.present? && marker.destroy
       render json: marker.to_builder.target!, status: :ok
     else
