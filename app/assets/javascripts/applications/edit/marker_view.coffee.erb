@@ -6,6 +6,7 @@ class MarkerView extends BaseView
   constructor: (options = {}) ->
     @app = options.app
     $(document).ready(@onDocumentReady)
+    @deleteMarker = _.debounce(@_deleteMarker, 250, true)
 
   onDocumentReady: =>
     @createUIHash()
@@ -115,7 +116,7 @@ class MarkerView extends BaseView
 
     JSON.stringify(params)
 
-  deleteMarker: (marker) =>
+  _deleteMarker: (marker) =>
     markerId = marker.id.split('-')[1]
     @markerToDelete = marker
 
