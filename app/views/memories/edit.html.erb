@@ -1,44 +1,46 @@
-<div class="container">
-  <div class="header link-header">
-    <div class="title-widget">
-      <div id="title" class="title"><%= @memory.name %></div>
-      <input id="title-input" class="title" />
-    </div>
-
-    <div class="description-widget">
-      <div id="description"><%= @memory.description %></div>
-      <input id="description-input" />
-    </div>
-
-    <div class="privacy-widget">
-      <div class="private">
-        <i class="fa fa-lock" aria-hidden="true"></i>
-        Private
+<div class="left-pad-row">
+  <div class="right-pad-row">
+    <div class="header link-header">
+      <div class="title-widget">
+        <div id="title" class="title"><%= @memory.name %></div>
+        <input id="title-input" class="title" />
       </div>
 
-      <div class="public">
-        <i class="fa fa-globe" aria-hidden="true"></i>
-        Public
+      <div class="description-widget">
+        <div id="description"><%= @memory.description %></div>
+        <input id="description-input" />
       </div>
+
+      <div class="privacy-widget">
+        <div class="private">
+          <i class="fa fa-lock" aria-hidden="true"></i>
+          Private
+        </div>
+
+        <div class="public">
+          <i class="fa fa-globe" aria-hidden="true"></i>
+          Public
+        </div>
+      </div>
+    </div>
+
+    <div class="sphere-select-view">
+      <h3 class="link-sphere-header">Spheres</h3>
+      <%= render 'add_sphere_view' %>
     </div>
   </div>
 
-  <div class="sphere-select-view">
-    <h3 class="link-sphere-header">Spheres</h3>
-    <%= render 'add_sphere_view' %>
-  </div>
 
-  <div class="row">
-    <div class="link-viewer col-md-6">
+  <div class="edit-row">
+    <div class="link-viewer">
       <%= render "shared/edit_memory_application", hideNavBar: true, style: "width: 100%; height: 100%", editMode: true %>
     </div>
-    <div class="col-md-3">
-      <ul class="finishing-touches">
-        <%= render 'portal_view' %>
-        <%= render 'marker_view' %>
-        <%= render 'zoom_view' %>
-      </ul>
+    <div class="edit-widgets right-pad-row">
+      <%= render 'portal_view' %>
+      <%= render 'marker_view' %>
+      <%= render 'zoom_view' %>
     </div>
   </div>
 </div>
+
 <%= link_to "Back to memories...", memories_path, class: 'josefin memories-link' %>

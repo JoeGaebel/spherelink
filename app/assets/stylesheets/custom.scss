@@ -4,6 +4,7 @@
 /* mixins, variables, etc. */
 
 $gray-medium-light: #eaeaea;
+$side-padding: 30px;
 
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
@@ -32,9 +33,12 @@ body.demo {
 .memories-link {
   font-size: 22px;
   color: #696969;
+  padding-top: 15px;
+
+  position: absolute;
+  right: 0px;
 
   &:hover { text-decoration: none; color: #337ab7;}
-  float: right;
 }
 
 a.demo {
@@ -134,8 +138,10 @@ p, .josefin {
 }
 
 .link-viewer {
-  width: 800px;
+  flex-grow: 200;
+  flex-shrink: 2;
   height: 500px;
+  padding-right: $side-padding;
 }
 
 .link-header {
@@ -709,4 +715,38 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 .sphere-select-view {
   display: flex;
   flex-direction: column;
+}
+
+.edit-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.edit-widgets {
+  padding-top: 10px;
+  flex-grow: 1;
+}
+
+.edit-widget {
+  width: 263px;
+}
+
+.wysihtml5-toolbar {
+  .btn-group {
+    width: 263px;
+  }
+}
+
+.zoom-view {
+  .slider.slider-horizontal {
+    width: 260px;
+  }
+}
+
+.left-pad-row {
+  padding-left: $side-padding;
+}
+
+.right-pad-row {
+  padding-right: $side-padding;
 }
