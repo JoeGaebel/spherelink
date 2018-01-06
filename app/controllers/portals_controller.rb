@@ -31,10 +31,17 @@ class PortalsController < ApplicationController
     end
 
     portal = parent_sphere.portals.find_by(id: params[:id])
-    if portal.present? && portal.destroy
-      render json: portal.to_builder.target!, status: :ok
+    if portal.present?
+      if portal.destroy
+        puts "found portal and destroyed it!"
+        render json: portal.to_builder.target!, status: :ok
+      else
+        puts "found portal couldn't destroy it!"
+        render json: portal.errors, status: :bad_request
+      end
     else
-      render json: portal.errors, status: :bad_request
+      puts "hmm, didn't find the portal"
+      render json: {}, status: :not_found
     end
   end
 end
