@@ -79,6 +79,7 @@ class PortalView extends BaseView
     JSON.stringify(params)
 
   deletePortal: (portal) =>
+    alert("delete Portal called!")
     portalId = portal.id.split('-')[1]
     @portalToDelete = portal
 
