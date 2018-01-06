@@ -106,15 +106,21 @@ class HeaderView
 
   onTitleLabelClick: =>
     @ui.$titleInput.val(@ui.$titleLabel.text())
+    @ui.$titleInput.css({ width: @ui.$titleLabel.css('width') })
+
     @ui.$titleInput.show()
     @ui.$titleInput.focus()
+    @ui.$titleInput.select()
 
     @ui.$titleLabel.hide()
 
   onDescriptionLabelClick: =>
     @ui.$descriptionInput.val(@ui.$descriptionLabel.text())
+    @ui.$descriptionInput.css({ width: @ui.$descriptionLabel.css('width') })
+
     @ui.$descriptionInput.show()
     @ui.$descriptionInput.focus()
+    @ui.$descriptionInput.select()
 
     @ui.$descriptionLabel.hide()
 
