@@ -6,6 +6,7 @@ class PortalView extends BaseView
   constructor: (options = {}) ->
     @app = options.app
     $(document).ready(@onDocumentReady)
+    @deletePortal = _.debounce(@_deletePortal, 250, true)
 
   onDocumentReady: =>
     @createUIHash()
@@ -78,8 +79,7 @@ class PortalView extends BaseView
 
     JSON.stringify(params)
 
-  deletePortal: (portal) =>
-    alert("delete Portal called!")
+  _deletePortal: (portal) =>
     portalId = portal.id.split('-')[1]
     @portalToDelete = portal
 
