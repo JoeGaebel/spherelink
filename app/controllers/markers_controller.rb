@@ -35,10 +35,15 @@ class MarkersController < ApplicationController
     end
 
     marker = parent_sphere.markers.find_by(id: params[:id])
-    if marker.present? && marker.destroy
-      render json: marker.to_builder.target!, status: :ok
+
+    if marker.present?
+      if marker.destroy
+        render json: marker.to_builder.target!, status: :ok
+      else
+        render json: marker.errors, status: :bad_request
+      end
     else
-      render json: marker.errors, status: :bad_request
+      render json: {}, status: :not_found
     end
   end
 end
