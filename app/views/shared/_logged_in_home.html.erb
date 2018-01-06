@@ -3,6 +3,8 @@
   <ul class="memory-list">
     <%= render @memories %>
   </ul>
-  <%= link_to 'Create a memory', new_memory_path, class: 'create-a-memory' %>
-  <%= link_to 'Log out', logout_path, method: 'delete', class: 'logout' %>
+  <div class="bottom-links">
+    <%= link_to 'Create a memory', new_memory_path, class: 'create-a-memory' %>
+    <%= link_to 'Log out', logout_path, method: 'delete', class: 'logout' %>
+  </div>
 </div>
