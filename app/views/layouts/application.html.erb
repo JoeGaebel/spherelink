@@ -7,14 +7,11 @@
     <%= render 'layouts/shim' %>
     <%= render 'layouts/view_port' %>
     <%= favicon_link_tag 'pin2.png' %>
-
   </head>
 
-  <body <%= "class=#{ @body_class }" if @body_class %>>
-    <% unless @hide_flash %>
-      <% flash.each do |message_type, message| %>
-        <div class="alert alert-<%= message_type %>"><%= message %></div>
-      <% end %>
+  <body>
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-<%= message_type %>"><%= message %></div>
     <% end %>
 
     <%= yield %>
