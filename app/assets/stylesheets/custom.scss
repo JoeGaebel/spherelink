@@ -12,19 +12,6 @@ $side-padding: 30px;
   box-sizing:         border-box;
 }
 
-body.demo {
-  background-color: #c2c6c9;
-  background-image: image-url("background.jpg");
-  background-position: -450px -285px;
-  background-size: 2005px 1271px;
-  background-repeat: no-repeat;
-}
-
-.saudade-container {
-  max-width: 1300px;
-  min-width: 1300px;
-}
-
 .alert {
   position: absolute;
   float: left;
@@ -48,12 +35,6 @@ a.demo {
   color: #696969;
 
   &:hover { text-decoration: none; color: #337ab7;}
-}
-
-.create-saudade {
-  top: 648px;
-  left: 1060px;
-  transform: rotateZ(392.3deg);
 }
 
 .user-login {
@@ -752,4 +733,8 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 
 .bottom-links {
   padding-bottom: 15px;
+}
+
+.fix-bottom {
+  bottom: 0;
 }

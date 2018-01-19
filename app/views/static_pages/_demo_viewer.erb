@@ -1,18 +1,20 @@
-<div class="saudade-container">
-  <div class="demo-header header">
+<%= link_to "Login", login_path, class: "move-left user-login josefin demo" if !user_signed_in? %>
+
+<div class="container">
+  <div class="header user-header">
     <span class="title">Spherelink</span>
   </div>
 
-  <%= link_to "Login", login_path, class: "login-saudade josefin demo" %>
-
-  <div class="demo-viewer">
-    <%= render "shared/memory_application", hideNavBar: true, style: "width: 83.6%; height: 460px;" %>
+  <div class="viewer">
+    <%= render "shared/memory_application", hideNavBar: true, style: "width: 100%; height: 600px;" %>
   </div>
 
-  <div class="josefin description demo-description">
+  <div class="josefin description show-description">
     Spherelink is a tool for capturing your most cherished memories. <br>
     By taking photospheres with your smartphone, linking them together, and embedding content, <br>
     you can always go back and explore your memories again.
   </div>
 </div>
-<%= link_to "Sign up", new_user_registration_path, class: "create-saudade josefin demo" %>
+
+
+<%= link_to "Sign up", new_user_registration_path, class: "move-left fix-bottom memories-link josefin" %>
