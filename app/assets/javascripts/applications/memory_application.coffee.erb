@@ -32,13 +32,19 @@ class MemoryApplication
     soundManager.onready(@onSoundManagerReady)
 
   doTransition: (portal) ->
+    oldAnimation = PSV.stopAnimation
+    PSV.stopAnimation = ->
+
     center = @getCenter(portal.polygon_px)
     associatedSphere = _.findWhere(window.memory.spheres, { id: parseInt(portal.to_sphere_id) })
 
     window.PSV.animate({
       x: center[0],
       y: center[1]
-    }, 1000).then(=> @setNextSphere(associatedSphere, portal))
+    }, 1000).then(=>
+      PSV.stopAnimation = oldAnimation
+      @setNextSphere(associatedSphere, portal)
+    )
 
   setNextSphere: (sphere, portal = {}) ->
     window.PSV.setPanorama(sphere.panorama, {
