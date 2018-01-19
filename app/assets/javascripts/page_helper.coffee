@@ -3,7 +3,7 @@ onPageLoad = ->
   clampDescriptions()
 
 fadeAlerts = ->
-  $(".alert-notice").fadeOut(3000)
+  setTimeout((-> $(".alert-notice").fadeOut(3000)), 5000)
 
 clampDescriptions = ->
   descriptions = $('.desc')

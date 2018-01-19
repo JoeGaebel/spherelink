@@ -748,6 +748,25 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 
 .bottom-links {
   padding-bottom: 15px;
+  margin: 0 10px 0 10px;
+  display: flex;
+  justify-content: space-between;
+
+  a {
+    flex-grow: 1;
+  }
+
+  .edit-profile {
+    text-align: center;
+  }
+
+  .logout {
+    text-align: right;
+  }
+}
+
+.delete-account {
+  margin-bottom: 10px;
 }
 
 .fix-bottom {

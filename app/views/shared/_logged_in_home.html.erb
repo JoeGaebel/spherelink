@@ -4,7 +4,8 @@
     <%= render @memories %>
   </ul>
   <div class="bottom-links">
-    <%= link_to 'Create a memory', new_memory_path, class: 'create-a-memory' %>
+    <%= link_to 'Create a memory', new_memory_path %>
+    <%= link_to 'Edit profile', edit_user_registration_path, class: 'edit-profile' %>
     <%= link_to 'Log out', logout_path, method: 'delete', class: 'logout' %>
   </div>
 </div>

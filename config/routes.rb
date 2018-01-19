@@ -15,7 +15,6 @@ Rails.application.routes.draw do
 
   get '/.well-known/acme-challenge/:id' => 'static_pages#letsencrypt'
 
-  resources :users, only: [:edit]
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
   resources :portals,             only: [:create, :destroy]
