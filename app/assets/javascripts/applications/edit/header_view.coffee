@@ -106,7 +106,7 @@ class HeaderView
 
   onTitleLabelClick: =>
     @ui.$titleInput.val(@ui.$titleLabel.text())
-    @ui.$titleInput.css({ width: @ui.$titleLabel.css('width') })
+    @ui.$titleInput.css({ height: @ui.$titleLabel.css('height') })
 
     @ui.$titleInput.show()
     @ui.$titleInput.focus()
@@ -116,7 +116,7 @@ class HeaderView
 
   onDescriptionLabelClick: =>
     @ui.$descriptionInput.val(@ui.$descriptionLabel.text())
-    @ui.$descriptionInput.css({ width: @ui.$descriptionLabel.css('width') })
+    @ui.$descriptionInput.css({ height: @ui.$descriptionLabel.css('height') })
 
     @ui.$descriptionInput.show()
     @ui.$descriptionInput.focus()
