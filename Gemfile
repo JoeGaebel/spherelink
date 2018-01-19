@@ -21,6 +21,7 @@ gem 'rails_12factor', group: :production
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'underscore-rails'
 gem 'figaro'
+gem 'file_validators'
 gem 'tipsy-rails'
 gem 'bootstrap-wysihtml5-rails'
 gem 'devise'

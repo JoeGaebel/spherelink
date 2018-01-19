@@ -14,4 +14,35 @@ describe Sphere, type: :model do
       expect(model.guid).to be_present
     end
   end
+
+  describe "validations" do
+    describe "file size" do
+      let(:sphere) { create(:sphere) }
+
+      before do
+        expect(sphere).to be_valid
+      end
+
+      context "with a file greater than 15MB" do
+        before do
+          allow(sphere.panorama.file).to receive(:size).and_return(16.megabytes)
+        end
+
+        it "is invalid" do
+          expect(sphere).not_to be_valid
+          expect(sphere.errors.full_messages).to include /file size must be less than or equal to 15 MB/
+        end
+      end
+
+      context "with a file greater than 15MB" do
+        before do
+          expect(sphere.panorama.file.size).to be < 15.megabytes
+        end
+
+        it "is valid" do
+          expect(sphere).to be_valid
+        end
+      end
+    end
+  end
 end

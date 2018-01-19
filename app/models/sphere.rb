@@ -19,6 +19,7 @@ class Sphere < ApplicationRecord
 
   validates_presence_of :caption
   validates_presence_of :panorama
+  validates :panorama, file_size: { less_than_or_equal_to: 15.megabytes }
 
   def to_builder
     Jbuilder.new do |json|
