@@ -18,8 +18,6 @@
 //= require d.js/lib/D
 //= require uevent/uevent
 //= require dot/doT
-//= require photo-sphere-viewer/dist/photo-sphere-viewer
-//= require soundmanager2/script/soundmanager2-jsmin
 //= require tipsy
 //= require bootstrap-wysihtml5
 //= require bootstrap-slider/dist/bootstrap-slider
