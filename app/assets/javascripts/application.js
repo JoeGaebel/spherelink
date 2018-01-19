@@ -24,5 +24,6 @@
 //= require bootstrap-wysihtml5
 //= require bootstrap-slider/dist/bootstrap-slider
 //= require jquery-awesome-cursor/dist/jquery.awesome-cursor
+//= require clamp-js/clamp
 //= require_tree ./applications/
 //= require_tree .

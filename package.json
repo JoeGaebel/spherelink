@@ -15,7 +15,8 @@
     "soundmanager2": "2.97.20170602",
     "three": "0.84.0",
     "uevent": "1.0.0",
-    "jquery-awesome-cursor": "0.3.1"
+    "jquery-awesome-cursor": "0.3.1",
+    "clamp-js": "0.7.0"
   },
   "license": "ISC"
 }
