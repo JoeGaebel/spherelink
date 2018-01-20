@@ -771,7 +771,14 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 
 #photosphere {
   width: 100%;
-  height: 554px;
+  height: 465px;
+}
+
+@media (min-width: 768px), (min-width: 992px), (min-width: 1200px) {
+  #photosphere {
+    width: 100%;
+    height: 554px;
+  }
 }
 
 @media (min-width: 992px) {
