@@ -9,6 +9,8 @@ class Memory < ApplicationRecord
 
   validates_presence_of :name
 
+  default_scope { order(created_at: :desc) }
+
   def to_builder
     Jbuilder.new do |json|
       json.(self, :id, :name, :private)
