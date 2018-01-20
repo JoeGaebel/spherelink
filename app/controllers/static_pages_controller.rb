@@ -3,8 +3,7 @@ class StaticPagesController < ApplicationController
     if user_signed_in?
       redirect_to memories_path
     else
-      @body_class = 'demo'
-      @memory_json = Memory.second.to_builder.target!
+      @memory_json = Memory.find_by(name: "Joe's Boat").to_builder.target!
     end
   end
 
