@@ -1,6 +1,6 @@
 <%= render "shared/memory_application_crums" %>
 
-<div id="photosphere" style="<%= style %>"></div>
+<div id="photosphere"></div>
 <script>
   var memoryApplication = new MemoryApplication({
     memory: <%= @memory_json.to_s.html_safe %>,
