@@ -51,6 +51,7 @@ class HeaderView
 
     spinner = new SmallSpinnerView
     @ui.$titleWidget.append(spinner.render())
+    setTimeout((-> $('.title-widget .small-spinner').show()), 500)
 
     name = @ui.$titleInput.val()
     @sendDetails({ name }, @clearTitleSpinner)
@@ -60,6 +61,7 @@ class HeaderView
 
     spinner = new SmallSpinnerView
     @ui.$descriptionWidget.append(spinner.render())
+    setTimeout((-> $('.description-widget .small-spinner').show()), 500)
 
     description = @ui.$descriptionInput.val()
     @sendDetails({ description }, @clearDescriptionSpinner)
@@ -107,6 +109,7 @@ class HeaderView
   onTitleLabelClick: =>
     @ui.$titleInput.val(@ui.$titleLabel.text())
     @ui.$titleInput.css({ height: @ui.$titleLabel.css('height') })
+    @ui.$titleWidget.css({ "min-height": @ui.$titleLabel.css('height') })
 
     @ui.$titleInput.show()
     @ui.$titleInput.focus()
@@ -117,6 +120,7 @@ class HeaderView
   onDescriptionLabelClick: =>
     @ui.$descriptionInput.val(@ui.$descriptionLabel.text())
     @ui.$descriptionInput.css({ height: @ui.$descriptionLabel.css('height') })
+    @ui.$descriptionWidget.css({ "min-height": @ui.$descriptionLabel.css('height') })
 
     @ui.$descriptionInput.show()
     @ui.$descriptionInput.focus()

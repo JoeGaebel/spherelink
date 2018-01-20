@@ -688,9 +688,13 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 
 .small-spinner {
   padding-bottom: 10px;
+  padding-top: 20px;
+  display: none;
 
   img {
     width: 60px;
+    margin: 0 auto;
+    display: block;
   }
 }
 
