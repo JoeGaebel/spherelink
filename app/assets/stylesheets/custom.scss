@@ -763,3 +763,9 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 .user-login {
   text-align: right;
 }
+
+@media (min-width: 992px) {
+  .devise-container {
+    width: 750px;
+  }
+}
