@@ -29,18 +29,11 @@ $side-padding: 30px;
   &:hover { text-decoration: none; color: #337ab7;}
 }
 
-a.demo {
-  position: absolute;
-
-  font-size: 22px;
+.demo a {
+  font-size: 14px;
   color: #696969;
 
   &:hover { text-decoration: none; color: #337ab7;}
-}
-
-.user-login {
-  top: 0;
-  right: 0;
 }
 
 .login-saudade {
@@ -76,12 +69,10 @@ p, .josefin {
 
 .header {
   font-family: 'Istok Web', sans-serif;
-  padding-top: 18px;
   color: #696969;
 
   .title {
-    font-size: 3rem;
-    padding-right: 4px;
+    font-size: 4rem;
   }
 }
 
@@ -768,6 +759,6 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
   margin-bottom: 10px;
 }
 
-.fix-bottom {
-  bottom: 0;
+.user-login {
+  text-align: right;
 }

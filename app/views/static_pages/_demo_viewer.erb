@@ -1,6 +1,8 @@
-<%= link_to "Login", login_path, class: "move-left user-login josefin demo" if !user_signed_in? %>
-
 <div class="container">
+  <div class="login-signup-links josefin demo user-login">
+    <%= link_to "Login", login_path %>/<%= link_to "Sign up", new_user_registration_path %>
+  </div>
+
   <div class="header user-header">
     <span class="title">Spherelink</span>
   </div>
@@ -15,6 +17,3 @@
     you can always go back and explore your memories again.
   </div>
 </div>
-
-
-<%= link_to "Sign up", new_user_registration_path, class: "move-left fix-bottom memories-link josefin" %>
