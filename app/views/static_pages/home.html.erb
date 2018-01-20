@@ -1,5 +1,17 @@
-<% if user_signed_in? %>
-  <%= render 'shared/logged_in_home' %>
-<% else %>
-  <%= render 'demo_viewer' %>
-<% end %>
+<div class="login-signup-links josefin demo user-login">
+  <%= link_to "Login", login_path %>/<%= link_to "Sign up", new_user_registration_path %>
+</div>
+
+<div class="container">
+  <div class="header user-header">
+    <span class="title">Spherelink</span>
+  </div>
+
+  <div class="viewer">
+    <%= render "shared/memory_application", hideNavBar: true %>
+  </div>
+
+  <div class="josefin description show-description">
+    Spherelink is a tool for capturing your most cherished memories
+  </div>
+</div>

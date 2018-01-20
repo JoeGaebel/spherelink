@@ -14,7 +14,10 @@ class MemoriesController < ApplicationController
   end
 
   def index
-    @memories = current_user.memories
+    @memories = current_user.memories.paginate({
+      page: params[:page],
+      per_page: 5
+    })
   end
 
   def destroy

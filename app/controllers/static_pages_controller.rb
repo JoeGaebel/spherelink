@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
     if user_signed_in?
-      @memories = current_user.memories
+      redirect_to memories_path
     else
       @body_class = 'demo'
       @memory_json = Memory.second.to_builder.target!

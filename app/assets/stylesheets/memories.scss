@@ -1,6 +1,7 @@
 .memory-list {
   list-style-type: none;
   padding: 0;
+  margin-bottom: -4px;
 }
 
 .memory-item-view {
@@ -19,6 +20,8 @@ h1, h3, p {
   margin-top: 0;
 }
 
-.logout {
-  float: right;
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
 }
