@@ -19,20 +19,15 @@ $side-padding: 30px;
 }
 
 .memories-link {
-  font-size: 22px;
-  color: #696969;
+  font-size: 14px;
   padding-top: 15px;
-
-  position: absolute;
-  right: 0px;
+  padding-right: 5px;
 
   &:hover { text-decoration: none; color: #337ab7;}
 }
 
 .demo a {
-  font-size: 14px;
-  color: #696969;
-
+  font-size: 1.5rem;
   &:hover { text-decoration: none; color: #337ab7;}
 }
 
@@ -771,6 +766,8 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 }
 
 .user-login {
+  padding-right: 10px;
+  margin-bottom: 10px;
   text-align: right;
 }
 
