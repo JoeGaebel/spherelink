@@ -25,3 +25,22 @@ h1, h3, p {
   justify-content: center;
   margin-top: 4px;
 }
+
+.top-links {
+  margin: 0 10px 0 10px;
+  display: flex;
+  justify-content: space-between;
+
+  a {
+    flex-grow: 1;
+  }
+
+  .edit-profile {
+    padding-right: 60px;
+    text-align: center;
+  }
+
+  .logout {
+    text-align: right;
+  }
+}

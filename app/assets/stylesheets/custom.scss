@@ -5,6 +5,7 @@
 
 $gray-medium-light: #eaeaea;
 $side-padding: 30px;
+$font-color: #696969;
 
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
@@ -16,59 +17,27 @@ $side-padding: 30px;
   font-size: 14px;
   padding-top: 15px;
   padding-right: 5px;
+}
 
+a {
   &:hover { text-decoration: none; color: #337ab7;}
+
+  .demo {
+    font-size: 1.5rem;
+  }
 }
 
-.demo a {
-  font-size: 1.5rem;
-  &:hover { text-decoration: none; color: #337ab7;}
-}
-
-.login-saudade {
-  left: 1084px;
-  top: 47.2px;
-  transform: rotateZ(336.4deg);
-}
-
-p, .josefin {
+body {
   font-family: 'Lora', serif;
-}
-
-.demo-header {
-  margin-bottom: 1px;
-  text-align: left;
-  padding-left: 35%;
-
-  span {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .title {
-    padding-right: 4px;
-  }
-
-  .phonetics {
-    font-size: 36px;
-    font-style: italic;
-    padding-top: 4.4px;
-  }
+  color: $font-color;
 }
 
 .header {
   font-family: 'Istok Web', sans-serif;
-  color: #696969;
 
   .title {
     font-size: 4rem;
   }
-}
-
-.profile-saudade {
-  position: fixed;
-  bottom: 0;
-  right: 0;
 }
 
 .user-header {
@@ -82,16 +51,6 @@ p, .josefin {
   font-size: 18px;
   color: #4f4f4f;
   transform: perspective(267px) rotateX(24.2deg);
-}
-
-.demo-description {
-  padding: 69px 12% 0 0;
-  margin-top: 8px;
-}
-
-.demo-viewer {
-  margin: auto;
-  width: 79%;
 }
 
 .viewer {
@@ -116,16 +75,6 @@ p, .josefin {
   margin-bottom: 0;
 }
 
-.finishing-touches {
-  list-style: none;
-  li h2 {
-    margin-bottom: 10px;
-    text-align: left;
-  }
-
-  padding-left: 0px;
-}
-
 /* miscellaneous */
 
 .debug_dump {
@@ -134,43 +83,6 @@ p, .josefin {
   width: 100%;
   margin-top: 45px;
   @include box_sizing;
-}
-
-/* sidebar */
-
-aside {
-  section.user_info {
-    margin-top: 20px;
-  }
-  section {
-    padding: 10px 0;
-    margin-top: 20px;
-    &:first-child {
-      border: 0;
-      padding-top: 0;
-    }
-    span {
-      display: block;
-      margin-bottom: 3px;
-      line-height: 1;
-    }
-    h1 {
-      font-size: 1.4em;
-      text-align: left;
-      letter-spacing: -1px;
-      margin-bottom: 3px;
-      margin-top: 0px;
-    }
-  }
-}
-
-.gravatar {
-  float: left;
-  margin-right: 10px;
-}
-
-.gravatar_edit {
-  margin-top: 15px;
 }
 
 /* universal */
@@ -226,57 +138,6 @@ p {
   font-size: 1.1em;
   line-height: 1.7em;
 }
-
-/* header */
-
-#logo {
-  float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-}
-
-#logo:hover {
-  color: #fff;
-  text-decoration: none;
-}
-
-/* footer */
-
-footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid $gray-medium-light;
-  color: #777;
-}
-
-footer a {
-  color: #555;
-}
-
-footer a:hover {
-  color: #222;
-}
-
-footer small {
-  float: left;
-}
-
-footer ul {
-  float: right;
-  list-style: none;
-}
-
-footer ul li {
-  float: left;
-  margin-left: 15px;
-}
-
-/* forms */
 
 .private-checkbox {
   input {
@@ -340,103 +201,8 @@ input {
   margin-left: 0;
 }
 
-.users {
-  list-style: none;
-  margin: 0;
-  li {
-    overflow: auto;
-    padding: 10px 0;
-    border-bottom: 1px solid $gray-lighter;
-  }
-}
-
-/* microposts */
-
-.microposts {
-  list-style: none;
-  padding: 0;
-  li {
-    padding: 10px 0;
-    border-top: 1px solid #e8e8e8;
-  }
-  .user {
-    margin-top: 5em;
-    padding-top: 0;
-  }
-  .content {
-    display: block;
-    margin-left: 60px;
-    img {
-      display: block;
-      padding: 5px 0;
-    }
-  }
-  .timestamp {
-    color: $gray-light;
-    display: block;
-    margin-left: 60px;
-  }
-  .gravatar {
-    float: left;
-    margin-right: 10px;
-    margin-top: 5px;
-  }
-}
-
-aside {
-  textarea {
-    height: 100px;
-    margin-bottom: 5px;
-  }
-}
-
-span.picture {
-  margin-top: 10px;
-  input {
-    border: 0;
-  }
-}
-
-.stats {
-  overflow: auto;
-  margin-top: 0;
-  padding: 0;
-  a {
-    float: left;
-    padding: 0 10px;
-    border-left: 1px solid $gray-lighter;
-    color: gray;
-    &:first-child {
-      padding-left: 0;
-      border: 0;
-    }
-    &:hover {
-      text-decoration: none;
-      color: blue;
-    }
-  }
-  strong {
-    display: block;
-  }
-}
-
-.user_avatars {
-  overflow: auto;
-  margin-top: 10px;
-  .gravatar {
-    margin: 1px 1px;
-  }
-  a {
-    padding: 0;
-  }
-}
-
-.users.follow {
-  padding: 0;
-}
-
 .zero-height {
-  height: 0px;
+  height: 0;
 }
 
 .add-sphere-view {
@@ -456,7 +222,7 @@ span.picture {
   .caption {
     font-size: 1em;
     text-align: center;
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   .delete-sphere {
@@ -492,15 +258,6 @@ span.picture {
   }
 }
 
-.new_memory, .edit_memory {
-  #error_explanation {
-    .alert {
-      position: relative;
-      float: none;
-    }
-  }
-}
-
 .alert {
   margin-bottom: 0;
 }
@@ -520,17 +277,6 @@ span.picture {
 
 ul.wysihtml5-toolbar.wysihtml5-toolbar {
   display: none;
-}
-
-.psv-panel-content {
-  h1, h2, h3, h4, h5, h6, p {
-    color: #A8A8A8;
-  }
-
-  img {
-    max-width: 100%;
-    max-height: 100%;
-  }
 }
 
 .add-sphere-link {
@@ -579,18 +325,6 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
   }
 }
 
-.move-left {
-  margin-right: 8px;
-}
-
-.psv-navbar.psv-navbar.psv-navbar {
-  display: inline-block;
-
-  .full-screen {
-    float: right;
-  }
-}
-
 .devise-page {
   width: 40%;
   margin: auto;
@@ -598,10 +332,9 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 
 .status-text {
   padding: 1px 0 0 11px;
-  color: #696969;
+  color: $font-color;
   font-size: 1em;
 }
-
 
 .alert-error {
   background-color: #f2dede;
@@ -724,6 +457,10 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
   .btn-group {
     width: 263px;
   }
+
+  .btn {
+    color: $font-color;
+  }
 }
 
 .zoom-view {
@@ -738,25 +475,6 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 
 .right-pad-row {
   padding-right: $side-padding;
-}
-
-.top-links {
-  margin: 0 10px 0 10px;
-  display: flex;
-  justify-content: space-between;
-
-  a {
-    flex-grow: 1;
-  }
-
-  .edit-profile {
-    padding-right: 60px;
-    text-align: center;
-  }
-
-  .logout {
-    text-align: right;
-  }
 }
 
 .delete-account {
