@@ -17,5 +17,5 @@ Rails.application.config.assets.precompile += %w( three/examples/js/postprocessi
 Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/MaskPass.js )
 Rails.application.config.assets.precompile += %w( three/examples/js/controls/DeviceOrientationControls.js )
 
-Rails.application.config.assets.precompile += %w( soundmanager2/script/soundmanager2-jsmin.js )
+Rails.application.config.assets.precompile += %w( soundmanager2.swf soundmanager2_flash9.swf)
 Rails.application.config.assets.precompile += %w( photo-sphere-viewer/dist/photo-sphere-viewer.min.js )

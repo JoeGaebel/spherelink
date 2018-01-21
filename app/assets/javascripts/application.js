@@ -24,5 +24,6 @@
 //= require jquery-awesome-cursor/dist/jquery.awesome-cursor
 //= require clamp-js/clamp
 //= require chance/dist/chance.min
+//= require soundmanager2-jsmin
 //= require_tree ./applications/
 //= require_tree .

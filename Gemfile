@@ -29,6 +29,7 @@ gem 'carrierwave_backgrounder'
 gem 'daemons'
 gem 'font-awesome-rails'
 gem 'nokogiri', '~> 1.8.1'
+gem 'soundmanager2-rails'
 
 group :production do
   gem 'pg', '~> 0.18'

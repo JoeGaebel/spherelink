@@ -154,10 +154,11 @@ class MemoryApplication
       blur: true
 
   defaultSoundManagerSettings:
-    preferFlash: false,
+    preferFlash: true,
     debugMode: false,
     debugFlash: false,
-    useHTML5Audio: true,
+    useHTML5Audio: false,
+    url: "<%= asset_path('soundmanager2.swf') %>"
 
   defaultSoundSettings:
     autoLoad: true,
