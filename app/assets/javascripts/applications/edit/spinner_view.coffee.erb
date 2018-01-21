@@ -1,7 +1,10 @@
 class SpinnerView
+  constructor: (id) ->
+    @id = id
+
   template: ->
     """
-      <div class="sphere-item-view spinner">
+      <div id="spinner-#{@id}" class="sphere-item-view spinner">
         <%= image_tag('spinner') %>
         <div class="status-text">Uploading...</div>
       </div>
@@ -10,10 +13,10 @@ class SpinnerView
   render: ->
     @template()
 
-  showProgress: ->
-    $('.status-text').text("Processing...")
+  showProgress: (id) ->
+    $("#spinner-#{id} .status-text").text("Processing...")
 
-  hideProgress: ->
-    $('.status-text').hide()
+  hideProgress: (id) ->
+    $("#spinner-#{id} .status-text").hide()
 
 window.SpinnerView = SpinnerView

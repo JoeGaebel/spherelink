@@ -3,6 +3,7 @@
 class AddSphereView
   constructor: (options = {}) ->
     @app = options.app
+    @intervals = {}
     $(document).ready(@onDocumentReady)
 
   onDocumentReady: =>
@@ -27,19 +28,20 @@ class AddSphereView
     @ui.$cancel.click(@resetWidget)
     @ui.$submit.click(@onSubmitClick)
 
-  resetWidget: =>
+  resetWidget: (event) =>
     @ui.$addForm.hide()
     @ui.$addSphereButton.show()
-    event.stopPropagation()
+    event?.stopPropagation()
 
   newSphere: ->
     formData = new FormData()
-    formData.append('sphere[panorama]', @ui.$file[0].files[0]);
-    formData.append('sphere[caption]', @ui.$caption.val());
-    formData.append('memory_id', window.memory.id);
+    formData.append('sphere[panorama]', @ui.$file[0].files[0])
+    formData.append('sphere[caption]', @ui.$caption.val())
+    formData.append('memory_id', window.memory.id)
 
-    @appendSpinner()
-    @ui.$addForm.hide()
+    spinnerID = chance.guid()
+    @appendSpinner(spinnerID)
+    @resetWidget()
 
     $.ajax
       url: '/spheres',
@@ -48,42 +50,50 @@ class AddSphereView
       contentType: false,
       processData: false,
       type: 'POST'
-      success: @onNewSphereSuccess
-      error: @onNewSphereError
+      success: _.partial(@onNewSphereSuccess, spinnerID)
+      error: _.partial(@onNewSphereError, spinnerID)
 
-  pollForCompletion: (guid) ->
+  pollForCompletion: (spinnerID, guid) ->
     $.ajax
       url: "/spheres/#{guid}",
-      data: { id: guid },
       cache: false,
       contentType: false,
       processData: false,
       type: 'GET'
-      success: @onCreateSphereSuccess
-      error: @onPollError
+      success: _.partial(@onCreateSphereSuccess, spinnerID)
+      error: _.partial(@onPollError, spinnerID)
 
-  appendSpinner: ->
+  appendSpinner: (id) ->
     $addSphereLink = $('.add-sphere-link')
 
-    view = new SpinnerView
-    html = view.render()
+    html = new SpinnerView(id).render()
     $(html).insertBefore($addSphereLink)
 
-  removeSpinner: ->
-    $('.spinner').remove()
+  removeSpinner: (id) ->
+    if id
+      $("#spinner-#{id}").remove()
+    else
+      $('.spinner').remove()
 
-  resetViewState: ->
-    @removeSpinner()
+  resetViewState: (id) ->
+    if id
+      @removeSpinner(id)
+    else
+      @removeSpinner()
 
-    @ui.$addForm.hide()
-    @ui.$addSphereButton.show()
+  clearInputs: ->
+    @ui.$caption.val("")
+    @ui.$file.val("")
+
+  clearLocalInterval: (spinnerID) ->
+    clearInterval(@intervals[spinnerID])
+    delete @intervals[spinnerID]
 
   onAddSphereButtonClick: (event) =>
     @ui.$addForm.show()
     @ui.$addSphereButton.hide()
 
-    @ui.$caption.val("")
-    @ui.$file.val("")
+    @clearInputs()
 
   onSubmitClick: =>
     if !@ui.$file[0].files[0]
@@ -97,26 +107,26 @@ class AddSphereView
       @ui.$captionForm.removeClass('has-error')
       @newSphere()
 
-  onNewSphereSuccess: (response) =>
-    @intervalID = setInterval((=> @pollForCompletion(response.guid)), 5000)
-    SpinnerView::showProgress();
+  onNewSphereSuccess: (spinnerID, response) =>
+    @intervals[spinnerID] = setInterval((=> @pollForCompletion(spinnerID, response.guid)), 5000)
+    SpinnerView::showProgress(spinnerID);
 
-  onCreateSphereSuccess: (response) =>
+  onCreateSphereSuccess: (spinnerID, response) =>
     return if response.guid
 
-    clearInterval(@intervalID)
-    SpinnerView::hideProgress();
+    @clearLocalInterval(spinnerID)
+    SpinnerView::hideProgress(spinnerID)
     window.memory.spheres.push(response)
-    @resetViewState()
+    @resetViewState(spinnerID)
     @app.handleNewSphere()
 
-  onNewSphereError: =>
-    @app.onAjaxError(arguments...)
-    @resetViewState()
+  onNewSphereError: (spinnerID, response) =>
+    @app.onAjaxError(response)
+    @resetViewState(spinnerID)
 
-  onPollError: =>
-    clearInterval(@intervalID)
-    @app.onAjaxError(arguments...)
+  onPollError: (spinnerID, response) =>
+    @clearLocalInterval(spinnerID)
+    @app.onAjaxError(response)
     @resetViewState()
 
 

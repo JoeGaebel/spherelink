@@ -23,5 +23,6 @@
 //= require bootstrap-slider/dist/bootstrap-slider
 //= require jquery-awesome-cursor/dist/jquery.awesome-cursor
 //= require clamp-js/clamp
+//= require chance/dist/chance.min
 //= require_tree ./applications/
 //= require_tree .
