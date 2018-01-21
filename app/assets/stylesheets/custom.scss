@@ -438,12 +438,18 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 }
 
 .edit-row {
+  padding-top: 10px;
   display: flex;
   flex-wrap: wrap;
 }
 
+.tipsy-header {
+  h3 {
+    margin-top: 10px;
+  }
+}
+
 .edit-widgets {
-  padding-top: 10px;
   flex-grow: 1;
 }
 
