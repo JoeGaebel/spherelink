@@ -30,7 +30,7 @@ class MemoriesController < ApplicationController
     memory = current_user.memories.find_by(id: params[:id])
 
     if memory.blank?
-      render json: {}, status: :not_found
+      render_not_found
       return
     end
 
@@ -41,7 +41,7 @@ class MemoriesController < ApplicationController
     if memory.save
       render json: { name: memory.name, description: memory.description, private: memory.private }, status: :created
     else
-      render json: memory.errors, status: :not_found
+      render_model_errors(memory)
     end
   end
 

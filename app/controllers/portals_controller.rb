@@ -18,7 +18,7 @@ class PortalsController < ApplicationController
     if portal.save
       render json: portal.to_builder.target!, status: :created
     else
-      render json: portal.errors, status: :bad_request
+      render_model_errors(portal)
     end
   end
 
@@ -26,7 +26,7 @@ class PortalsController < ApplicationController
     parent_sphere = current_user.spheres.find_by(id: params[:sphere_id])
 
     if parent_sphere.blank?
-      render json: {}, status: :bad_request
+      render_not_found
       return
     end
 
@@ -39,7 +39,7 @@ class PortalsController < ApplicationController
         render json: portal.errors, status: :bad_request
       end
     else
-      render json: {}, status: :not_found
+      render_not_found
     end
   end
 end

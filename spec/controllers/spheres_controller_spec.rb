@@ -89,7 +89,7 @@ describe SpheresController, type: :controller do
       context "when the required params are missing" do
         let(:missing_params) { valid_params.except(:sphere) }
         let(:error_hash) do
-          { errors:[{ sphere: ["parameter is required"] }] }.to_json
+          { message: "sphere is required" }.to_json
         end
 
         it "returns the errors and unprocessable_entity status" do
@@ -108,13 +108,13 @@ describe SpheresController, type: :controller do
           end
         end
 
-        let(:error_hash) { { caption: ["can't be blank"] }.to_json }
+        let(:error_hash) { { message: "Caption can't be blank" }.to_json }
 
         it "returns the errors and unprocessable_entity status" do
           sign_in(user)
           do_request(invalid_params)
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:bad_request)
           expect(response.body).to eq(error_hash)
         end
       end

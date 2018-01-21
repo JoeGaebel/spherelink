@@ -2,17 +2,14 @@ class SpheresController < ApplicationController
   before_action :authenticate_user!
 
   rescue_from(ActionController::ParameterMissing) do |exception|
-    error = {}
-    error[exception.param] = ['parameter is required']
-
-    render json: { errors: [error] }, status: :unprocessable_entity
+    render json: { message: "#{exception.param} is required" }, status: :unprocessable_entity
   end
 
   def create
     memory = current_user.memories.find_by(id: params[:memory_id])
 
     if memory.blank?
-      render json: {}, status: :not_found
+      render_not_found
       return
     end
 
@@ -27,7 +24,7 @@ class SpheresController < ApplicationController
       render json: { guid: guid }, status: :accepted
       sphere.save!
     else
-      render json: sphere.errors, status: :unprocessable_entity
+      render_model_errors(sphere)
     end
   end
 
@@ -35,7 +32,7 @@ class SpheresController < ApplicationController
     sphere = current_user.spheres.find_by(guid: params[:id])
 
     if sphere.blank?
-      render json: {}, status: :not_found
+      render_not_found
       return
     end
 
@@ -51,7 +48,7 @@ class SpheresController < ApplicationController
     sphere = current_user.spheres.find_by(id: params[:id])
 
     if sphere.blank?
-      render json: {}, status: :not_found
+      render_not_found
       return
     end
 
@@ -66,7 +63,7 @@ class SpheresController < ApplicationController
     sphere = current_user.spheres.find_by(id: params[:id])
 
     if sphere.blank?
-      render json: {}, status: :not_found
+      render_not_found
       return
     end
 
@@ -75,7 +72,7 @@ class SpheresController < ApplicationController
     if sphere.save
       render json: sphere.to_builder.target!, status: :created
     else
-      render json: sphere.errors, status: :not_found
+      render_model_errors(sphere)
     end
   end
 
