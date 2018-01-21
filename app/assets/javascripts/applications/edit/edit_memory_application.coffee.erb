@@ -97,7 +97,7 @@ class EditMemoryApplication extends MemoryApplication
 # Promises
 
   onAjaxError: (jqXHR, textStatus, errorThrown) =>
-    alert("#{textStatus}: #{jqXHR.responseJSON?.message || 'Wops! Not sure what happened there. Please email joe.gaebel@hotmail.com if this continues :('}")
+    alert("Error: #{jqXHR.responseJSON?.message || 'Wops! Not sure what happened there. Please email joe.gaebel@hotmail.com if this continues :('}")
 
 
 # Constants
