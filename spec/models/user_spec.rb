@@ -68,7 +68,8 @@ describe User do
     end
 
     describe 'passwords' do
-      let(:minimum_length) { User::MINIMUM_PASSWORD_LENGTH }
+      let(:minimum_length) { 8 }
+      let(:maximum_length) { 128 }
 
       it 'requires a password' do
         expect(@user).to be_valid
@@ -79,6 +80,11 @@ describe User do
 
       it 'should have a minimum length' do
         @user.password = @user.password_confirmation = 'a' * (minimum_length - 1)
+        expect(@user).to_not be_valid
+      end
+
+      it 'has a crazy max length' do
+        @user.password = @user.password_confirmation = 'a' * (maximum_length + 1)
         expect(@user).to_not be_valid
       end
     end

@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   MINIMUM_PASSWORD_LENGTH = 8
-  MAXIMUM_PASSWORD_LENGTH = 8
+  MAXIMUM_PASSWORD_LENGTH = 128
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
