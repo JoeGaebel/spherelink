@@ -14,7 +14,7 @@ class SphereSelectView
       $addSphereLink = $('.add-sphere-link')
       $loading = $('.sphere-item-view.spinner')
 
-      $injectBeforeElement = if $loading.length then $loading else $addSphereLink
+      $injectBeforeElement = if $loading.length then $($loading[0]) else $addSphereLink
 
       if $("#sphere-#{sphere.id}").length == 0
         view = new SphereView(sphere)
