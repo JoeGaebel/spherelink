@@ -28,7 +28,6 @@ class MemoryApplication
     , @defaultPanoramaSettings
 
   setupSoundManager: ->
-    debugger
     soundManager.setup(@defaultSoundManagerSettings);
     soundManager.onready(@onSoundManagerReady)
 
@@ -156,11 +155,10 @@ class MemoryApplication
 
   defaultSoundManagerSettings:
     preferFlash: true,
-    flashVersion: 9,
-    debugMode: true,
-    debugFlash: true,
+    debugMode: false,
+    debugFlash: false,
     useHTML5Audio: false,
-    url: "/swf/"
+    url: "<%= asset_path('soundmanager2.swf') %>"
 
   defaultSoundSettings:
     autoLoad: true,
