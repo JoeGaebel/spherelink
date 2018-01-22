@@ -10,4 +10,6 @@
   <button id="save-marker" class="btn btn-success" disabled>Save</button>
   <button id="reset-marker" class="btn btn-warning" disabled>Cancel</button>
   <button id="delete-marker" class="btn btn-danger">Delete</button>
+
+  <%= file_field_tag 'marker', accept: 'image/png,image/gif,image/jpeg', class: 'marker-file', style: 'display: none;' %>
 </div>

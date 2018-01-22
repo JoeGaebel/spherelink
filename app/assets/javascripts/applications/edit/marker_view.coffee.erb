@@ -26,6 +26,8 @@ class MarkerView extends BaseView
       $markerCaption: $('#marker_caption')
       $markerContent: $('#marker_content')
 
+      $markerFile: $('.marker-file')
+
       $tipsy: $('#marker-tipsy')
       $deleteExplanation: $('.delete-marker-explanation')
 
@@ -62,11 +64,26 @@ class MarkerView extends BaseView
       toolbar:
         'fa': true
         'lists': false
+        'image': false
       events:
         'save:dialog': @onMarkerContentChange
 
     @ui.$markerContentToolbar = $('.wysihtml5-toolbar')
     @ui.$markerContentToolbar.click => _.defer(@onMarkerContentChange)
+    @appendUploadButton()
+
+
+  appendUploadButton: ->
+    imageButton = "<li>
+      <a id='add-photo' class='btn btn-default' tabindex='-1' href='javascript:;' unselectable='on'>
+        <span class='fa fa-image'></span>
+      </a>
+    </li>"
+
+    $('.wysihtml5-toolbar').append(imageButton)
+    $('#add-photo').click(@onAddPhotoClick)
+    @ui.$markerFile.change(@onMarkerFileChange)
+
 
   resetViewState: =>
     @isCreatingMarker = false
@@ -106,15 +123,16 @@ class MarkerView extends BaseView
     @isDeletingMarker = false
 
   getMarkerParams: (marker) ->
-    params =
-      id: window.currentSphere.id
-      marker:
-        x: marker.x
-        y: marker.y
-        caption: marker.tooltip?.content || ''
-        content: @getEditorContent()
+    formData = new FormData()
 
-    JSON.stringify(params)
+    formData.append('id', window.currentSphere.id)
+    formData.append('marker[x]', marker.x)
+    formData.append('marker[y]', marker.y)
+    formData.append('marker[caption]', marker.tooltip?.content || '')
+    formData.append('marker[content]', @formatEditorContent())
+    formData.append('marker[photo]', @ui.$markerFile[0]?.files[0])
+
+    formData
 
   _deleteMarker: (marker) =>
     markerId = marker.id.split('-')[1]
@@ -135,6 +153,27 @@ class MarkerView extends BaseView
 
   getEditorContent: =>
     @ui.$markerContent.html()
+
+  formatEditorContent: =>
+    imageRegex = /<img([\w\W]+?)>/
+    raw = @getEditorContent()
+
+    if raw.match(imageRegex)
+      raw.replace(imageRegex, '<!--IMGHERE-->')
+    else
+      @ui.$markerFile[0]?.files[0] = undefined
+      raw
+
+  setPreviewSource: ->
+    input = @ui.$markerFile[0]
+    if input && input.files && input.files[0]
+      reader = new FileReader()
+
+      reader.onload = (e) =>
+        $('#marker_content .remove-me').attr('src', e.target.result)
+        @onMarkerContentChange()
+
+      reader.readAsDataURL(input.files[0])
 
 # Event Handlers
 
@@ -167,6 +206,8 @@ class MarkerView extends BaseView
         @ui.$markerContent.show()
         @ui.$markerContentToolbar.show()
 
+        @ui.$markerCaption.focus()
+
         return
 
       PSV.updateMarker
@@ -182,6 +223,10 @@ class MarkerView extends BaseView
     @ui.$resetMarker.prop('disabled', false)
     @ui.$deleteMarker.prop('disabled', true)
 
+    @ui.$markerFile.files = []
+    @ui.$markerContent.text('')
+    @ui.$markerCaption.val('')
+
     @isCreatingMarker = true
 
   onSaveMarkerClick: =>
@@ -190,13 +235,13 @@ class MarkerView extends BaseView
 
     $.ajax
       url: '/markers'
+      data: @getMarkerParams(marker)
+      cache: false
+      contentType: false
+      processData: false
       type: 'POST'
-      dataType: 'json'
-      contentType: 'application/json'
       success: @onSaveMarkerSuccess
       error: @app.onAjaxError
-      data: @getMarkerParams(marker)
-
 
   onDeleteMarkerClick: =>
     @app.freezeOtherViews(@)
@@ -234,6 +279,15 @@ class MarkerView extends BaseView
         id: 'new-marker'
         content: null
 
+  onAddPhotoClick: =>
+    @ui.$markerFile.click()
+
+  onMarkerFileChange: =>
+    previewImage = "<img class='remove-me'>"
+    $('#marker_content .remove-me').remove()
+    $('#marker_content').append(previewImage)
+    @setPreviewSource()
+    $('#marker_content').focus()
 
 # Promises
 
