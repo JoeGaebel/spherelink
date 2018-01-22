@@ -42,6 +42,14 @@ class BaseUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg)
   end
 
+  def quality(percentage)
+    manipulate! do |img|
+      img.quality(percentage.to_s)
+      img = yield(img) if block_given?
+      img
+    end
+  end
+
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   # def filename

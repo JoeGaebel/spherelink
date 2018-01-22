@@ -5,6 +5,7 @@ class Marker < ApplicationRecord
   belongs_to :sphere
 
   mount_uploader :embedded_photo, EmbeddedPhotoUploader
+  process_in_background :embedded_photo
 
   validates :embedded_photo, file_size: { less_than_or_equal_to: 8.megabytes }, if: :should_validate_photo
 
