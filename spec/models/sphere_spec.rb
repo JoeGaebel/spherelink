@@ -44,5 +44,16 @@ describe Sphere, type: :model do
         end
       end
     end
+
+    describe "filetype" do
+      context "when the file is an exe" do
+        let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'ohno.exe')) }
+        let(:sphere) { build(:sphere, panorama: file) }
+
+        it "does not allow upload" do
+          expect(sphere).not_to be_valid
+        end
+      end
+    end
   end
 end

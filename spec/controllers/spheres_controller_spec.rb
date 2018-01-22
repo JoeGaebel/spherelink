@@ -4,7 +4,7 @@ describe SpheresController, type: :controller do
   let(:user) { create(:user) }
 
   describe "#create" do
-    let(:fake_file) { fixture_file_upload('rails.png', 'image/png') }
+    let(:fake_file) { fixture_file_upload('rails.jpg', 'image/jpeg') }
     let(:caption) { "Cool!" }
 
     let(:valid_params) do
