@@ -295,6 +295,8 @@ class MarkerView extends BaseView
     marker = PSV.getMarker('new-marker')
     PSV.removeMarker('new-marker', false)
 
+    savedRecord.content = marker.content
+
     PSV.addMarker(savedRecord)
     currentSphere.markers.push savedRecord
 
