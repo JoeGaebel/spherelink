@@ -57,9 +57,9 @@ body {
 }
 
 .link-viewer {
+  height: 500px;
   flex-grow: 200;
   flex-shrink: 2;
-  height: 500px;
   padding-right: $side-padding;
 }
 
@@ -493,7 +493,6 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
   width: 100%;
   height: 465px;
   min-width: 300px;
-  margin-bottom: 25px;
 }
 
 .marker-spinner {
