@@ -89,6 +89,16 @@ class EditMemoryApplication extends MemoryApplication
   hackThePencil: ->
     $('body').append("<i class='fa fa-pencil' style='width:0px; height:0px; overflow:hidden'>");
 
+  promptForTransition: ->
+    # To prevent loss of unsaved data
+
+    if @markerView.isCreatingMarker
+      confirm("Looks like you're creating a marker, are you sure you wish to leave? Unsaved marker content will be lost.")
+    else if @portalView.isCreatingPortal
+      confirm("Looks like you're creating a portal, are you sure you wish to leave? Unsaved portal settings will be lost.")
+    else
+      true
+
   onDocumentReady: =>
     @hackThePencil()
     @handleEmptyPage()

@@ -134,6 +134,8 @@ class PortalView extends BaseView
 
   onSelectMarker: (marker) =>
     if marker.isPolygon()
+      return unless @app.promptForTransition()
+
       if @isDeletingPortal
         @deletePortal(marker)
 

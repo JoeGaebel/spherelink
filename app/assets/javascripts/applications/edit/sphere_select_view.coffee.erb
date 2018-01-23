@@ -51,6 +51,8 @@ class SphereSelectView
         window.PSV.removeMarker(portal.id)
 
   onSphereLinkClick: (e) =>
+    return unless @app.promptForTransition()
+
     id = parseInt(e.currentTarget.id)
     associatedSphere = _.findWhere(window.memory.spheres, { id })
     @app.setNextSphere(associatedSphere)
@@ -69,6 +71,7 @@ class SphereSelectView
 
     if currentSphere.id == sphere.id
       if memory.spheres.length
+        @app.resetPageState()
         @app.setNextSphere(memory.spheres[0])
       else
         delete window.currentSphere
