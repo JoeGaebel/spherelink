@@ -23,6 +23,11 @@ class StaticPagesController < ApplicationController
     @page_title = 'Sign up'
   end
 
+  def contact_success
+    flash[:notice] = "Thanks for the feedback!"
+    redirect_to root_path
+  end
+
   def letsencrypt
     if params[:id].match /yysef/
       render text: "yysef78qwgdDBZJoN6FEx2oCJrIeCCF6XKByFQR0njQ.y8WTLTOwWWbA4olBERIK4CspJS7ZCK6dcZfOO2kgCP8"

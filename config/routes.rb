@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get    '/about',   to: 'static_pages#about'
   get    '/contact', to: 'static_pages#contact'
   get    '/demo',    to: 'static_pages#demo'
+  get    '/contact-success',    to: 'static_pages#contact_success'
 
   get '/.well-known/acme-challenge/:id' => 'static_pages#letsencrypt'
 
