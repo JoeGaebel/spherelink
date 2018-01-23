@@ -38,6 +38,7 @@ Marker.create!({
   sphere: kitchen_sphere,
   image: 'pin2.png',
   tooltip_content: 'Look at joes face',
+  content: "<!--IMGHERE-->",
   embedded_photo: File.open("#{Rails.root}/app/assets/images/joesface.jpg"),
   x: 2068,
   y: 1225,
@@ -49,6 +50,7 @@ Marker.create!({
   sphere: kitchen_sphere,
   image: 'pin2.png',
   tooltip_content: 'cool fridge photo',
+  content: "<!--IMGHERE-->",
   embedded_photo: File.open("#{Rails.root}/app/assets/images/fridge.jpg"),
   x: 8546,
   y: 745,
@@ -166,6 +168,7 @@ Portal.create!({
 Marker.create!({
   sphere: night_time,
   image: 'pin2.png',
+  content: "<!--IMGHERE-->",
   embedded_photo: File.open("#{Rails.root}/app/assets/images/marina_night.jpg"),
   x: 6815,
   y: 579,
@@ -187,6 +190,7 @@ Marker.create!({
 Marker.create!({
   sphere: boat_bed,
   image: 'pin2.png',
+  content: "<!--IMGHERE-->",
   embedded_photo: File.open("#{Rails.root}/app/assets/images/books.jpg"),
   x: 6658,
   y: 2894,
@@ -197,6 +201,7 @@ Marker.create!({
 Marker.create!({
   sphere: boat_bed,
   image: 'pin2.png',
+  content: "<!--IMGHERE-->",
   embedded_photo: File.open("#{Rails.root}/app/assets/images/dollars.jpg"),
   x: 2298,
   y: 2651,
@@ -207,6 +212,7 @@ Marker.create!({
 Marker.create!({
   sphere: night_time,
   image: 'pin2.png',
+  content: "<!--IMGHERE-->",
   embedded_photo: File.open("#{Rails.root}/app/assets/images/marina_night2.jpg"),
   x: 3032,
   y: 374,
@@ -217,6 +223,7 @@ Marker.create!({
 Marker.create!({
   sphere: boat_livingroom,
   image: 'pin2.png',
+  content: "<!--IMGHERE-->",
   embedded_photo: File.open("#{Rails.root}/app/assets/images/drawer.jpg"),
   x: 8024,
   y: 4747,
@@ -227,6 +234,7 @@ Marker.create!({
 Marker.create!({
   sphere: night_time,
   image: 'pin2.png',
+  content: "<!--IMGHERE-->",
   embedded_photo: File.open("#{Rails.root}/app/assets/images/golden_gate_night.jpg"),
   x: 6383,
   y: 638,
@@ -237,6 +245,7 @@ Marker.create!({
 Marker.create!({
   sphere: night_time,
   image: 'pin2.png',
+  content: "<!--IMGHERE-->",
   embedded_photo: File.open("#{Rails.root}/app/assets/images/boat_bed_night.jpg"),
   x: 5308,
   y: 1230,
