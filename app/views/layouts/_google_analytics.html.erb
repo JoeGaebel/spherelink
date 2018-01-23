@@ -6,11 +6,8 @@
       gtag('js', new Date());
 
       gtag('config', 'UA-113000357-1');
+      <% if current_user %>
+        gtag('set', {'user_id': '<%= current_user.id %>'});
+      <% end %>
   </script>
-
-  <% if current_user %>
-    <script>
-      gtag('set', {'user_id': '<%= current_user.id %>'});
-    </script>
-  <% end %>
 <% end %>
