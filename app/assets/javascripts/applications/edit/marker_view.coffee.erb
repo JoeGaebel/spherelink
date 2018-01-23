@@ -166,7 +166,7 @@ class MarkerView extends BaseView
     if raw.match(imageRegex)
       raw.replace(imageRegex, '<!--IMGHERE-->')
     else
-      @ui.$markerFile[0]?.files[0] = undefined
+      @ui.$markerFile.val(null)
       raw
 
   setPreviewSource: ->
@@ -239,7 +239,7 @@ class MarkerView extends BaseView
     @ui.$resetMarker.prop('disabled', false)
     @ui.$deleteMarker.prop('disabled', true)
 
-    @ui.$markerFile.files = []
+    @ui.$markerFile.val(null)
     @ui.$markerContent.text('')
     @ui.$markerCaption.val('')
 
