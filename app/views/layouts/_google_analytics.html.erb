@@ -1,5 +1,4 @@
 <% if Rails.env.production? %>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113000357-1"></script>
   <script>
       window.dataLayer = window.dataLayer || [];
@@ -8,4 +7,10 @@
 
       gtag('config', 'UA-113000357-1');
   </script>
+
+  <% if current_user %>
+    <script>
+      gtag('set', {'user_id': '<%= current_user.id %>'});
+    </script>
+  <% end %>
 <% end %>
