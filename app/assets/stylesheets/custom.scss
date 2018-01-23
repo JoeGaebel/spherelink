@@ -497,6 +497,12 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
   margin-bottom: 25px;
 }
 
+.marker-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 @media (min-width: 768px), (min-width: 992px), (min-width: 1200px) {
   #photosphere {
     width: 100%;

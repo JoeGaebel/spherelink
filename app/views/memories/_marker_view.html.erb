@@ -1,15 +1,20 @@
 <div class="marker-view edit-widget">
+
   <div class="tipsy-header">
     <h3>Markers <a id="marker-tipsy" class="tipsy-link">(?)</a></h3>
   </div>
   <p class="delete-marker-explanation" hidden>Click a marker to delete it</p>
-  <%= text_field_tag 'marker_caption', nil, placeholder: 'Marker caption', hidden: true %>
-  <div id="marker_content"></div>
 
-  <button id="add-marker" class="btn btn-primary">Add</button>
-  <button id="save-marker" class="btn btn-success" disabled>Save</button>
-  <button id="reset-marker" class="btn btn-warning" disabled>Cancel</button>
-  <button id="delete-marker" class="btn btn-danger">Delete</button>
+  <div class="marker-container">
 
-  <%= file_field_tag 'marker', accept: 'image/png,image/gif,image/jpeg', class: 'marker-file', style: 'display: none;' %>
+    <%= text_field_tag 'marker_caption', nil, placeholder: 'Marker caption', hidden: true %>
+    <div id="marker_content"></div>
+
+    <button id="add-marker" class="btn btn-primary">Add</button>
+    <button id="save-marker" class="btn btn-success" disabled>Save</button>
+    <button id="reset-marker" class="btn btn-warning" disabled>Cancel</button>
+    <button id="delete-marker" class="btn btn-danger">Delete</button>
+
+    <%= file_field_tag 'marker', accept: 'image/png,image/gif,image/jpeg', class: 'marker-file', style: 'display: none;' %>
+  </div>
 </div>

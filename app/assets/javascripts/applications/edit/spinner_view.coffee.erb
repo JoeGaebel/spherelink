@@ -1,10 +1,11 @@
 class SpinnerView
-  constructor: (id) ->
+  constructor: (id, className) ->
     @id = id
+    @className = className
 
   template: ->
     """
-      <div id="spinner-#{@id}" class="sphere-item-view spinner">
+      <div id="spinner-#{@id}" class="#{@className} spinner">
         <%= image_tag('spinner') %>
         <div class="status-text">Uploading...</div>
       </div>

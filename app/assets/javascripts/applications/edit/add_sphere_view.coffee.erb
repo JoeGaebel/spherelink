@@ -66,7 +66,7 @@ class AddSphereView
   appendSpinner: (id) ->
     $addSphereLink = $('.add-sphere-link')
 
-    html = new SpinnerView(id).render()
+    html = new SpinnerView(id, 'sphere-item-view').render()
     $(html).insertBefore($addSphereLink)
 
   removeSpinner: (id) ->

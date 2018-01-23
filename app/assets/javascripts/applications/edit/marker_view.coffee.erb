@@ -1,4 +1,5 @@
 #= require applications/edit/base_view
+#= require applications/edit/spinner_view
 
 class MarkerView extends BaseView
   viewClass: '.marker-view'
@@ -30,6 +31,8 @@ class MarkerView extends BaseView
 
       $tipsy: $('#marker-tipsy')
       $deleteExplanation: $('.delete-marker-explanation')
+
+      $markerContainer: $('.marker-container')
 
   bindHandlers: ->
     PSV.on 'click', @onPSVClick
@@ -99,6 +102,8 @@ class MarkerView extends BaseView
     @ui.$markerContentToolbar.hide()
 
     @ui.$deleteExplanation.hide()
+
+    @removeSpinner()
 
     try
       PSV.getMarker('new-marker')
@@ -175,6 +180,17 @@ class MarkerView extends BaseView
 
       reader.readAsDataURL(input.files[0])
 
+  appendSpinner: ->
+    spinner = new SpinnerView('marker', 'marker-spinner')
+
+    @ui.$markerContainer.hide()
+    $(@viewClass).append(spinner.render())
+
+
+  removeSpinner: ->
+    @ui.$markerContainer.show()
+    $('.marker-spinner').remove()
+
 # Event Handlers
 
 
@@ -233,6 +249,8 @@ class MarkerView extends BaseView
     marker = PSV.getMarker('new-marker')
     @app.resetCursor()
 
+    @appendSpinner()
+
     $.ajax
       url: '/markers'
       data: @getMarkerParams(marker)
@@ -241,7 +259,7 @@ class MarkerView extends BaseView
       processData: false
       type: 'POST'
       success: @onSaveMarkerSuccess
-      error: @app.onAjaxError
+      error: @onSaveMarkerError
 
   onDeleteMarkerClick: =>
     @app.freezeOtherViews(@)
@@ -301,6 +319,10 @@ class MarkerView extends BaseView
     currentSphere.markers.push savedRecord
 
     @app.resetPageState()
+
+  onSaveMarkerError: =>
+    @resetViewState()
+    @app.onAjaxError(arguments...)
 
   onDeleteMarkerSuccess: =>
     PSV.removeMarker(@markerToDelete)
