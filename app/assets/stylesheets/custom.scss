@@ -515,3 +515,24 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 textarea[name="contact_us_contact[message]"] {
   height: 100px;
 }
+
+.video-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vid-section {
+  padding-bottom: 20px;
+  width: 100%;
+
+  .video {
+    iframe {
+      width: 100%;
+    }
+  }
+}
+
+.about-spherelink {
+  margin-bottom: 10px;
+}
