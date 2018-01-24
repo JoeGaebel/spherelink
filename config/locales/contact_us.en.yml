@@ -11,7 +11,7 @@ en:
     contacts:
       new: &new
         contact_us: "Contact Us"
-        email: "Email"
+        email: "Your Email"
         message: "Message"
         name: "Name"
         subject: "Subject"
