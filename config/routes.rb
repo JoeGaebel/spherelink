@@ -10,7 +10,6 @@ Rails.application.routes.draw do
 
   get    '/help',    to: 'static_pages#help'
   get    '/about',   to: 'static_pages#about'
-  get    '/contact', to: 'static_pages#contact'
   get    '/demo',    to: 'static_pages#demo'
   get    '/contact-success',    to: 'static_pages#contact_success'
 
