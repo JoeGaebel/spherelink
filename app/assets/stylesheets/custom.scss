@@ -323,11 +323,6 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
   }
 }
 
-.devise-page {
-  width: 40%;
-  margin: auto;
-}
-
 .status-text {
   padding-left: 11px;
   color: $font-color;
@@ -506,7 +501,7 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 }
 
 @media (min-width: 992px) {
-  .devise-container {
+  .smaller-container {
     width: 750px;
   }
 }
