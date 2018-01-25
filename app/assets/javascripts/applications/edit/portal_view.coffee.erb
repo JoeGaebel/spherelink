@@ -129,6 +129,10 @@ class PortalView extends BaseView
     @isCreatingPortal = false
     @isDeletingPortal = false
 
+  canSavePortal: (portal) ->
+    portal.polygon_px.length > 2 && @ui.$toSphereSelect.val()
+
+
 # Event Handlers
 
 
@@ -150,7 +154,7 @@ class PortalView extends BaseView
 
       PSV.updateMarker(newPortal, true)
 
-      if newPortal.polygon_px.length > 2
+      if @canSavePortal(newPortal)
         @ui.$savePortal.prop('disabled', false)
 
   onAddPortalClicked: =>
@@ -185,6 +189,9 @@ class PortalView extends BaseView
       newPortal.to_sphere_id = @ui.$toSphereSelect.val()
 
       PSV.updateMarker(newPortal)
+
+      if @canSavePortal(newPortal)
+        @ui.$savePortal.prop('disabled', false)
 
   onSavePortalClicked: =>
     portal = PSV.getMarker('new-portal')

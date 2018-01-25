@@ -68,6 +68,7 @@ class SphereSelectView
   onSphereDeleteSuccess: (sphere) =>
     @cleanSphereCache(sphere.id)
     @removeAssociatedPortals(sphere.id)
+    @app.portalView.updateSelect()
 
     if currentSphere.id == sphere.id
       if memory.spheres.length
