@@ -24,10 +24,12 @@ nav {
 
 
 .nav-item {
-  padding: 10px;
+  padding: 0.5rem;
 }
 
 .bar-items {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: flex-end;
 }
