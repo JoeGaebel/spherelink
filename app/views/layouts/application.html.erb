@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Spherelink</title>
-
-    <%= render 'layouts/rails_default' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= render 'layouts/prefetch' %>
     <%= render 'layouts/shim' %>
+
+    <%= favicon_link_tag 'pin2.png' %>
+    <%= csrf_meta_tags %>
+
     <%= render 'layouts/google_analytics' %>
     <%= render 'layouts/view_port' %>
-    <%= favicon_link_tag 'pin2.png' %>
+    <title>Spherelink</title>
   </head>
 
   <body>
@@ -15,4 +18,6 @@
     <%= render 'layouts/navbar' %>
     <%= yield %>
   </body>
+
+  <%= javascript_include_tag 'application' %>
 </html>
