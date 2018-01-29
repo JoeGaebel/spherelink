@@ -1,0 +1,24 @@
+<nav class="navbar container">
+  <div class="title nav-item">
+    <%= image_tag("pin2.png", class: 'icon') %>
+    <div>Spherelink</div>
+  </div>
+
+  <div class="bar-items">
+    <div class="nav-item">
+      <%= link_to "Login", login_path %>
+    </div>
+
+    <div class="nav-item">
+      <%= link_to "Sign up", new_user_registration_path %>
+    </div>
+
+    <div class="nav-item">
+      <%= link_to "About", about_path %>
+    </div>
+
+    <div class="nav-item">
+      <%= link_to "Feedback", contact_us_path %>
+    </div>
+  </div>
+</nav>

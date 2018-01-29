@@ -1,0 +1,31 @@
+nav {
+  display: flex;
+
+  &.navbar {
+    margin-bottom: 0;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+  }
+
+  .title {
+    display: flex;
+    margin-right: auto;
+    padding-left: 35px;
+    font-family: 'Istok Web', sans-serif;
+    font-size: 30px;
+  }
+}
+
+
+.nav-item {
+  padding: 10px;
+}
+
+.bar-items {
+  display: flex;
+  justify-content: flex-end;
+}
