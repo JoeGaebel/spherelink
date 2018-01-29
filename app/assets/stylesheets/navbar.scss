@@ -1,3 +1,5 @@
+$font-color: #696969;
+
 nav {
   display: flex;
 
@@ -14,9 +16,9 @@ nav {
   .title {
     display: flex;
     margin-right: auto;
-    padding-left: 35px;
     font-family: 'Istok Web', sans-serif;
     font-size: 30px;
+    color: $font-color;
   }
 }
 

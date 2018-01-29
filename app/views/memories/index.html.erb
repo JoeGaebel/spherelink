@@ -3,7 +3,6 @@
   <div class="top-links">
     <%= link_to 'Create a memory', new_memory_path %>
     <%= link_to 'Edit profile', edit_user_registration_path, class: 'edit-profile' %>
-    <%= link_to 'Log out', logout_path, method: 'delete', class: 'logout' %>
   </div>
 
   <ul class="memory-list">
@@ -11,6 +10,4 @@
   </ul>
 
   <%= will_paginate(@memories) %>
-
-  <%= render "layouts/feedback" %>
 </div>

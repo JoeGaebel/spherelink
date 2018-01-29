@@ -1,17 +1,27 @@
 <nav class="navbar container">
   <div class="title nav-item">
     <%= image_tag("pin2.png", class: 'icon') %>
-    <div>Spherelink</div>
+    <%= link_to "Spherelink", root_path, class: 'title' %>
   </div>
 
   <div class="bar-items">
-    <div class="nav-item">
-      <%= link_to "Login", login_path %>
-    </div>
+    <% if user_signed_in? %>
+      <div class="nav-item">
+        <%= link_to "Logout", logout_path, method: 'delete' %>
+      </div>
 
-    <div class="nav-item">
-      <%= link_to "Sign up", new_user_registration_path %>
-    </div>
+      <div class="nav-item">
+        <%= link_to "Memories", memories_path %>
+      </div>
+    <% else %>
+      <div class="nav-item">
+        <%= link_to "Login", login_path %>
+      </div>
+
+      <div class="nav-item">
+        <%= link_to "Sign up", new_user_registration_path %>
+      </div>
+    <% end %>
 
     <div class="nav-item">
       <%= link_to "About", about_path %>
