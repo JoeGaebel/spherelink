@@ -15,10 +15,11 @@ nav {
 
   .title {
     display: flex;
-    margin-right: auto;
-    font-family: 'Istok Web', sans-serif;
     font-size: 30px;
     color: $font-color;
+    align-items: center;
+    margin-right: auto;
+    font-family: 'Istok Web', sans-serif;
   }
 }
 
