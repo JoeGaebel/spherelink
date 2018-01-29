@@ -1,9 +1,51 @@
 <div class="container">
-  <div class="viewer">
-    <%= render "shared/memory_application", hideNavBar: true %>
-  </div>
+  <div class="main-page">
+    <div class="instructions container smallest-container">
+      <div class="step">
+        <div class="icon">
+          <%= inline_svg "photosphere.svg" %>
+        </div>
+        <div class="words">
+          <div class="text">
+            Take a photosphere
+          </div>
+          <div class="subtext">
+            With most smartphones or a 360° camera
+          </div>
+        </div>
+      </div>
 
-  <div class="josefin description show-description">
-    Spherelink is a tool for capturing your most cherished memories
+      <div class="step">
+        <div class="icon">
+          <i class="fa fa-paint-brush" aria-hidden="true"></i>
+        </div>
+        <div class="words">
+          <div class="text">
+            Link it!
+          </div>
+          <div class="subtext">
+            Connect the photospheres together and embed content
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="icon">
+          <i class="fa fa-link" aria-hidden="true"></i>
+        </div>
+        <div class="words">
+          <div class="text">
+            Share it!
+          </div>
+          <div class="subtext">
+            Share the experience with friends and family
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="viewer">
+      <%= render "shared/memory_application", hideNavBar: true %>
+    </div>
   </div>
 </div>

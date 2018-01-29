@@ -31,6 +31,7 @@ gem 'font-awesome-rails'
 gem 'nokogiri', '~> 1.8.1'
 gem 'contact_us', '~> 1.0.1'
 gem 'simple_form'
+gem 'inline_svg'
 
 group :production do
   gem 'pg', '~> 0.18'

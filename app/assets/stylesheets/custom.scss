@@ -502,6 +502,16 @@ ul.wysihtml5-toolbar.wysihtml5-toolbar {
 }
 
 @media (min-width: 992px) {
+  .main-page {
+    padding-top: 40px !important;
+  }
+
+  .smallest-container {
+    width: 440px;
+  }
+}
+
+@media (min-width: 992px) {
   .smaller-container {
     width: 750px;
   }
@@ -536,4 +546,58 @@ textarea[name="contact_us_contact[message]"] {
 
 .about-spherelink {
   margin-bottom: 10px;
+}
+
+.instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  height: 500px;
+
+  .icon > i {
+    color: $font-color;
+    font-size: 4rem;
+    margin: 10px;
+  }
+
+  .icon > svg {
+    margin: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .words {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+  }
+
+  .step {
+    margin-bottom: 60px;
+    display: flex;
+    padding: 20px;
+  }
+
+  .text {
+    font-family: 'Istok Web', sans-serif;
+    font-size: 3rem;
+    line-height: 4rem;
+  }
+}
+
+.main-page {
+  padding-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  .viewer {
+    width: 500px;
+    padding-bottom: 15px;
+  }
+
+  .viewer, .instructions {
+    flex-grow: 1;
+  }
 }
