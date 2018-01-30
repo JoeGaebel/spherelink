@@ -19,6 +19,7 @@ class EditMemoryApplication extends MemoryApplication
   bindHandlers: ->
     super
     PSV.off 'select-marker'
+    view.bindPSV() for view in @views
 
 # Helpers
 

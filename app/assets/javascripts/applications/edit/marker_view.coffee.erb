@@ -35,9 +35,6 @@ class MarkerView extends BaseView
       $markerContainer: $('.marker-container')
 
   bindHandlers: ->
-    PSV.on 'click', @onPSVClick
-    PSV.on 'select-marker', @onSelectMarker
-
     @ui.$addMarker.click(@onAddMarkerClick)
     @ui.$resetMarker.click(@app.resetPageState)
     @ui.$saveMarker.click(@onSaveMarkerClick)
@@ -45,6 +42,10 @@ class MarkerView extends BaseView
 
     @ui.$markerCaption.keyup _.debounce(@onMarkerCaptionChange)
     @ui.$markerContent.keyup _.debounce(@onMarkerContentChange)
+
+  bindPSV: ->
+    PSV.on 'click', @onPSVClick
+    PSV.on 'select-marker', @onSelectMarker
 
   createTipsies: ->
     @ui.$tipsy.tipsy

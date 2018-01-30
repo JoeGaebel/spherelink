@@ -30,9 +30,6 @@ class PortalView extends BaseView
       $deleteExplanation: $('.delete-portal-explanation')
 
   bindHandlers: ->
-    PSV.on 'click', @onPSVClick
-    PSV.on 'select-marker', @onSelectMarker
-
     @ui.$addPortal.click(@onAddPortalClicked)
     @ui.$resetPortal.click(@app.resetPageState)
     @ui.$savePortal.click(@onSavePortalClicked)
@@ -40,6 +37,10 @@ class PortalView extends BaseView
 
     @ui.$portalCaption.keyup _.debounce(@onPortalCaptionChanged, 300)
     @ui.$toSphereSelect.change(@onToSphereSelectChanged)
+
+  bindPSV: ->
+    PSV.on 'click', @onPSVClick
+    PSV.on 'select-marker', @onSelectMarker
 
   updateSelect: ->
     @ui.$toSphereSelect.children().remove()
