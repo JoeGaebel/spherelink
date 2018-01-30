@@ -1,17 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%= inline_css 'critical.css' %>
-    <%= inline_js 'loadCSS.js' %>
-
-    <script>
-        loadCSS("<%= stylesheet_path('application') %>");
-    </script>
-    <link rel="preload" href="<%= stylesheet_path('application') %>" as="style" onload="this.rel='stylesheet'">
-    <noscript>
-      <link rel="stylesheet" href="<%= stylesheet_path('application') %>">
-    </noscript>
-
+    <%= render 'layouts/stylesheets' %>
     <%= render 'layouts/prefetch' %>
     <%= render 'layouts/shim' %>
 
@@ -25,7 +15,6 @@
   <body>
     <%= render 'layouts/flash' %>
     <%= render 'layouts/navbar' %>
-    <%= render 'shared/patterns' %>
     <%= yield %>
   </body>
 

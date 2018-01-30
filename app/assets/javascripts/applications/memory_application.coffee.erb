@@ -5,11 +5,13 @@ class MemoryApplication
 
     $(@onDocumentReady)
 
-  start: ->
+  _start: =>
     @setupSoundManager()
     window.PSV = new PhotoSphereViewer(@getPSVOptions())
     @bindHandlers()
 
+  start: ->
+    setTimeout(@_start, 500)
 
   bindHandlers: ->
     PSV.on 'ready', @onPSVReady

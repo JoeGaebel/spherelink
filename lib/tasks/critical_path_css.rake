@@ -20,8 +20,8 @@ desc "Generate critical CSS for the home route and spit out CSS file"
 task critical: :environment do
   puts "Oooo, better run the server!" && return unless server_running?
 
+  system("rm #{Rails.root}/app/assets/stylesheets/critical.css")
   Rake::Task['assets:precompile'].invoke
-
   root_css = CriticalPathCss.generate_all["/"]
 
   File.open("#{Rails.root}/app/assets/stylesheets/critical.css", "w") do |f|
