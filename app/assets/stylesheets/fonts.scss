@@ -1,3 +1,29 @@
-@import url('https://fonts.googleapis.com/css?family=Istok+Web');
-@import url('https://fonts.googleapis.com/css?family=Lora');
 @import "font-awesome";
+
+@font-face {
+  font-family: 'Istok Web';
+  src:font-url('IstokWeb-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Istok Web';
+  src:font-url('IstokWeb-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lora';
+  src:font-url('Lora-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lora';
+  src:font-url('Lora-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
