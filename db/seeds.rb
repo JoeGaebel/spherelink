@@ -1,8 +1,4 @@
-include ActionView::Helpers::AssetTagHelper
-def asset_image_tag(image)
-  path = ActionController::Base.helpers.asset_url(image)
-  "#{image_tag(path, style: 'max-width: 100%; max-height: 100%;')}"
-end
+return unless Rails.env.development?
 
 joe = User.create!({
   name:  'Joe',
