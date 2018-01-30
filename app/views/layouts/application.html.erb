@@ -2,8 +2,8 @@
 <html>
   <head>
     <%= inline_css 'critical.css' %>
+    <%= inline_js 'loadCSS.js' %>
 
-    <%= javascript_include_tag 'loadCSS' %>
     <script>
         loadCSS("<%= stylesheet_path('application') %>");
     </script>
@@ -25,6 +25,7 @@
   <body>
     <%= render 'layouts/flash' %>
     <%= render 'layouts/navbar' %>
+    <%= render 'shared/patterns' %>
     <%= yield %>
   </body>
 
