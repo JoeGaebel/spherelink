@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= render 'layouts/prefetch' %>
     <%= render 'layouts/shim' %>
 
@@ -18,5 +17,6 @@
     <%= yield %>
   </body>
 
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
 </html>
