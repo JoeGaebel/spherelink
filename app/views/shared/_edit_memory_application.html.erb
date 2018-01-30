@@ -1,11 +1,12 @@
-<%= render "shared/memory_application_crums" %>
+<%= render 'shared/patterns' %>
 
 <div id="photosphere" style="<%= style %>"></div>
-<script>
-  var editMemoryApplication = new EditMemoryApplication({
-    memory: <%= @memory_json.to_s.html_safe %>,
-    sphereNum: 0
-  });
 
-  editMemoryApplication.start();
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    new EditMemoryApplication({
+      memory: <%= @memory_json.to_s.html_safe %>,
+      sphereNum: 0
+    }).start();
+  });
 </script>

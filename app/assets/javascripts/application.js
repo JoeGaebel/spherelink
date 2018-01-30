@@ -24,5 +24,16 @@
 //= require jquery-awesome-cursor/dist/jquery.awesome-cursor
 //= require clamp-js/clamp
 //= require chance/dist/chance.min
+//= require 'soundmanager2/script/soundmanager2-jsmin.js'
+//= require 'photo-sphere-viewer/dist/photo-sphere-viewer.min.js'
+
+//= require 'three/examples/js/renderers/CanvasRenderer.js'
+//= require 'three/examples/js/renderers/Projector.js'
+//= require 'three/examples/js/postprocessing/EffectComposer.js'
+//= require 'three/examples/js/postprocessing/RenderPass.js'
+//= require 'three/examples/js/postprocessing/ShaderPass.js'
+//= require 'three/examples/js/postprocessing/MaskPass.js'
+//= require 'three/examples/js/shaders/CopyShader.js'
+//= require 'three/examples/js/controls/DeviceOrientationControls.js'
 //= require_tree ./applications/
 //= require_tree .
