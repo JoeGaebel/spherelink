@@ -101,7 +101,7 @@ Rails.application.configure do
   config.assets.digest = true
 
   config.public_file_server.headers = config.static_cache_control ={
-    'Cache-Control' => 'public, s-maxage=31536000, maxage=15552000',
+    'Cache-Control' => 'public, s-max-age=31536000, max-age=15552000',
     'Expires' => "#{1.year.from_now.to_formatted_s(:rfc822)}"
   }
 end
