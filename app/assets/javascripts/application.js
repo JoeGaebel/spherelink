@@ -14,7 +14,6 @@
 //= require chance/dist/chance.min
 //= require 'soundmanager2/script/soundmanager2-jsmin.js'
 //= require 'photo-sphere-viewer/dist/photo-sphere-viewer.min.js'
-//= require loadCSS
 //= require 'three/examples/js/renderers/CanvasRenderer.js'
 //= require 'three/examples/js/renderers/Projector.js'
 //= require 'three/examples/js/postprocessing/EffectComposer.js'

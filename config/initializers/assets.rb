@@ -10,14 +10,4 @@ Rails.application.config.assets.paths << Rails.root.join("app", "assets", "fonts
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-Rails.application.config.assets.precompile += %w( three/examples/js/renderers/CanvasRenderer.js )
-Rails.application.config.assets.precompile += %w( three/examples/js/renderers/Projector.js )
-Rails.application.config.assets.precompile += %w( three/examples/js/shaders/CopyShader.js )
-Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/EffectComposer.js )
-Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/RenderPass.js )
-Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/ShaderPass.js )
-Rails.application.config.assets.precompile += %w( three/examples/js/postprocessing/MaskPass.js )
-Rails.application.config.assets.precompile += %w( three/examples/js/controls/DeviceOrientationControls.js )
-
-Rails.application.config.assets.precompile += %w( soundmanager2/script/soundmanager2-jsmin.js )
-Rails.application.config.assets.precompile += %w( photo-sphere-viewer/dist/photo-sphere-viewer.min.js )
+Rails.application.config.assets.precompile += %w( loadCSS )

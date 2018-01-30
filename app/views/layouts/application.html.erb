@@ -5,6 +5,8 @@
       <%= CriticalPathCss.fetch(request.path) %>
     </style>
 
+
+    <%= javascript_include_tag 'loadCSS' %>
     <script>
         loadCSS("<%= stylesheet_path('application') %>");
     </script>
@@ -29,6 +31,5 @@
     <%= yield %>
   </body>
 
-  <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
 </html>
