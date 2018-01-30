@@ -1,4 +1,4 @@
-require 'critical-path-css-rails'
+require 'critical-path-css-rails' unless Rails.env.production?
 
 namespace :critical_path_css do
   desc 'Generate critical CSS for the routes defined'

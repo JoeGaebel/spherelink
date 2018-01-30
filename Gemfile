@@ -33,7 +33,6 @@ gem 'contact_us', '~> 1.0.1'
 gem 'simple_form'
 gem 'inline_svg'
 gem 'loadcss-rails'
-gem 'critical-path-css-rails'
 
 group :production do
   gem 'heroku-deflater'
@@ -41,6 +40,7 @@ group :production do
 end
 
 group :development, :test do
+  gem 'critical-path-css-rails'
   gem 'mysql2'
   gem 'pry'
   gem 'factory_bot'
