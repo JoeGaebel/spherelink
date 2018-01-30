@@ -7,7 +7,10 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.paths << Emoji.images_path
 #
 Rails.application.config.assets.paths << Rails.root.join("app", "assets", "fonts")
-Rails.application.config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=3600' }
+Rails.application.config.public_file_server.headers = {
+    'Cache-Control' => 'public, max-age=3600',
+    'Expires' => "#{1.year.from_now.to_formatted_s (:rfc822)}"
+}
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
