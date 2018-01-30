@@ -6,7 +6,7 @@ end
 
 joe = User.create!({
   name:  'Joe',
-  email: 'joe@joegaebel.com',
+  email: 'joe.gaebel@hotmail.com',
   password:              'password',
   password_confirmation: 'password',
   admin: true,
