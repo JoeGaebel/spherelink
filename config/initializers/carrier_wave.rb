@@ -8,6 +8,7 @@ if Rails.env.production?
     }
     config.fog_directory     =  ENV['S3_BUCKET_NAME']
     config.fog_attributes = { 'Cache-Control'=>'max-age=315576000', 'Expires' => 1.week.from_now.httpdate }
+    config.fog_public = false
   end
 end
 
