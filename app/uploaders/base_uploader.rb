@@ -50,6 +50,17 @@ class BaseUploader < CarrierWave::Uploader::Base
     end
   end
 
+  def optimize
+    manipulate! do |img|
+      img.combine_options do |c|
+        c.quality "80"
+        c.depth "8"
+        c.interlace "plane"
+      end
+      img
+    end
+  end
+
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   # def filename
