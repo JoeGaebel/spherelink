@@ -96,6 +96,7 @@ GEM
     contact_us (1.0.1)
       rails (>= 4.2.0)
     crass (1.0.3)
+    critical-path-css-rails (2.3.0)
     daemons (1.2.6)
     database_cleaner (1.6.2)
     delayed_job (4.1.4)
@@ -170,6 +171,7 @@ GEM
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+    loadcss-rails (2.0.1)
     loofah (2.1.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -335,6 +337,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (= 4.2.1)
   contact_us (~> 1.0.1)
+  critical-path-css-rails (~> 2.3.0)
   daemons
   database_cleaner
   delayed_job_active_record
@@ -350,6 +353,7 @@ DEPENDENCIES
   inline_svg
   jbuilder
   listen (~> 3.0.5)
+  loadcss-rails (~> 2.0.1)
   mini_magick (= 4.5.1)
   mysql2
   nokogiri (~> 1.8.1)

@@ -32,6 +32,8 @@ gem 'nokogiri', '~> 1.8.1'
 gem 'contact_us', '~> 1.0.1'
 gem 'simple_form'
 gem 'inline_svg'
+gem 'critical-path-css-rails', '~> 2.3.0'
+gem 'loadcss-rails', '~> 2.0.1'
 
 group :production do
   gem 'heroku-deflater'

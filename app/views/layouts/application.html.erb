@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style>
+      <%= CriticalPathCss.fetch(request.path) %>
+    </style>
+
+    <script>
+        loadCSS("<%= stylesheet_path('application') %>");
+    </script>
+    <link rel="preload" href="<%= stylesheet_path('application') %>" as="style" onload="this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet" href="<%= stylesheet_path('application') %>">
+    </noscript>
+
     <%= render 'layouts/prefetch' %>
     <%= render 'layouts/shim' %>
 
