@@ -35,7 +35,7 @@ gem 'inline_svg'
 gem 'loadcss-rails'
 
 group :production do
-  gem 'heroku-deflater'
+  gem 'heroku-deflater', :group => :production, git: "https://github.com/romanbsd/heroku-deflater.git"
   gem 'pg', '~> 0.18'
 end
 
