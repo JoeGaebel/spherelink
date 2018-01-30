@@ -34,6 +34,7 @@ gem 'simple_form'
 gem 'inline_svg'
 
 group :production do
+  gem 'heroku-deflater'
   gem 'pg', '~> 0.18'
 end
 
