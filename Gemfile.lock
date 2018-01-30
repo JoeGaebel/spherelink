@@ -170,7 +170,6 @@ GEM
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    loadcss-rails (2.0.1)
     loofah (2.1.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -351,7 +350,6 @@ DEPENDENCIES
   inline_svg
   jbuilder
   listen (~> 3.0.5)
-  loadcss-rails (~> 2.0.1)
   mini_magick (= 4.5.1)
   mysql2
   nokogiri (~> 1.8.1)

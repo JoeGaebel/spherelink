@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="preload" href="<%= stylesheet_path('application') %>" as="style" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="<%= stylesheet_path('application') %>"></noscript>
-
     <%= render 'layouts/prefetch' %>
     <%= render 'layouts/shim' %>
 
@@ -20,5 +17,6 @@
     <%= yield %>
   </body>
 
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
 </html>
