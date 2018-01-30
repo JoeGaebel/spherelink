@@ -15,4 +15,4 @@ namespace :critical_path_css do
   end
 end
 
-Rake::Task['assets:precompile'].enhance { Rake::Task['critical_path_css:generate'].invoke }
+# Rake::Task['assets:precompile'].enhance { Rake::Task['critical_path_css:generate'].invoke }
