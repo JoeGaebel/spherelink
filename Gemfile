@@ -32,7 +32,6 @@ gem 'nokogiri', '~> 1.8.1'
 gem 'contact_us', '~> 1.0.1'
 gem 'simple_form'
 gem 'inline_svg'
-gem 'critical-path-css-rails'
 gem 'loadcss-rails'
 
 group :production do
@@ -50,6 +49,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
   gem 'pry-byebug'
+  gem 'critical-path-css-rails'
 end
 
 group :test do
