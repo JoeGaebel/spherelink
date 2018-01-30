@@ -7,6 +7,10 @@ if Rails.env.production?
       :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
     }
     config.fog_directory     =  ENV['S3_BUCKET_NAME']
+    config.aws_attributes = {
+      expires: 1.week.from_now.httpdate,
+      cache_control: 'max-age=604800'
+    }
   end
 end
 
