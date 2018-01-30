@@ -33,6 +33,7 @@ gem 'contact_us', '~> 1.0.1'
 gem 'simple_form'
 gem 'inline_svg'
 gem 'loadcss-rails'
+gem 'sitemap'
 
 group :production do
   gem 'heroku-deflater', :group => :production, git: "https://github.com/romanbsd/heroku-deflater.git"

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://spherelink.io/</loc>
+  </url>
+  <url>
+    <loc>http://spherelink.io/about</loc>
+  </url>
+  <url>
+    <loc>http://spherelink.io/contact-us</loc>
+  </url>
+  <url>
+    <loc>http://spherelink.io/user/sign_up</loc>
+  </url>
+  <url>
+    <loc>http://spherelink.io/user/edit</loc>
+  </url>
+  <url>
+    <loc>http://spherelink.io/login</loc>
+  </url>
+  <url>
+    <loc>http://spherelink.io/logout</loc>
+  </url>
+  <url>
+    <loc>http://spherelink.io/memories</loc>
+  </url>
+</urlset>
