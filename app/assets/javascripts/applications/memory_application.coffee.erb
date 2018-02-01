@@ -44,8 +44,8 @@ class MemoryApplication
       x: center[0],
       y: center[1]
     }, 1000).then(=>
-      PSV.stopAnimation = oldAnimation
       @setNextSphere(associatedSphere, portal)
+      PSV.stopAnimation = oldAnimation
     )
 
   setNextSphere: (sphere, portal = {}) ->
