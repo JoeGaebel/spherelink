@@ -1,7 +1,7 @@
 Sitemap::Generator.instance.load :host => "spherelink.io" do
   path :root
   path :about
-  path :contact_us
+  path :feedback
 
   path :new_user_registration
   path :edit_user_registration

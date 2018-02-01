@@ -10,7 +10,7 @@ en:
         subject: "Contact Us message from %{email}"
     contacts:
       new: &new
-        contact_us: "Contact Us"
+        contact_us: "Feedback"
         email: "Your Email"
         message: "Message"
         name: "Name"

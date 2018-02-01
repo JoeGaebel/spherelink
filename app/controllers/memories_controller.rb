@@ -3,6 +3,7 @@ class MemoriesController < ApplicationController
   before_action :authenticate_user!, only: [:index, :new, :edit]
 
   def edit
+    @page_title = "Edit Memory"
   end
 
   def new
@@ -11,9 +12,11 @@ class MemoriesController < ApplicationController
   end
 
   def show
+    @page_title = @memory.name
   end
 
   def index
+    @page_title = "Memories"
     @memories = current_user.memories.paginate({
       page: params[:page],
       per_page: 5

@@ -1,14 +1,16 @@
 Rails.application.routes.draw do
   root 'static_pages#home'
 
-  devise_for :user, controllers: { registrations: 'registrations' }
+  devise_for :user, controllers: {
+    registrations: 'registrations',
+    sessions: 'sessions'
+  }
 
   as :user do
-    get 'login', to: 'devise/sessions#new'
+    get 'login', to: 'sessions#new'
     delete 'logout', to: 'devise/sessions#destroy'
   end
 
-  get    '/help',    to: 'static_pages#help'
   get    '/about',   to: 'static_pages#about'
   get    '/contact-success',    to: 'static_pages#contact_success'
 
@@ -28,4 +30,10 @@ Rails.application.routes.draw do
       post :zoom
     end
   end
+
+  resources :contacts,
+            controller: 'contacts',
+            only:       [:new, :create]
+
+  get 'feedback', to: 'contacts#new'
 end
