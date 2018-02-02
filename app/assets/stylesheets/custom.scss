@@ -211,13 +211,14 @@ textarea[name="contact_us_contact[message]"] {
 }
 
 footer {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 2px;
+  color: $font-color;
+  opacity: 0.6;
+  font-size: 12px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
 
-  a {
-    color: $font-color;
-    opacity: 0.6;
-    font-size: 10px;
+  .text {
+    padding-right: 15px;
   }
 }
