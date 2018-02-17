@@ -31,9 +31,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :contacts,
-            controller: 'contacts',
-            only:       [:new, :create]
+  resources :contacts, controller: 'contacts', only: :create
 
   get 'feedback', to: 'contacts#new'
 end
