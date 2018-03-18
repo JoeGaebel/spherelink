@@ -25,18 +25,18 @@ describe Sphere, type: :model do
 
       context "with a file greater than 15MB" do
         before do
-          allow(sphere.panorama.file).to receive(:size).and_return(16.megabytes)
+          allow(sphere.panorama.file).to receive(:size).and_return(20.megabytes)
         end
 
         it "is invalid" do
           expect(sphere).not_to be_valid
-          expect(sphere.errors.full_messages).to include /file size must be less than or equal to 15 MB/
+          expect(sphere.errors.full_messages).to include /file size must be less than or equal to 20 MB/
         end
       end
 
       context "with a file greater than 15MB" do
         before do
-          expect(sphere.panorama.file.size).to be < 15.megabytes
+          expect(sphere.panorama.file.size).to be < 20.megabytes
         end
 
         it "is valid" do
