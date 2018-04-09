@@ -1,0 +1,13 @@
+#= require applications/edit/sphere_select_view
+
+class ShowMemoryApplication extends MemoryApplication
+  constructor: (options = {}) ->
+    super
+    @sphereSelectView = new SphereSelectView({ app: @, hideCans: true })
+
+  promptForTransition: ->
+    true
+
+  resetPageState: ->
+
+window.ShowMemoryApplication = ShowMemoryApplication

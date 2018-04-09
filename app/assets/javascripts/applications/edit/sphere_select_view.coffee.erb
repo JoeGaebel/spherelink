@@ -4,6 +4,7 @@ class SphereSelectView
   constructor: (options = {}) ->
     @app = options.app
     @portalView = options.portalView
+    @hideCans = options.hideCans
     $(document).ready(@onDocumentReady)
 
   onDocumentReady: =>
@@ -17,9 +18,14 @@ class SphereSelectView
       $injectBeforeElement = if $loading.length then $($loading[0]) else $addSphereLink
 
       if $("#sphere-#{sphere.id}").length == 0
-        view = new SphereView(sphere)
+        view = new SphereView(_.extend(sphere, { hideCan: @hideCans }))
         html = view.render()
-        $(html).insertBefore($injectBeforeElement)
+
+        if $injectBeforeElement.length
+          $(html).insertBefore($injectBeforeElement)
+        else
+          $('.sphere-select-view').append(html)
+
         $("##{sphere.id}.sphere-link").click(@onSphereLinkClick)
         $("##{sphere.id}.delete-sphere").click(@onSphereDeleteClick)
 

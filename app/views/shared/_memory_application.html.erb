@@ -3,7 +3,7 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    new MemoryApplication({
+    new ShowMemoryApplication({
       memory: <%= @memory_json.to_s.html_safe %>,
       sphereNum: 0
     }).start();

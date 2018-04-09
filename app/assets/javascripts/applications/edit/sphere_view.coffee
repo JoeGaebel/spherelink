@@ -1,6 +1,6 @@
 class SphereView
   constructor: (options = {}) ->
-    { @id, @thumb, @caption } = options
+    { @id, @thumb, @caption, @hideCan } = options
 
   render: ->
     @template()
@@ -8,8 +8,8 @@ class SphereView
   template: ->
     """
       <div id="sphere-#{ @id }" class="sphere-item-view">
-        <div id="#{ @id }" class="glyphicon glyphicon-trash delete-sphere delete-shadow"></div>
-        <div id="#{ @id }" class="glyphicon glyphicon-trash delete-sphere"></div>
+        <div id="#{ @id }" class="glyphicon glyphicon-trash delete-sphere delete-shadow #{ "hidden" if @hideCan }"></div>
+        <div id="#{ @id }" class="glyphicon glyphicon-trash delete-sphere #{ "hidden" if @hideCan }"></div>
         <a href="javascript:;" id="#{ @id }" class="sphere-link">
           <img src="#{ @thumb }">
         </a>
