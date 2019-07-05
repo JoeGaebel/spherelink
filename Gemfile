@@ -43,7 +43,7 @@ end
 
 group :development, :test do
   gem 'critical-path-css-rails'
-  gem 'mysql2'
+  gem 'mysql2', '< 0.5'
   gem 'pry'
   gem 'factory_bot'
   gem 'rspec-rails'
