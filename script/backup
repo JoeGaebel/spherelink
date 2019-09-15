@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-aws s3 sync s3://saudade ~/Downloads/spherelink-backup-`date +%Y-%m-%d-%H-%M-%S`
+aws s3 --profile joe sync s3://saudade ~/Downloads/spherelink-backup-`date +%Y-%m-%d-%H-%M-%S`
