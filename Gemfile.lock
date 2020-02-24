@@ -192,14 +192,14 @@ GEM
     mimemagic (0.3.3)
     mini_magick (4.5.1)
     mini_mime (1.0.1)
-    mini_portile2 (2.3.0)
+    mini_portile2 (2.4.0)
     minitest (5.11.3)
     multi_json (1.13.1)
     mysql2 (0.4.10)
     nenv (0.3.0)
     nio4r (2.3.1)
-    nokogiri (1.8.5)
-      mini_portile2 (~> 2.3.0)
+    nokogiri (1.10.8)
+      mini_portile2 (~> 2.4.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -369,7 +369,7 @@ DEPENDENCIES
   loadcss-rails
   mini_magick (= 4.5.1)
   mysql2 (< 0.5)
-  nokogiri (~> 1.8.1)
+  nokogiri (~> 1.10.8)
   omniauth
   pg (~> 0.18)
   progress_bar
