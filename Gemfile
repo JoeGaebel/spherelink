@@ -35,6 +35,7 @@ gem 'inline_svg'
 gem 'loadcss-rails'
 gem 'sitemap'
 gem 'progress_bar'
+gem "recaptcha", require: "recaptcha/rails"
 
 group :production do
   gem 'heroku-deflater', :group => :production, git: "https://github.com/romanbsd/heroku-deflater.git"

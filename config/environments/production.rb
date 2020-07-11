@@ -104,4 +104,9 @@ Rails.application.configure do
     'Cache-Control' => 'public, s-max-age=31536000, max-age=15552000',
     'Expires' => "#{1.year.from_now.to_formatted_s(:rfc822)}"
   }
+
+  Recaptcha.configure do |config|
+    config.site_key  = ENV['RECAPTCHA_SITE_KEY']
+    config.secret_key = ENV['RECAPTCHA_SECRET_KEY']
+  end
 end

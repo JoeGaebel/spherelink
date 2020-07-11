@@ -255,6 +255,8 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    recaptcha (5.5.0)
+      json
     regexp_parser (1.5.1)
     responders (3.0.0)
       actionpack (>= 5.0)
@@ -378,6 +380,7 @@ DEPENDENCIES
   puma
   rails (= 5.1.4)
   rails-controller-testing (= 0.1.1)
+  recaptcha
   rspec-rails
   sass-rails (= 5.0.6)
   selenium-webdriver
