@@ -16,7 +16,7 @@
     "jquery-ujs": "1.2.2",
     "photo-sphere-viewer": "3.2.4",
     "soundmanager2": "2.97.20170602",
-    "three": "0.84.0",
+    "three": "0.137.0",
     "uevent": "1.0.0"
   },
   "license": "ISC"
