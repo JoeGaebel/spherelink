@@ -10,7 +10,7 @@
     "chance": "^1.0.18",
     "clamp-js": "0.7.0",
     "d.js": "0.7.5",
-    "dot": "^1.1.2",
+    "dot": "^1.1.3",
     "jquery": "^3.4.1",
     "jquery-awesome-cursor": "github:JoeGaebel/jquery-awesome-cursor",
     "jquery-ujs": "1.2.2",
