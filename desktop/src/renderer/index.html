@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Spherelink</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/app.css">
+  <style>
+    .memory-list-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+    .memory-card {
+      border: 1px solid #cfcfcf; border-radius: 4px; padding: 15px; margin-bottom: 12px;
+      display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+      transition: background-color 0.15s;
+    }
+    .memory-card:hover { background-color: #f5f5f5; }
+    .memory-info { flex: 1; }
+    .memory-name { font-size: 1.4em; font-family: 'Istok Web', sans-serif; color: #696969; margin: 0; }
+    .memory-meta { font-size: 0.85em; color: #999; margin-top: 4px; }
+    .memory-desc { font-size: 0.95em; color: #888; margin-top: 4px; }
+    .memory-actions { display: flex; gap: 8px; align-items: center; }
+    .memory-actions .btn { font-size: 13px; }
+    .empty-state {
+      text-align: center; padding: 80px 20px; color: #999;
+    }
+    .empty-state h2 { color: #999; font-weight: normal; }
+    .top-bar {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+    }
+    .top-bar h1 { margin: 0; text-align: left; font-size: 2em; }
+  </style>
+</head>
+<body>
+  <div class="memory-list-container">
+    <div class="top-bar">
+      <h1>Spherelink</h1>
+      <button class="btn btn-primary" id="new-memory-btn">New Memory</button>
+    </div>
+
+    <div id="memory-list"></div>
+    <div id="empty-state" class="empty-state" style="display:none;">
+      <h2>No memories yet</h2>
+      <p>Create your first memory to get started.</p>
+      <button class="btn btn-primary btn-lg" id="empty-new-btn">Create Memory</button>
+    </div>
+  </div>
+
+  <script src="./js/lib/jquery.min.js"></script>
+  <script>
+    async function loadMemories() {
+      const memories = await window.spherelinkAPI.listMemories();
+      const $list = $('#memory-list');
+      const $empty = $('#empty-state');
+      $list.empty();
+
+      if (memories.length === 0) {
+        $empty.show();
+        return;
+      }
+      $empty.hide();
+
+      for (const mem of memories) {
+        const date = new Date(mem.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        const desc = mem.description ? `<div class="memory-desc">${escapeHtml(mem.description).substring(0, 100)}</div>` : '';
+        const card = $(`
+          <div class="memory-card" data-id="${mem.id}">
+            <div class="memory-info">
+              <div class="memory-name">${escapeHtml(mem.name)}</div>
+              <div class="memory-meta">${mem.sphereCount} sphere${mem.sphereCount !== 1 ? 's' : ''} &middot; ${date}</div>
+              ${desc}
+            </div>
+            <div class="memory-actions">
+              <button class="btn btn-default btn-sm edit-btn" data-id="${mem.id}">Edit</button>
+              <button class="btn btn-danger btn-sm delete-btn" data-id="${mem.id}">Delete</button>
+            </div>
+          </div>
+        `);
+
+        // Click card to view
+        card.on('click', function(e) {
+          if ($(e.target).hasClass('btn')) return;
+          window.spherelinkAPI.navigate('viewer.html', { id: mem.id });
+        });
+
+        card.find('.edit-btn').on('click', function() {
+          window.spherelinkAPI.navigate('editor.html', { id: mem.id });
+        });
+
+        card.find('.delete-btn').on('click', async function(e) {
+          e.stopPropagation();
+          if (confirm('Delete "' + mem.name + '" and all its spheres, markers, and portals?')) {
+            await window.spherelinkAPI.deleteMemory(mem.id);
+            loadMemories();
+          }
+        });
+
+        $list.append(card);
+      }
+    }
+
+    $('#new-memory-btn, #empty-new-btn').on('click', async function() {
+      const memory = await window.spherelinkAPI.createMemory('Untitled Memory');
+      window.spherelinkAPI.navigate('editor.html', { id: memory.id });
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    $(document).ready(function() {
+      window.spherelinkAPI.setTitle('Memories');
+      loadMemories();
+    });
+  </script>
+</body>
+</html>

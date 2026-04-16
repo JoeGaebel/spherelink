@@ -1,0 +1,265 @@
+/* Spherelink Desktop — compiled styles
+   Combines custom.scss, photosphere_overrides.scss, memories.scss, edit-page.scss
+   with SCSS variables inlined */
+
+/* Variables */
+/* $side-padding: 30px; */
+/* $font-color: #696969; */
+
+/* === custom.scss === */
+
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #337ab7;
+}
+
+body {
+  font-family: 'Lora', serif;
+  color: #696969;
+}
+
+.header {
+  font-family: 'Istok Web', sans-serif;
+}
+
+.header .title {
+  font-size: 4rem;
+}
+
+.user-header {
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.description {
+  text-align: center;
+  font-size: 18px;
+  color: #4f4f4f;
+}
+
+.viewer {
+  width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+  font-family: 'Istok Web', sans-serif;
+}
+
+label, .btn {
+  font-family: 'Lora', serif;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: #777;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+h1, h3, p {
+  color: #696969;
+}
+
+#photosphere {
+  width: 100%;
+  height: 465px;
+  min-width: 300px;
+}
+
+@media (min-width: 768px) {
+  #photosphere {
+    width: 100%;
+    height: 554px;
+  }
+}
+
+.show-description {
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.sphere-select-row-flex {
+  display: flex;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+}
+
+/* === photosphere_overrides.scss === */
+
+.psv-navbar.psv-navbar.psv-navbar {
+  display: inline-block;
+}
+
+.psv-navbar .full-screen {
+  float: right;
+}
+
+.psv-panel-content.psv-panel-content {
+  font-family: 'Istok Web', sans-serif;
+  color: #A8A8A8;
+}
+
+.psv-panel-content.psv-panel-content h1,
+.psv-panel-content.psv-panel-content h2,
+.psv-panel-content.psv-panel-content h3,
+.psv-panel-content.psv-panel-content h4,
+.psv-panel-content.psv-panel-content h5,
+.psv-panel-content.psv-panel-content h6,
+.psv-panel-content.psv-panel-content p {
+  color: #A8A8A8;
+}
+
+.psv-panel-content.psv-panel-content img {
+  user-select: none;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.psv-panel.psv-panel {
+  width: unset;
+}
+
+#patterns {
+  position: absolute;
+  height: 0;
+}
+
+.zero-height {
+  height: 0;
+  overflow: hidden;
+}
+
+/* === memories.scss (subset for viewer) === */
+
+.memory-list {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: -4px;
+}
+
+.memory-item-view {
+  border-color: #cfcfcf;
+  border-style: solid;
+  border-width: 1px;
+  padding: 10px;
+  margin: 8px;
+}
+
+.memory-item-view .text {
+  padding-bottom: 2px;
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+.name {
+  margin-top: 0;
+}
+
+/* === sphere-select-view === */
+
+.sphere-item-view {
+  display: inline-block;
+  position: relative;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.sphere-item-view img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.sphere-item-view .caption {
+  text-align: center;
+  font-size: 11px;
+  max-width: 80px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sphere-item-view .delete-sphere {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  color: #d9534f;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 10;
+}
+
+.sphere-item-view .delete-shadow {
+  color: white;
+  text-shadow: 0 0 3px white;
+}
+
+/* === spinner === */
+
+.spinner {
+  text-align: center;
+  padding: 20px;
+}
+
+.spinner img {
+  width: 60px;
+  height: 60px;
+}
+
+.spinner .status-text {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #999;
+}
+
+.small-spinner {
+  display: inline-block;
+}
+
+.small-spinner img {
+  width: 20px;
+  height: 20px;
+}
+
+/* === Bootstrap font path fix for Electron === */
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'),
+       url('../fonts/glyphicons-halflings-regular.woff') format('woff'),
+       url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'),
+       url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+/* Utility */
+.hidden {
+  display: none !important;
+}

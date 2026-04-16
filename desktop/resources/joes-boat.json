@@ -1,0 +1,1086 @@
+{
+  "memory": {
+    "name": "Joe's Boat",
+    "description": "",
+    "createdAt": "2017-06-05 07:15:47"
+  },
+  "defaultSound": {
+    "oldId": 1,
+    "name": "sail",
+    "volume": 30,
+    "loops": 100,
+    "file": "sound/file/1/sail.mp3"
+  },
+  "spheres": [
+    {
+      "oldId": 3,
+      "caption": "Marina",
+      "createdAt": "2017-06-05 07:15:50.4061",
+      "defaultZoom": 61,
+      "panoramaFile": "sphere/panorama/3/marina.jpg",
+      "thumbFile": "sphere/panorama/3/thumb_marina.jpg",
+      "sound": null,
+      "markers": [
+        {
+          "oldId": 92,
+          "x": 8874,
+          "y": 713,
+          "width": 32,
+          "height": 32,
+          "tooltip": {
+            "content": "Welcome!",
+            "position": "right bottom"
+          },
+          "content": "<h3>Welcome to my boat!</h3><h5>I used to live here.</h5><h5>﻿<span style=\"color: inherit; font-family: &quot;Istok Web&quot;, sans-serif;\">Click the places indicated in red&nbsp;</span>to explore.</h5><div>﻿<br></div><!--IMGHERE-->",
+          "embeddedPhotoFile": "marker/embedded_photo/92/joe_sail.jpg"
+        }
+      ],
+      "portals": [
+        {
+          "polygonPx": [
+            [
+              9094,
+              964
+            ],
+            [
+              9209,
+              998
+            ],
+            [
+              9303,
+              1023
+            ],
+            [
+              9304,
+              1074
+            ],
+            [
+              9303,
+              1181
+            ],
+            [
+              9310,
+              1310
+            ],
+            [
+              9297,
+              1478
+            ],
+            [
+              9268,
+              1715
+            ],
+            [
+              9253,
+              1821
+            ],
+            [
+              9253,
+              1825
+            ],
+            [
+              8555,
+              1575
+            ],
+            [
+              8424,
+              1516
+            ],
+            [
+              8347,
+              1445
+            ],
+            [
+              8315,
+              1362
+            ],
+            [
+              8275,
+              1262
+            ],
+            [
+              8283,
+              1125
+            ],
+            [
+              8288,
+              1070
+            ],
+            [
+              8306,
+              1036
+            ],
+            [
+              8429,
+              1015
+            ],
+            [
+              8451,
+              977
+            ],
+            [
+              8473,
+              947
+            ],
+            [
+              8559,
+              926
+            ],
+            [
+              8697,
+              913
+            ],
+            [
+              8783,
+              896
+            ],
+            [
+              8878,
+              896
+            ]
+          ],
+          "toSphereOldId": 4,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go inside the boat!",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        },
+        {
+          "polygonPx": [
+            [
+              9371,
+              1048
+            ],
+            [
+              9391,
+              1308
+            ],
+            [
+              9328,
+              1847
+            ],
+            [
+              9447,
+              1881
+            ],
+            [
+              9568,
+              1909
+            ],
+            [
+              9688,
+              1935
+            ],
+            [
+              9787,
+              1945
+            ],
+            [
+              9796,
+              1960
+            ],
+            [
+              10156,
+              1421
+            ],
+            [
+              10139,
+              1376
+            ]
+          ],
+          "toSphereOldId": 27,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go to the frontyard",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        }
+      ]
+    },
+    {
+      "oldId": 4,
+      "caption": "Boat Livingroom",
+      "createdAt": "2017-06-05 07:15:55.976359",
+      "defaultZoom": 31,
+      "panoramaFile": "sphere/panorama/4/boat_livingroom.jpg",
+      "thumbFile": "sphere/panorama/4/thumb_boat_livingroom.jpg",
+      "sound": null,
+      "markers": [
+        {
+          "oldId": 78,
+          "x": 8041,
+          "y": 4716,
+          "width": 32,
+          "height": 32,
+          "tooltip": {
+            "content": "",
+            "position": "right bottom"
+          },
+          "content": "<!--IMGHERE-->",
+          "embeddedPhotoFile": "marker/embedded_photo/78/drawer.jpg"
+        }
+      ],
+      "portals": [
+        {
+          "polygonPx": [
+            [
+              4426,
+              1188
+            ],
+            [
+              4930,
+              1198
+            ],
+            [
+              4966,
+              1932
+            ],
+            [
+              4381,
+              1907
+            ]
+          ],
+          "toSphereOldId": 5,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Check out that boat bed!",
+            "position": "right bottom"
+          },
+          "fovLat": -0.2149931464977397,
+          "fovLng": 0.04682678441209071
+        },
+        {
+          "polygonPx": [
+            [
+              2844,
+              1518
+            ],
+            [
+              3050,
+              1549
+            ],
+            [
+              3046,
+              1786
+            ],
+            [
+              2798,
+              1773
+            ]
+          ],
+          "toSphereOldId": 6,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 30,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Turn the light on",
+            "position": "right bottom"
+          },
+          "fovLat": -0.3021493524569316,
+          "fovLng": 0.1722633391850528
+        },
+        {
+          "polygonPx": [
+            [
+              12299,
+              288
+            ],
+            [
+              -2920,
+              343
+            ],
+            [
+              -1933,
+              2875
+            ],
+            [
+              11041,
+              3259
+            ]
+          ],
+          "toSphereOldId": 26,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Boat backyard",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        }
+      ]
+    },
+    {
+      "oldId": 5,
+      "caption": "Boat Bedroom",
+      "createdAt": "2017-06-05 07:15:59.617597",
+      "defaultZoom": 50,
+      "panoramaFile": "sphere/panorama/5/boat_bed.jpg",
+      "thumbFile": "sphere/panorama/5/thumb_boat_bed.jpg",
+      "sound": null,
+      "markers": [
+        {
+          "oldId": 83,
+          "x": 1926,
+          "y": 2518,
+          "width": 32,
+          "height": 32,
+          "tooltip": {
+            "content": "",
+            "position": "right bottom"
+          },
+          "content": "<h4>Ocean beach was great for finding sand dollars</h4><!--IMGHERE-->",
+          "embeddedPhotoFile": "marker/embedded_photo/83/surf.jpg"
+        },
+        {
+          "oldId": 85,
+          "x": 6687,
+          "y": 2877,
+          "width": 32,
+          "height": 32,
+          "tooltip": {
+            "content": "",
+            "position": "right bottom"
+          },
+          "content": "<!--IMGHERE-->",
+          "embeddedPhotoFile": "marker/embedded_photo/85/books-bdbe2f566aa81dfe68f5255a16258baa6f12dd7564eb838bcf02f688ad5c7bd7.jpg"
+        },
+        {
+          "oldId": 87,
+          "x": 4093,
+          "y": 2119,
+          "width": 32,
+          "height": 32,
+          "tooltip": {
+            "content": "This heater was all I needed to keep warm",
+            "position": "right bottom"
+          },
+          "content": "",
+          "embeddedPhotoFile": "marker/embedded_photo/87/top_hatch.jpg"
+        },
+        {
+          "oldId": 88,
+          "x": 3371,
+          "y": -484,
+          "width": 32,
+          "height": 32,
+          "tooltip": {
+            "content": "",
+            "position": "right bottom"
+          },
+          "content": "<h5>The best part was at night. I'd open this hatch and watch the planes fly by overhead.<br><br>The breeze, the sound of the waves, and the gentle rocking put you right to sleep.</h5>﻿<br><!--IMGHERE-->",
+          "embeddedPhotoFile": "marker/embedded_photo/88/top_hatch.jpg"
+        }
+      ],
+      "portals": [
+        {
+          "polygonPx": [
+            [
+              1553,
+              87
+            ],
+            [
+              4942,
+              -98
+            ],
+            [
+              4497,
+              1089
+            ],
+            [
+              2904,
+              1047
+            ]
+          ],
+          "toSphereOldId": 27,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go to the boat frontyard",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        },
+        {
+          "polygonPx": [
+            [
+              10951,
+              828
+            ],
+            [
+              -1478,
+              818
+            ],
+            [
+              -1255,
+              3300
+            ],
+            [
+              10674,
+              3304
+            ]
+          ],
+          "toSphereOldId": 4,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        }
+      ]
+    },
+    {
+      "oldId": 6,
+      "caption": "night time",
+      "createdAt": "2017-06-05 07:16:04.04708",
+      "defaultZoom": 43,
+      "panoramaFile": "sphere/panorama/6/boat_night.jpg",
+      "thumbFile": "sphere/panorama/6/thumb_boat_night.jpg",
+      "sound": {
+        "oldId": 2,
+        "name": "as_you_found_me",
+        "volume": 30,
+        "loops": 100,
+        "file": "sound/file/2/as_you_found_me.mp3"
+      },
+      "markers": [
+        {
+          "oldId": 79,
+          "x": 2944,
+          "y": 377,
+          "width": 32,
+          "height": 32,
+          "tooltip": {
+            "content": "",
+            "position": "right bottom"
+          },
+          "content": "<!--IMGHERE-->",
+          "embeddedPhotoFile": "marker/embedded_photo/79/left.jpg"
+        },
+        {
+          "oldId": 80,
+          "x": 5326,
+          "y": 1199,
+          "width": 32,
+          "height": 32,
+          "tooltip": {
+            "content": "",
+            "position": "right bottom"
+          },
+          "content": "<!--IMGHERE-->",
+          "embeddedPhotoFile": "marker/embedded_photo/80/middle.jpg"
+        },
+        {
+          "oldId": 81,
+          "x": 6440,
+          "y": 615,
+          "width": 32,
+          "height": 32,
+          "tooltip": {
+            "content": "",
+            "position": "right bottom"
+          },
+          "content": "<!--IMGHERE-->",
+          "embeddedPhotoFile": "marker/embedded_photo/81/second_right.jpg"
+        },
+        {
+          "oldId": 82,
+          "x": 6865,
+          "y": 545,
+          "width": 32,
+          "height": 32,
+          "tooltip": {
+            "content": "",
+            "position": "right bottom"
+          },
+          "content": "<!--IMGHERE-->",
+          "embeddedPhotoFile": "marker/embedded_photo/82/far_right.jpg"
+        }
+      ],
+      "portals": [
+        {
+          "polygonPx": [
+            [
+              3825,
+              1037
+            ],
+            [
+              4102,
+              1061
+            ],
+            [
+              4069,
+              1369
+            ],
+            [
+              3753,
+              1337
+            ]
+          ],
+          "toSphereOldId": 4,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 30,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go back to day time",
+            "position": "right bottom"
+          },
+          "fovLat": -0.6267388220839005,
+          "fovLng": 0.1639751227994196
+        }
+      ]
+    },
+    {
+      "oldId": 23,
+      "caption": "treasure island",
+      "createdAt": "2017-06-11 19:50:36.549308",
+      "defaultZoom": 74,
+      "panoramaFile": "sphere/panorama/23/PANO_20150828_070600.jpg",
+      "thumbFile": "sphere/panorama/23/thumb_PANO_20150828_070600.jpg",
+      "sound": null,
+      "markers": [],
+      "portals": [
+        {
+          "polygonPx": [
+            [
+              14009,
+              956
+            ],
+            [
+              14080,
+              956
+            ],
+            [
+              14082,
+              1167
+            ],
+            [
+              14008,
+              1204
+            ]
+          ],
+          "toSphereOldId": 4,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go back to the boat",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        },
+        {
+          "polygonPx": [
+            [
+              14504,
+              828
+            ],
+            [
+              14597,
+              836
+            ],
+            [
+              14607,
+              990
+            ],
+            [
+              14494,
+              992
+            ]
+          ],
+          "toSphereOldId": 25,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "See the Island View",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        }
+      ]
+    },
+    {
+      "oldId": 25,
+      "caption": "island view",
+      "createdAt": "2017-06-11 20:04:30.084501",
+      "defaultZoom": 44,
+      "panoramaFile": "sphere/panorama/25/PANO_20150928_085633.jpg",
+      "thumbFile": "sphere/panorama/25/thumb_PANO_20150928_085633.jpg",
+      "sound": null,
+      "markers": [
+        {
+          "oldId": 90,
+          "x": 5186,
+          "y": 2190,
+          "width": 32,
+          "height": 32,
+          "tooltip": {
+            "content": "Surfboard",
+            "position": "right bottom"
+          },
+          "content": "I talked about getting a surfboard for a long time. <br><br>The next day, A surfboard washed into shore while I was waiting for the bus.<br><br>As you can see, I'm in a state of disbelief.<br><!--IMGHERE-->",
+          "embeddedPhotoFile": "marker/embedded_photo/90/surfboard.jpg"
+        }
+      ],
+      "portals": [
+        {
+          "polygonPx": [
+            [
+              6298,
+              1560
+            ],
+            [
+              6395,
+              1519
+            ],
+            [
+              6535,
+              1516
+            ],
+            [
+              6628,
+              1514
+            ],
+            [
+              6634,
+              1546
+            ],
+            [
+              6626,
+              1557
+            ],
+            [
+              6295,
+              1572
+            ]
+          ],
+          "toSphereOldId": 3,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go to South Beach Marina!",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        },
+        {
+          "polygonPx": [
+            [
+              1731,
+              1461
+            ],
+            [
+              1971,
+              1461
+            ],
+            [
+              1963,
+              1680
+            ],
+            [
+              1717,
+              1650
+            ]
+          ],
+          "toSphereOldId": 23,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go back to treasure island marina",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        }
+      ]
+    },
+    {
+      "oldId": 26,
+      "caption": "Boat backyard",
+      "createdAt": "2017-06-11 20:18:18.78791",
+      "defaultZoom": 50,
+      "panoramaFile": "sphere/panorama/26/PANO_20160511_200955.jpg",
+      "thumbFile": "sphere/panorama/26/thumb_PANO_20160511_200955.jpg",
+      "sound": null,
+      "markers": [],
+      "portals": [
+        {
+          "polygonPx": [
+            [
+              108,
+              1248
+            ],
+            [
+              -114,
+              1401
+            ],
+            [
+              152,
+              1522
+            ],
+            [
+              -360,
+              1403
+            ]
+          ],
+          "toSphereOldId": 27,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go to the boat frontyard",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        },
+        {
+          "polygonPx": [
+            [
+              2828,
+              2100
+            ],
+            [
+              3120,
+              2097
+            ],
+            [
+              3116,
+              2300
+            ],
+            [
+              2777,
+              2297
+            ]
+          ],
+          "toSphereOldId": 4,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Back to boat",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        },
+        {
+          "polygonPx": [
+            [
+              4142,
+              1215
+            ],
+            [
+              4381,
+              1426
+            ],
+            [
+              4127,
+              1698
+            ],
+            [
+              4608,
+              1436
+            ]
+          ],
+          "toSphereOldId": 27,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go to the frontyard",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        }
+      ]
+    },
+    {
+      "oldId": 27,
+      "caption": "Boat frontyard",
+      "createdAt": "2017-06-11 20:21:52.628113",
+      "defaultZoom": 50,
+      "panoramaFile": "sphere/panorama/27/PANO_20160521_125420.jpg",
+      "thumbFile": "sphere/panorama/27/thumb_PANO_20160521_125420.jpg",
+      "sound": null,
+      "markers": [],
+      "portals": [
+        {
+          "polygonPx": [
+            [
+              2186,
+              687
+            ],
+            [
+              2289,
+              667
+            ],
+            [
+              2336,
+              668
+            ],
+            [
+              2403,
+              670
+            ],
+            [
+              2458,
+              674
+            ],
+            [
+              2540,
+              696
+            ],
+            [
+              2562,
+              708
+            ],
+            [
+              2601,
+              727
+            ],
+            [
+              2609,
+              747
+            ],
+            [
+              2562,
+              753
+            ],
+            [
+              2470,
+              749
+            ],
+            [
+              2377,
+              753
+            ],
+            [
+              2306,
+              747
+            ],
+            [
+              2249,
+              745
+            ],
+            [
+              2209,
+              743
+            ],
+            [
+              2182,
+              731
+            ]
+          ],
+          "toSphereOldId": 23,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go to Treasure Island Marina!",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        },
+        {
+          "polygonPx": [
+            [
+              1393,
+              1149
+            ],
+            [
+              1421,
+              1102
+            ],
+            [
+              1415,
+              1080
+            ],
+            [
+              1283,
+              1056
+            ],
+            [
+              1273,
+              1060
+            ],
+            [
+              1253,
+              1069
+            ],
+            [
+              1242,
+              1073
+            ],
+            [
+              1236,
+              1082
+            ],
+            [
+              1238,
+              1102
+            ],
+            [
+              1238,
+              1112
+            ],
+            [
+              1238,
+              1118
+            ],
+            [
+              1238,
+              1121
+            ]
+          ],
+          "toSphereOldId": 5,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go to the boat bed!",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        },
+        {
+          "polygonPx": [
+            [
+              5056,
+              542
+            ],
+            [
+              5224,
+              677
+            ],
+            [
+              5036,
+              835
+            ],
+            [
+              5406,
+              684
+            ]
+          ],
+          "toSphereOldId": 26,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go to the boat backyard",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        },
+        {
+          "polygonPx": [
+            [
+              157,
+              448
+            ],
+            [
+              5,
+              597
+            ],
+            [
+              176,
+              675
+            ],
+            [
+              -211,
+              599
+            ]
+          ],
+          "toSphereOldId": 26,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go to the backyard",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        },
+        {
+          "polygonPx": [
+            [
+              1624,
+              966
+            ],
+            [
+              1907,
+              982
+            ],
+            [
+              1911,
+              1054
+            ],
+            [
+              1621,
+              1033
+            ]
+          ],
+          "toSphereOldId": 3,
+          "fill": "points",
+          "stroke": "#ff0032",
+          "strokeTransparency": 80,
+          "strokeWidth": 2,
+          "tooltip": {
+            "content": "Go to the marina",
+            "position": "right bottom"
+          },
+          "fovLat": 0,
+          "fovLng": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spherelink</title>
+
+  <!-- CSS: Bootstrap, PSV, Bootstrap-slider, App -->
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/photo-sphere-viewer.min.css">
+  <link rel="stylesheet" href="./css/bootstrap-slider.min.css">
+  <link rel="stylesheet" href="./css/app.css">
+</head>
+<body>
+
+  <div class="container">
+    <div style="display:flex; justify-content:space-between; padding:10px 0;">
+      <a href="javascript:;" id="back-btn" style="font-size:14px; color:#337ab7;">&larr; Back to memories</a>
+      <a href="javascript:;" id="edit-btn" style="font-size:14px; color:#337ab7;">Edit</a>
+    </div>
+    <div class="header user-header">
+      <span class="title" id="memory-title"></span>
+    </div>
+
+    <div class="sphere-select-view sphere-select-row-flex"></div>
+
+    <div class="viewer">
+      <div id="photosphere"></div>
+
+      <!-- SVG patterns for portal fill -->
+      <svg id="patterns" class="zero-height">
+        <defs>
+          <pattern id="dots" x="10" y="10" width="30" height="30" patternUnits="userSpaceOnUse">
+            <circle cx="10" cy="10" r="10" style="stroke: none; fill: rgba(255,0,0,0.4)" />
+          </pattern>
+          <pattern id="points" x="10" y="10" width="15" height="15" patternUnits="userSpaceOnUse">
+            <circle cx="10" cy="10" r="0.8" style="stroke: none; fill: red" />
+          </pattern>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="josefin description show-description" id="memory-description"></div>
+  </div>
+
+  <!-- JS: Libraries (order matters — matches Rails application.js manifest) -->
+  <script src="./js/lib/jquery.min.js"></script>
+  <script src="./js/lib/bootstrap.min.js"></script>
+  <script src="./js/lib/underscore-min.js"></script>
+
+  <!-- Three.js core + extensions -->
+  <script src="./js/lib/three.min.js"></script>
+  <script src="./js/lib/CanvasRenderer.js"></script>
+  <script src="./js/lib/Projector.js"></script>
+  <script src="./js/lib/EffectComposer.js"></script>
+  <script src="./js/lib/RenderPass.js"></script>
+  <script src="./js/lib/ShaderPass.js"></script>
+  <script src="./js/lib/MaskPass.js"></script>
+  <script src="./js/lib/CopyShader.js"></script>
+  <script src="./js/lib/DeviceOrientationControls.js"></script>
+
+  <!-- PSV dependencies -->
+  <script src="./js/lib/D.js"></script>
+  <script src="./js/lib/uevent.js"></script>
+  <script src="./js/lib/doT.min.js"></script>
+
+  <!-- PhotoSphereViewer (must be after Three.js + deps) -->
+  <script src="./js/lib/photo-sphere-viewer.min.js"></script>
+
+  <!-- Other vendor libs -->
+  <script src="./js/lib/soundmanager2-jsmin.js"></script>
+  <script src="./js/lib/bootstrap-slider.min.js"></script>
+  <script src="./js/lib/clamp.js"></script>
+  <script src="./js/lib/chance.min.js"></script>
+
+  <!-- App code -->
+  <script src="./js/base-view.js"></script>
+  <script src="./js/spinner-view.js"></script>
+  <script src="./js/small-spinner-view.js"></script>
+  <script src="./js/sphere-view.js"></script>
+  <script src="./js/sphere-select-view.js"></script>
+  <script src="./js/memory-application.js"></script>
+  <script src="./js/show-memory-application.js"></script>
+  <script src="./js/page-helper.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      // Get memory ID from URL params
+      const params = new URLSearchParams(window.location.search);
+      const memoryId = parseInt(params.get('id'));
+
+      if (!memoryId) {
+        document.getElementById('memory-title').textContent = 'No memory selected';
+        return;
+      }
+
+      const memory = await window.spherelinkAPI.getMemory(memoryId);
+      if (!memory) {
+        document.getElementById('memory-title').textContent = 'Memory not found';
+        return;
+      }
+
+      document.getElementById('memory-title').textContent = memory.name;
+      document.getElementById('memory-description').textContent = memory.description || '';
+      window.spherelinkAPI.setTitle(memory.name);
+
+      new ShowMemoryApplication({
+        memory: memory,
+        sphereNum: 0
+      }).start();
+
+      document.getElementById('back-btn').onclick = function() {
+        window.spherelinkAPI.navigate('index.html');
+      };
+      document.getElementById('edit-btn').onclick = function() {
+        window.spherelinkAPI.navigate('editor.html', { id: memoryId });
+      };
+    });
+  </script>
+</body>
+</html>

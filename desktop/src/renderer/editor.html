@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Spherelink — Editor</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/photo-sphere-viewer.min.css">
+  <link rel="stylesheet" href="./css/bootstrap-slider.min.css">
+  <link rel="stylesheet" href="./css/app.css">
+  <link rel="stylesheet" href="./css/edit-page.css">
+</head>
+<body>
+  <a href="javascript:;" class="back-link" id="back-btn">&larr; Back</a>
+
+  <div class="left-pad-row">
+    <div class="right-pad-row">
+      <div class="header link-header">
+        <div class="title-widget">
+          <div id="title" class="title"></div>
+          <textarea id="title-input" class="title"></textarea>
+        </div>
+
+        <div class="description-widget">
+          <div id="description"></div>
+          <textarea id="description-input"></textarea>
+        </div>
+      </div>
+
+      <div class="sphere-select-view">
+        <h3 class="link-sphere-header">Spheres</h3>
+        <div class="add-sphere-view">
+          <div class="add-sphere-link">
+            <div class="add-button">
+              <div class="glyphicon glyphicon-plus"></div>
+            </div>
+            <div class="add-form">
+              <div class="form-group file-form">
+                <button class="btn btn-default btn-sm sphere-file-btn" id="choose-file-btn">Choose panorama...</button>
+                <span id="selected-file-name" style="font-size:12px; color:#999;"></span>
+              </div>
+              <div class="form-group caption-form">
+                <input type="text" class="sphere-caption form-control" placeholder="New sphere caption">
+              </div>
+              <div class="actions">
+                <button id="upload-submit" class="btn btn-success">Add new sphere</button>
+                <button id="upload-cancel" class="btn btn-warning">cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="empty-sphere-state" style="display:none; text-align:center; padding:40px; color:#999;">
+      <h2 style="color:#999; font-weight:normal;">No spheres yet</h2>
+      <p>Click the + button above to upload your first panoramic image.</p>
+    </div>
+
+    <div class="edit-row">
+      <div class="link-viewer">
+        <div id="photosphere"></div>
+        <svg id="patterns" class="zero-height">
+          <defs>
+            <pattern id="dots" x="10" y="10" width="30" height="30" patternUnits="userSpaceOnUse">
+              <circle cx="10" cy="10" r="10" style="stroke: none; fill: rgba(255,0,0,0.4)" />
+            </pattern>
+            <pattern id="points" x="10" y="10" width="15" height="15" patternUnits="userSpaceOnUse">
+              <circle cx="10" cy="10" r="0.8" style="stroke: none; fill: red" />
+            </pattern>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="edit-widgets right-pad-row">
+        <!-- Portal View -->
+        <div class="portal-view edit-widget">
+          <div class="tipsy-header"><h3>Portals</h3></div>
+          <p class="delete-portal-explanation" hidden>Click a portal to delete it</p>
+          <select id="to_sphere_id" hidden></select>
+          <input type="text" id="portal_caption" placeholder="Portal caption" hidden>
+          <button id="start-portal" class="btn btn-primary">Add</button>
+          <button id="save-portal" class="btn btn-success" disabled>Save</button>
+          <button id="reset-portal" class="btn btn-warning" disabled>Cancel</button>
+          <button id="delete-portal" class="btn btn-danger">Delete</button>
+        </div>
+
+        <!-- Marker View -->
+        <div class="marker-view edit-widget">
+          <div class="tipsy-header"><h3>Markers</h3></div>
+          <p class="delete-marker-explanation" hidden>Click a marker to delete it</p>
+          <div class="marker-container">
+            <input type="text" id="marker_caption" placeholder="Marker caption" hidden>
+            <div id="marker_content" contenteditable="true"></div>
+            <button id="add-marker" class="btn btn-primary">Add</button>
+            <button id="save-marker" class="btn btn-success" disabled>Save</button>
+            <button id="reset-marker" class="btn btn-warning" disabled>Cancel</button>
+            <button id="delete-marker" class="btn btn-danger">Delete</button>
+          </div>
+        </div>
+
+        <!-- Zoom View -->
+        <div class="zoom-view edit-widget">
+          <h3>Initial Zoom Level</h3>
+          <input id="default_zoom" data-slider-id="defaultZoomSlider" type="text"
+                 data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Libraries -->
+  <script src="./js/lib/jquery.min.js"></script>
+  <script src="./js/lib/bootstrap.min.js"></script>
+  <script src="./js/lib/underscore-min.js"></script>
+  <script src="./js/lib/three.min.js"></script>
+  <script src="./js/lib/CanvasRenderer.js"></script>
+  <script src="./js/lib/Projector.js"></script>
+  <script src="./js/lib/EffectComposer.js"></script>
+  <script src="./js/lib/RenderPass.js"></script>
+  <script src="./js/lib/ShaderPass.js"></script>
+  <script src="./js/lib/MaskPass.js"></script>
+  <script src="./js/lib/CopyShader.js"></script>
+  <script src="./js/lib/DeviceOrientationControls.js"></script>
+  <script src="./js/lib/D.js"></script>
+  <script src="./js/lib/uevent.js"></script>
+  <script src="./js/lib/doT.min.js"></script>
+  <script src="./js/lib/photo-sphere-viewer.min.js"></script>
+  <script src="./js/lib/soundmanager2-jsmin.js"></script>
+  <script src="./js/lib/bootstrap-slider.min.js"></script>
+  <script src="./js/lib/clamp.js"></script>
+  <script src="./js/lib/chance.min.js"></script>
+
+  <!-- App code -->
+  <script src="./js/base-view.js"></script>
+  <script src="./js/spinner-view.js"></script>
+  <script src="./js/small-spinner-view.js"></script>
+  <script src="./js/sphere-view.js"></script>
+  <script src="./js/sphere-select-view.js"></script>
+  <script src="./js/memory-application.js"></script>
+  <script src="./js/header-view.js"></script>
+  <script src="./js/zoom-view.js"></script>
+  <script src="./js/add-sphere-view.js"></script>
+  <script src="./js/portal-view.js"></script>
+  <script src="./js/marker-view.js"></script>
+  <script src="./js/edit-memory-application.js"></script>
+  <script src="./js/page-helper.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      const params = new URLSearchParams(window.location.search);
+      const memoryId = parseInt(params.get('id'));
+
+      if (!memoryId) { document.getElementById('title').textContent = 'No memory selected'; return; }
+
+      const memory = await window.spherelinkAPI.getMemory(memoryId);
+      if (!memory) { document.getElementById('title').textContent = 'Memory not found'; return; }
+
+      document.getElementById('title').textContent = memory.name;
+      document.getElementById('description').textContent = memory.description || '';
+      window.spherelinkAPI.setTitle('Editing: ' + memory.name);
+
+      // Replace file input with Electron file dialog
+      document.getElementById('choose-file-btn').addEventListener('click', async function() {
+        const filePath = await window.spherelinkAPI.showOpenDialog({
+          properties: ['openFile'],
+          filters: [{ name: 'Panorama Images', extensions: ['jpg', 'jpeg'] }]
+        });
+        if (filePath) {
+          window._selectedSpherePath = filePath;
+          document.getElementById('selected-file-name').textContent = filePath.split('/').pop();
+        }
+      });
+
+      // Patch AddSphereView to use the selected file
+      const _origSubmit = AddSphereView.prototype.onSubmitClick;
+      AddSphereView.prototype.onSubmitClick = async function() {
+        if (window._selectedSpherePath) {
+          this.selectedFilePath = window._selectedSpherePath;
+        }
+        if (!this.selectedFilePath) {
+          const filePath = await window.spherelinkAPI.showOpenDialog({
+            properties: ['openFile'],
+            filters: [{ name: 'Panorama Images', extensions: ['jpg', 'jpeg'] }]
+          });
+          if (filePath) {
+            this.selectedFilePath = filePath;
+            window._selectedSpherePath = filePath;
+            document.getElementById('selected-file-name').textContent = filePath.split('/').pop();
+          } else {
+            return;
+          }
+        }
+        if (!this.ui.$caption.val()) {
+          this.ui.$captionForm.addClass('has-error');
+          return;
+        }
+        this.ui.$captionForm.removeClass('has-error');
+        this.newSphere();
+        window._selectedSpherePath = null;
+      };
+
+      new EditMemoryApplication({
+        memory: memory,
+        sphereNum: 0
+      }).start();
+
+      document.getElementById('back-btn').onclick = function() {
+        window.spherelinkAPI.navigate('index.html');
+      };
+    });
+  </script>
+</body>
+</html>

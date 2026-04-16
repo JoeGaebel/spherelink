@@ -1,0 +1,25 @@
+appId: io.spherelink.desktop
+productName: Spherelink
+
+directories:
+  output: dist
+
+files:
+  - "src/**/*"
+  - "package.json"
+
+extraResources:
+  - from: "resources/"
+    to: "resources/"
+
+asarUnpack:
+  - "**/better-sqlite3/**"
+  - "**/sharp/**"
+  - "**/@img/**"
+
+mac:
+  category: public.app-category.photography
+  target:
+    - target: dir
+      arch: arm64
+  icon: build/icon.png

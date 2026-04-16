@@ -1,0 +1,26 @@
+{
+  "name": "spherelink-desktop",
+  "version": "1.0.0",
+  "description": "Spherelink - Create virtual tours of your most cherished memories",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:mac": "electron-builder --mac",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "bootstrap": "^3.4.1",
+    "electron": "^30.0.0",
+    "electron-builder": "^24.0.0",
+    "underscore": "^1.13.6"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.9.0",
+    "sharp": "^0.34.5"
+  }
+}
