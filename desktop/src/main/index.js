@@ -1,14 +1,21 @@
-const { app, BrowserWindow, ipcMain, Menu, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, shell, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const DataStore = require('./data-store');
 const { registerHandlers } = require('./ipc-handlers');
 const { seedJoesBoat } = require('./seed-joes-boat');
+const importEngine = require('./import-engine');
 
 let mainWindow;
 let store;
 
-const dataDir = path.join(app.getPath('home'), 'Spherelink', 'data');
+// When packaged, keep user data INSIDE the .app bundle so the application is
+// fully portable — zip/copy the .app and all memories travel with it.
+// In dev, fall back to ~/Spherelink/data/ since process.resourcesPath points
+// at Electron's own Resources dir (which we do not want to pollute).
+const dataDir = app.isPackaged
+  ? path.join(process.resourcesPath, 'userdata')
+  : path.join(app.getPath('home'), 'Spherelink', 'data');
 
 function resolveBundleUploadsDir() {
   const packaged = path.join(process.resourcesPath || '', 'resources', 'joes-boat-uploads');
@@ -81,6 +88,10 @@ function buildMenu() {
             navigateTo('editor.html', { id: memory.id });
           },
         },
+        {
+          label: 'Import from Backup…',
+          click: () => { navigateTo('import.html'); },
+        },
         { type: 'separator' },
         {
           label: 'Show Data Folder',
@@ -141,6 +152,19 @@ function buildMenu() {
 }
 
 app.whenReady().then(() => {
+  // Explicitly set the dock icon at runtime. macOS's Info.plist
+  // CFBundleIconFile is normally sufficient, but unsigned Electron apps
+  // sometimes get a generic icon in the Dock / Cmd+Tab switcher until the
+  // Dock is restarted. Setting it here forces the packaged photosphere icon.
+  if (process.platform === 'darwin' && app.dock) {
+    const iconPath = app.isPackaged
+      ? path.join(process.resourcesPath, 'icon.icns')
+      : path.join(__dirname, '..', '..', 'build', 'icon.png');
+    if (fs.existsSync(iconPath)) {
+      try { app.dock.setIcon(iconPath); } catch (_e) { /* non-fatal */ }
+    }
+  }
+
   const bundleUploadsDir = resolveBundleUploadsDir();
   store = new DataStore(dataDir, bundleUploadsDir);
   registerHandlers(store);
@@ -163,6 +187,55 @@ app.whenReady().then(() => {
   // Window title handler
   ipcMain.handle('app:setTitle', (event, subtitle) => {
     updateTitle(subtitle);
+  });
+
+  // ── Import from backup ──
+
+  ipcMain.handle('import:pickSql', async () => {
+    const result = await dialog.showOpenDialog(mainWindow, {
+      title: 'Select SQL dump (unpacked)',
+      properties: ['openFile'],
+      filters: [{ name: 'SQL', extensions: ['sql'] }, { name: 'All Files', extensions: ['*'] }],
+    });
+    if (result.canceled || result.filePaths.length === 0) return null;
+    return result.filePaths[0];
+  });
+
+  ipcMain.handle('import:pickUploads', async () => {
+    const result = await dialog.showOpenDialog(mainWindow, {
+      title: 'Select uploads directory',
+      properties: ['openDirectory'],
+    });
+    if (result.canceled || result.filePaths.length === 0) return null;
+    return result.filePaths[0];
+  });
+
+  ipcMain.handle('import:preview', (event, sqlPath) => {
+    try {
+      return { ok: true, preview: importEngine.preview(sqlPath) };
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  });
+
+  ipcMain.handle('import:run', async (event, args) => {
+    const { sqlPath, uploadsDir, assetsDir } = args;
+    try {
+      const summary = importEngine.importAll(store, {
+        sqlPath,
+        uploadsDir,
+        assetsDir,
+        onProgress: (p) => {
+          if (mainWindow && !mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('import:progress', p);
+          }
+        },
+      });
+      return { ok: true, summary };
+    } catch (err) {
+      console.error('Import failed:', err);
+      return { ok: false, error: err.message };
+    }
   });
 
   buildMenu();

@@ -284,6 +284,8 @@ class DataStore {
     } else {
       content = content.replace('<!--IMGHERE-->', '');
     }
+    // Resolve {{ASSET:relPath}} placeholders stored by the importer into file:// URLs
+    content = content.replace(/\{\{ASSET:([^}]+)\}\}/g, (_, rel) => this._toFileUrl(rel));
     if (content) result.content = content;
     return result;
   }

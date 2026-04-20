@@ -34,4 +34,15 @@ contextBridge.exposeInMainWorld('spherelinkAPI', {
 
   // Window
   setTitle: (subtitle) => ipcRenderer.invoke('app:setTitle', subtitle),
+
+  // Import from backup
+  importPickSql: () => ipcRenderer.invoke('import:pickSql'),
+  importPickUploads: () => ipcRenderer.invoke('import:pickUploads'),
+  importPreview: (sqlPath) => ipcRenderer.invoke('import:preview', sqlPath),
+  importRun: (args) => ipcRenderer.invoke('import:run', args),
+  onImportProgress: (callback) => {
+    const listener = (event, payload) => callback(payload);
+    ipcRenderer.on('import:progress', listener);
+    return () => ipcRenderer.removeListener('import:progress', listener);
+  },
 });

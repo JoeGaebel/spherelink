@@ -16,6 +16,7 @@ webapp/config/application.yml
 # ── Desktop (Electron) ──
 desktop/node_modules
 desktop/dist
+desktop/build-userdata
 
 # ── Editor / OS ──
 .idea

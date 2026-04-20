@@ -5,10 +5,15 @@
   "main": "src/main/index.js",
   "scripts": {
     "start": "electron .",
+    "prebuild": "mkdir -p build-userdata",
+    "prebuild:mac": "mkdir -p build-userdata",
+    "prebuild:win": "mkdir -p build-userdata",
+    "prebuild:linux": "mkdir -p build-userdata",
     "build": "electron-builder",
     "build:mac": "electron-builder --mac",
     "build:win": "electron-builder --win",
-    "build:linux": "electron-builder --linux"
+    "build:linux": "electron-builder --linux",
+    "prepare-seed": "electron scripts/prepare-seed.js"
   },
   "author": "",
   "license": "UNLICENSED",

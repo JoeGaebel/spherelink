@@ -11,6 +11,11 @@ files:
 extraResources:
   - from: "resources/"
     to: "resources/"
+  # Pre-baked user data, produced by `npm run prepare-seed` before build.
+  # Safe to omit (electron-builder tolerates a missing `from` path); a normal
+  # build without prepare-seed will just have no pre-loaded memories.
+  - from: "build-userdata/"
+    to: "userdata/"
 
 asarUnpack:
   - "**/better-sqlite3/**"
@@ -23,3 +28,9 @@ mac:
     - target: dir
       arch: arm64
   icon: build/icon.png
+
+# Post-build cleanup:
+#  - trims non-English locales from the Electron Framework (~45MB)
+#  - strips the bundled Joe's Boat seed when userdata was already populated
+#    by prepare-seed (~24MB)
+afterPack: "scripts/after-pack.js"

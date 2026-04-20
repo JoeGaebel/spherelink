@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Import from Backup</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/app.css">
+  <style>
+    .import-container { max-width: 720px; margin: 0 auto; padding: 30px 20px; }
+    h1 { font-size: 1.8em; margin-bottom: 8px; }
+    .step { margin-top: 24px; }
+    .step-label { font-weight: bold; color: #555; margin-bottom: 6px; }
+    .path-display {
+      font-family: monospace; font-size: 0.9em; color: #333;
+      background: #f5f5f5; padding: 8px 10px; border-radius: 4px;
+      word-break: break-all; margin-top: 6px; min-height: 32px;
+    }
+    .path-display.empty { color: #999; font-style: italic; }
+    .preview-box {
+      background: #fafafa; border: 1px solid #ddd; border-radius: 4px;
+      padding: 14px; margin-top: 10px;
+    }
+    .preview-stats { font-size: 1.1em; margin-bottom: 10px; }
+    .preview-list { max-height: 220px; overflow-y: auto; font-size: 0.9em; }
+    .preview-list .mem-row { padding: 4px 0; border-bottom: 1px solid #eee; }
+    .preview-list .mem-row:last-child { border-bottom: none; }
+    .progress-container { margin-top: 20px; }
+    .progress { height: 22px; margin-bottom: 8px; }
+    .progress-message { font-size: 0.9em; color: #555; }
+    .summary-box {
+      background: #e8f4e8; border: 1px solid #b7d9b7; border-radius: 4px;
+      padding: 14px; margin-top: 14px;
+    }
+    .summary-box.has-errors { background: #fdf0e8; border-color: #e2b896; }
+    .summary-box ul { margin: 6px 0 0 0; padding-left: 20px; }
+    .missing-list { max-height: 160px; overflow-y: auto; font-size: 0.85em; color: #a66; }
+    .button-row { margin-top: 20px; display: flex; gap: 10px; }
+    .hint { font-size: 0.85em; color: #888; margin-top: 4px; }
+    .warning { color: #b58800; font-size: 0.9em; margin-top: 6px; }
+  </style>
+</head>
+<body>
+  <div class="import-container">
+    <h1>Import from Backup</h1>
+    <p class="hint">
+      Imports memories from a Rails <code>pg_dump</code> (unpacked <code>.sql</code>) plus a
+      CarrierWave-style uploads directory. User accounts and their PII are never loaded.
+    </p>
+
+    <div class="step">
+      <div class="step-label">1. SQL dump file (.sql)</div>
+      <button class="btn btn-default" id="pick-sql-btn">Choose SQL file…</button>
+      <div class="path-display empty" id="sql-path">No file selected</div>
+      <div class="hint">If you have a binary <code>.dump</code>, convert first: <code>pg_restore -f backup.sql backup.dump</code></div>
+    </div>
+
+    <div class="step">
+      <div class="step-label">2. Uploads directory</div>
+      <button class="btn btn-default" id="pick-uploads-btn">Choose directory…</button>
+      <div class="path-display empty" id="uploads-path">No directory selected</div>
+      <div class="hint">Should contain <code>sphere/</code>, <code>marker/</code>, <code>sound/</code> subdirectories.</div>
+    </div>
+
+    <div class="step" id="preview-step" style="display:none;">
+      <div class="step-label">3. Preview</div>
+      <div class="preview-box">
+        <div class="preview-stats" id="preview-stats"></div>
+        <div class="preview-list" id="preview-list"></div>
+      </div>
+      <div class="warning" id="duplicate-warning" style="display:none;"></div>
+    </div>
+
+    <div class="progress-container" id="progress-container" style="display:none;">
+      <div class="progress">
+        <div class="progress-bar" id="progress-bar" role="progressbar" style="width:0%"></div>
+      </div>
+      <div class="progress-message" id="progress-message"></div>
+    </div>
+
+    <div class="summary-box" id="summary-box" style="display:none;"></div>
+
+    <div class="button-row">
+      <button class="btn btn-default" id="cancel-btn">Back to Memories</button>
+      <button class="btn btn-primary" id="import-btn" disabled>Import All</button>
+    </div>
+  </div>
+
+  <script src="./js/lib/jquery.min.js"></script>
+  <script>
+    let sqlPath = null;
+    let uploadsPath = null;
+    let preview = null;
+
+    function updateImportButton() {
+      $('#import-btn').prop('disabled', !(sqlPath && uploadsPath && preview));
+    }
+
+    function setPathDisplay($el, value) {
+      if (value) {
+        $el.removeClass('empty').text(value);
+      } else {
+        $el.addClass('empty').text('No selection');
+      }
+    }
+
+    async function refreshPreview() {
+      if (!sqlPath) { $('#preview-step').hide(); preview = null; updateImportButton(); return; }
+      const result = await window.spherelinkAPI.importPreview(sqlPath);
+      if (!result.ok) {
+        alert('Could not parse SQL file: ' + result.error);
+        preview = null;
+        $('#preview-step').hide();
+        updateImportButton();
+        return;
+      }
+      preview = result.preview;
+      $('#preview-stats').text(
+        `Found ${preview.memoryCount} memor${preview.memoryCount === 1 ? 'y' : 'ies'} ` +
+        `with ${preview.sphereCount} sphere${preview.sphereCount === 1 ? '' : 's'} total.`
+      );
+      const $list = $('#preview-list').empty();
+      for (const m of preview.memories) {
+        const row = $('<div class="mem-row"></div>').text(
+          `${m.name} — ${m.sphereCount} sphere${m.sphereCount === 1 ? '' : 's'}`
+        );
+        $list.append(row);
+      }
+
+      // Warn if any preview memory name exists already
+      try {
+        const existing = await window.spherelinkAPI.listMemories();
+        const existingNames = new Set(existing.map(e => e.name));
+        const dupes = preview.memories.filter(m => existingNames.has(m.name));
+        if (dupes.length > 0) {
+          $('#duplicate-warning').show().text(
+            `Warning: ${dupes.length} memor${dupes.length === 1 ? 'y' : 'ies'} with a matching name already exist. ` +
+            `Importing will create duplicates.`
+          );
+        } else {
+          $('#duplicate-warning').hide();
+        }
+      } catch (e) { /* ignore */ }
+
+      $('#preview-step').show();
+      updateImportButton();
+    }
+
+    $('#pick-sql-btn').on('click', async () => {
+      const p = await window.spherelinkAPI.importPickSql();
+      if (!p) return;
+      sqlPath = p;
+      setPathDisplay($('#sql-path'), sqlPath);
+      await refreshPreview();
+    });
+
+    $('#pick-uploads-btn').on('click', async () => {
+      const p = await window.spherelinkAPI.importPickUploads();
+      if (!p) return;
+      uploadsPath = p;
+      setPathDisplay($('#uploads-path'), uploadsPath);
+      updateImportButton();
+    });
+
+    $('#cancel-btn').on('click', () => {
+      window.spherelinkAPI.navigate('index.html');
+    });
+
+    $('#import-btn').on('click', async () => {
+      if (!sqlPath || !uploadsPath || !preview) return;
+      if (!confirm(`Import ${preview.memoryCount} memories and ${preview.sphereCount} spheres?`)) return;
+
+      $('#import-btn, #pick-sql-btn, #pick-uploads-btn, #cancel-btn').prop('disabled', true);
+      $('#progress-container').show();
+      $('#summary-box').hide();
+
+      const unsubscribe = window.spherelinkAPI.onImportProgress((p) => {
+        const pct = p.total > 0 ? Math.round((p.current / p.total) * 100) : 0;
+        $('#progress-bar').css('width', pct + '%');
+        $('#progress-message').text(p.message || '');
+      });
+
+      try {
+        const result = await window.spherelinkAPI.importRun({ sqlPath, uploadsDir: uploadsPath });
+        unsubscribe();
+        if (!result.ok) {
+          alert('Import failed: ' + result.error);
+          $('#pick-sql-btn, #pick-uploads-btn, #cancel-btn, #import-btn').prop('disabled', false);
+          return;
+        }
+        const s = result.summary;
+        const hasIssues = s.missingAssets.length > 0 || s.errors.length > 0;
+        const $box = $('#summary-box').removeClass('has-errors');
+        if (hasIssues) $box.addClass('has-errors');
+
+        let html = `<strong>Import complete.</strong><ul>` +
+          `<li>${s.memoriesImported} memories</li>` +
+          `<li>${s.spheresImported} spheres</li>` +
+          `<li>${s.portalsImported} portals</li>` +
+          `<li>${s.markersImported} markers</li>` +
+          `<li>${s.soundsImported} sounds</li>` +
+          `</ul>`;
+        if (s.errors.length > 0) {
+          html += `<div style="margin-top:8px;"><strong>Errors (${s.errors.length}):</strong><ul>`;
+          for (const e of s.errors) html += `<li>${escapeHtml(e.memory)}: ${escapeHtml(e.message)}</li>`;
+          html += `</ul></div>`;
+        }
+        if (s.missingAssets.length > 0) {
+          html += `<div style="margin-top:8px;"><strong>Missing assets (${s.missingAssets.length}):</strong>` +
+            `<div class="missing-list">`;
+          for (const a of s.missingAssets.slice(0, 50)) html += `<div>${escapeHtml(a)}</div>`;
+          if (s.missingAssets.length > 50) html += `<div>…and ${s.missingAssets.length - 50} more</div>`;
+          html += `</div></div>`;
+        }
+        $box.html(html).show();
+        $('#cancel-btn').text('Done').prop('disabled', false);
+      } catch (err) {
+        unsubscribe();
+        alert('Import error: ' + err.message);
+        $('#pick-sql-btn, #pick-uploads-btn, #cancel-btn, #import-btn').prop('disabled', false);
+      }
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    $(document).ready(function() {
+      window.spherelinkAPI.setTitle('Import from Backup');
+    });
+  </script>
+</body>
+</html>

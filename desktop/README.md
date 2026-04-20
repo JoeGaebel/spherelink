@@ -1,8 +1,8 @@
 # Spherelink (desktop)
 
-Standalone Electron app for viewing and editing 360° panoramic memory tours. Runs entirely offline with an embedded SQLite database — no server, account, or dependencies beyond the installer.
+Standalone Electron app for viewing and editing 360° panoramic memory tours. Runs entirely offline with an embedded SQLite database — no server, account, or cloud dependencies.
 
-The app ships with **Joe's Boat** pre-loaded as the default memory on first launch.
+The app ships with **Joe's Boat** pre-loaded as the default memory on first launch. Additional memories can be imported at runtime (File → Import from Backup…) or baked directly into the built `.app` at build time.
 
 ## Develop
 
@@ -13,33 +13,87 @@ npm start
 
 Requires Node 18+ and a working build toolchain for native modules (`better-sqlite3`, `sharp`).
 
+In dev, user data lives at `~/Spherelink/data/` (outside the source tree).
+
 ## Build a distributable
 
+### Plain build — empty app, Joe's Boat seeds on first launch
+
 ```sh
-npm run build:mac       # macOS arm64 (current default in electron-builder.yml)
-npm run build:win       # Windows (untested)
-npm run build:linux     # Linux (untested)
+npm run build:mac     # macOS arm64 (current default in electron-builder.yml)
+npm run build:win     # Windows (untested)
+npm run build:linux   # Linux (untested)
 ```
 
-The output lands in `dist/`.
+The output lands in `dist/mac-arm64/Spherelink.app`.
+
+### Build with memories pre-loaded (two-step)
+
+Run the build-time importer against a Rails `pg_dump` + CarrierWave uploads directory, then build:
+
+```sh
+npm run prepare-seed -- \
+  --sql=/path/to/backup-unpacked.sql \
+  --uploads=/path/to/uploads
+
+npm run build:mac
+```
+
+`prepare-seed` writes a fully populated `userdata/` into `desktop/build-userdata/` (gitignored). `electron-builder` then bundles that as `Spherelink.app/Contents/Resources/userdata/`, so the first launch finds memories already present and skips the Joe's Boat seed.
+
+If you have a binary `.dump` instead of unpacked SQL, convert first:
+
+```sh
+pg_restore -f backup-unpacked.sql backup.dump
+```
+
+## Portability
+
+**When packaged, user data lives *inside* the `.app` bundle**, at `Spherelink.app/Contents/Resources/userdata/`. This means:
+
+- Zip the `.app` → unzip elsewhere → all memories travel with it.
+- No internet access required at any point after install.
+- No user-account data. No telemetry. No cloud sync.
+
+### Important caveats
+
+- **Don't install to `/Applications`.** That directory is group-writable only by `admin`; the running app can't write back to itself there. Keep the `.app` in a user-writable location (Desktop, `~/Applications/`, external drive, etc.).
+- **Quit cleanly before zipping/copying.** SQLite WAL mode creates `-wal` / `-shm` sidecar files; capturing them mid-write can lead to a torn state. `Cmd+Q` flushes and closes. The build-time `prepare-seed` script explicitly checkpoints WAL before exiting for this same reason.
+- **Don't code-sign the `.app` without rethinking this.** Writing inside a signed bundle invalidates its signature. If you ever need signed distribution, user data should move back to `~/Library/Application Support/Spherelink/` and portability becomes an opt-in feature.
+- **Unsigned warning on first launch.** Dismiss with:
+  ```sh
+  xattr -dr com.apple.quarantine /path/to/Spherelink.app
+  ```
+
+## Import from Backup (runtime UI)
+
+File → Import from Backup… lets you point the running app at a `pg_dump` unpacked SQL file and an uploads directory. It parses the dump, copies assets, and inserts all memories into the local SQLite database inside the bundle.
+
+- User-table data (users, microposts, delayed_jobs) is never read — no PII lands in the DB.
+- Imports are non-idempotent: running twice creates duplicate memories. The UI flags name collisions before you commit.
+- Rails asset-pipeline `<img src="/assets/…">` tags inside marker HTML are stripped during import (they can't resolve inside Electron). CarrierWave-uploaded marker photos are preserved.
 
 ## Layout
 
 ```
 desktop/
 ├── src/
-│   ├── main/                  # Electron main process
-│   │   ├── index.js           # entry point, menu, window lifecycle
-│   │   ├── data-store.js      # SQLite schema + reads/writes
-│   │   ├── ipc-handlers.js    # renderer ↔ main IPC
-│   │   ├── seed-joes-boat.js  # first-launch seed (hardcoded)
-│   │   └── import-backup.js   # RESERVED: future import-UI phase
-│   ├── preload/               # contextBridge shim
-│   └── renderer/              # HTML + JS (viewer + editor)
-├── resources/                 # bundled into the .app
-│   ├── joes-boat.json         # Joe's Boat memory + spheres + markers + portals + sounds
-│   └── joes-boat-uploads/     # panoramas, marker photos, sounds
-├── build/                     # icons etc. used by electron-builder
+│   ├── main/                   # Electron main process
+│   │   ├── index.js            # entry point, menu, window lifecycle
+│   │   ├── data-store.js       # SQLite schema + reads/writes; path resolver
+│   │   ├── ipc-handlers.js     # renderer ↔ main IPC
+│   │   ├── seed-joes-boat.js   # first-launch seed (only if DB is empty)
+│   │   ├── import-engine.js    # SQL dump + uploads → SQLite + assets
+│   │   └── sql-dump-parser.js  # PG COPY-format parser + YAML polygon decoder
+│   ├── preload/                # contextBridge shim
+│   └── renderer/               # HTML + JS (memory list, viewer, editor, import wizard)
+├── resources/                  # bundled read-only into the .app
+│   ├── joes-boat.json          # seed memory + spheres + markers + portals + sounds
+│   └── joes-boat-uploads/      # panoramas, marker photos, sounds
+├── scripts/
+│   └── prepare-seed.js         # build-time importer
+├── build-userdata/             # (gitignored) produced by prepare-seed, bundled by builder
+├── build/                      # icons etc. used by electron-builder
 ├── package.json
 └── electron-builder.yml
 ```
@@ -52,10 +106,22 @@ Assets are **not** copied into the user data dir. The path resolver in `data-sto
 
 - Viewing Joe's Boat reads directly from the `.app` bundle.
 - Editing a sphere or marker in Joe's Boat writes the new asset to the user data dir; the bundle remains untouched.
-- Deleting Joe's Boat removes the DB rows; the bundle is left alone (and does not reappear unless the app is reinstalled or the user clears the data dir).
+- Deleting Joe's Boat removes the DB rows; the bundled files are left alone (and do not reappear unless the app is reinstalled or `userdata/` is cleared).
 
-User data lives under `~/Spherelink/data/`.
+If the `userdata/` directory is pre-populated at build time via `prepare-seed`, the DB isn't empty on first launch and Joe's Boat seeding is skipped.
 
-## Import from backup (future)
+## Data-folder hierarchy (packaged)
 
-`src/main/import-backup.js` is retained as the starting point for a future "Import from SQL backup" UI. It is not currently wired to any menu item or IPC handler.
+```
+Spherelink.app/Contents/Resources/
+├── resources/                   # read-only bundled defaults
+│   ├── joes-boat.json
+│   └── joes-boat-uploads/
+└── userdata/                    # user-writable; pre-baked if built with prepare-seed
+    ├── spherelink.db
+    ├── sphere/panorama/…/       # imported panoramas + thumbs
+    ├── marker/embedded_photo/…/ # imported marker photos
+    └── sound/file/…/            # imported sounds
+```
+
+Menu item **File → Show Data Folder** opens whichever path is currently in use (inside the bundle when packaged, `~/Spherelink/data/` in dev).
