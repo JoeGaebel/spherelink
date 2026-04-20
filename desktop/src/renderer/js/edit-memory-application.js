@@ -42,7 +42,18 @@ class EditMemoryApplication extends MemoryApplication {
     $('.link-viewer').show();
     window.currentSphere = window.memory.spheres[0];
     this._preload(currentSphere.panorama);
-    this.setNextSphere(window.currentSphere);
+
+    // The initial PSV was instantiated while .edit-row was hidden
+    // (display:none), so its WebGL renderer was created with a 0x0 container
+    // and can't render panoramas for the remainder of the session. Now that
+    // the container has real dimensions, destroy that stale instance and
+    // create a fresh one sized correctly.
+    if (window.PSV) {
+      try { window.PSV.destroy(); } catch (_e) { /* ignore */ }
+    }
+    window.PSV = new PhotoSphereViewer(this.getPSVOptions());
+    this.bindHandlers();
+
     for (const view of this.viewsToHide) {
       view.show();
     }

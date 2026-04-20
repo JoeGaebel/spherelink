@@ -37,6 +37,10 @@ class AddSphereView {
   async newSphere() {
     if (!this.selectedFilePath) return;
 
+    // Capture inputs before resetWidget() nulls them
+    const filePath = this.selectedFilePath;
+    const caption = this.ui.$caption.val();
+
     const spinnerID = chance.guid();
     this.appendSpinner(spinnerID);
     this.resetWidget();
@@ -44,8 +48,8 @@ class AddSphereView {
     try {
       const sphere = await window.spherelinkAPI.createSphere(
         window.memory.id,
-        this.ui.$caption.val(),
-        this.selectedFilePath
+        caption,
+        filePath
       );
       window.memory.spheres.push(sphere);
       this.resetViewState(spinnerID);
