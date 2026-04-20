@@ -34,10 +34,17 @@ Run the build-time importer against a Rails `pg_dump` + CarrierWave uploads dire
 ```sh
 npm run prepare-seed -- \
   --sql=/path/to/backup-unpacked.sql \
-  --uploads=/path/to/uploads
+  --uploads=/path/to/uploads \
+  --assets=/path/to/rails/app/assets/images
 
 npm run build:mac
 ```
+
+- `--sql` — required. Path to the unpacked `pg_dump` SQL file (text format, not `.dump`).
+- `--uploads` — required. CarrierWave uploads root; expected subdirs `sphere/panorama/{id}/`, `marker/embedded_photo/{id}/`, `sound/file/{id}/`.
+- `--assets` — optional. Rails asset-pipeline images dir, used to resolve fingerprinted `<img src="/assets/foo-HASH.jpg">` references inside marker HTML. If omitted, the script auto-detects a sibling `webapp/app/assets/images/` directory. Any unresolved asset is stripped from the marker content and logged as a missing asset.
+
+Exclusions: a hard-coded allowlist in `desktop/src/main/import-engine.js` (`EXCLUDED_MEMORY_NAMES`) drops specific test / scratch memories by exact name before import. Edit that set to change what gets packaged.
 
 `prepare-seed` writes a fully populated `userdata/` into `desktop/build-userdata/` (gitignored). `electron-builder` then bundles that as `Spherelink.app/Contents/Resources/userdata/`, so the first launch finds memories already present and skips the Joe's Boat seed.
 
@@ -46,6 +53,23 @@ If you have a binary `.dump` instead of unpacked SQL, convert first:
 ```sh
 pg_restore -f backup-unpacked.sql backup.dump
 ```
+
+Full end-to-end example (run from `desktop/`):
+
+```sh
+# 1. Unpack the binary dump (if needed)
+pg_restore -f ../2024-backup-unpacked.sql ../2024-backup.dump
+
+# 2. Populate desktop/build-userdata/ with SQLite DB + panoramas + photos + sounds
+npm run prepare-seed -- \
+  --sql=../2024-backup-unpacked.sql \
+  --uploads=../spherelink-backup-2026-04-13-15-49-32/uploads
+
+# 3. Build the .app (will pick up build-userdata/ automatically)
+npm run build:mac
+```
+
+The resulting `dist/mac-arm64/Spherelink.app` contains every imported memory and is fully portable (see Portability section).
 
 ## Portability
 
