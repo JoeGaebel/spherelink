@@ -18,6 +18,13 @@ desktop/node_modules
 desktop/dist
 desktop/build-userdata
 
+# ── Build inputs (never commit; large / contain user content) ──
+# Rails pg_dump output, unpacked or binary
+*-backup-unpacked.sql
+*-backup.dump
+# CarrierWave uploads snapshots that feed `prepare-seed`
+spherelink-backup-*/
+
 # ── Editor / OS ──
 .idea
 .DS_Store

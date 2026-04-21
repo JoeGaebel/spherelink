@@ -24,9 +24,10 @@ asarUnpack:
 
 mac:
   category: public.app-category.photography
+  # Arch is supplied by the build script (--x64 / --arm64). Don't hardcode it
+  # here — doing so pins every `electron-builder --mac` invocation to one arch.
   target:
     - target: dir
-      arch: arm64
   icon: build/icon.png
 
 # Post-build cleanup:
