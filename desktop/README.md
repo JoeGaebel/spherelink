@@ -17,19 +17,30 @@ In dev, user data lives at `~/Spherelink/data/` (outside the source tree).
 
 ## Build a distributable
 
+The Mac build is split per-architecture — pick the script that matches the target machine:
+
+| Script                 | Target              | Output                           |
+|------------------------|---------------------|----------------------------------|
+| `npm run build:mac`    | macOS Apple Silicon | `dist/mac-arm64/Spherelink.app`  |
+| `npm run build:mac:arm`| macOS Apple Silicon | `dist/mac-arm64/Spherelink.app`  |
+| `npm run build:mac:intel` | macOS Intel      | `dist/mac/Spherelink.app`        |
+| `npm run build:win`    | Windows (untested)  | `dist/win-unpacked/`             |
+| `npm run build:linux`  | Linux (untested)    | `dist/linux-unpacked/`           |
+
+`build:mac` is an alias for `build:mac:arm` and is the default. `electron-builder` rebuilds native modules (`better-sqlite3`, `sharp`) for the selected arch, so you can produce an Intel bundle on Apple Silicon and vice versa.
+
 ### Plain build — empty app, Joe's Boat seeds on first launch
 
 ```sh
-npm run build:mac     # macOS arm64 (current default in electron-builder.yml)
-npm run build:win     # Windows (untested)
-npm run build:linux   # Linux (untested)
+npm run build:mac           # Apple Silicon
+npm run build:mac:intel     # Intel
 ```
 
-The output lands in `dist/mac-arm64/Spherelink.app`.
+The resulting `.app` contains the bundled Joe's Boat seed and will populate its database on first launch.
 
 ### Build with memories pre-loaded (two-step)
 
-Run the build-time importer against a Rails `pg_dump` + CarrierWave uploads directory, then build:
+Run the build-time importer against a Rails `pg_dump` + CarrierWave uploads directory, then build for whichever arch you need:
 
 ```sh
 npm run prepare-seed -- \
@@ -37,8 +48,12 @@ npm run prepare-seed -- \
   --uploads=/path/to/uploads \
   --assets=/path/to/rails/app/assets/images
 
-npm run build:mac
+npm run build:mac           # Apple Silicon
+# or
+npm run build:mac:intel     # Intel
 ```
+
+`prepare-seed` is arch-independent — the SQLite DB and assets it produces under `build-userdata/` work for any target. You only need to re-run it if the source SQL / uploads change, not when switching arch.
 
 - `--sql` — required. Path to the unpacked `pg_dump` SQL file (text format, not `.dump`).
 - `--uploads` — required. CarrierWave uploads root; expected subdirs `sphere/panorama/{id}/`, `marker/embedded_photo/{id}/`, `sound/file/{id}/`.
@@ -66,10 +81,12 @@ npm run prepare-seed -- \
   --uploads=../spherelink-backup-2026-04-13-15-49-32/uploads
 
 # 3. Build the .app (will pick up build-userdata/ automatically)
-npm run build:mac
+npm run build:mac           # Apple Silicon → dist/mac-arm64/Spherelink.app
+# or
+npm run build:mac:intel     # Intel        → dist/mac/Spherelink.app
 ```
 
-The resulting `dist/mac-arm64/Spherelink.app` contains every imported memory and is fully portable (see Portability section).
+The resulting `.app` (`dist/mac-arm64/Spherelink.app` for arm, `dist/mac/Spherelink.app` for Intel) contains every imported memory and is fully portable (see Portability section).
 
 ## Portability
 

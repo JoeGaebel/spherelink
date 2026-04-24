@@ -10,7 +10,9 @@
     "prebuild:win": "mkdir -p build-userdata",
     "prebuild:linux": "mkdir -p build-userdata",
     "build": "electron-builder",
-    "build:mac": "electron-builder --mac",
+    "build:mac": "electron-builder --mac --arm64",
+    "build:mac:arm": "electron-builder --mac --arm64",
+    "build:mac:intel": "electron-builder --mac --x64",
     "build:win": "electron-builder --win",
     "build:linux": "electron-builder --linux",
     "prepare-seed": "electron scripts/prepare-seed.js"
